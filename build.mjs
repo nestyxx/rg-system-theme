@@ -1,7 +1,7 @@
 // Build : Tailwind CLI -> CSS minifié, polices -> data-URI, assemblage du .user.js
 // Usage : npm run build
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -43,4 +43,18 @@ js = js
   .replace("/*__CSS_FONTS__*/''", () => JSON.stringify(fonts))
   .replace("/*__CSS_THEME__*/''", () => JSON.stringify(css));
 writeFileSync(path.join(here, 'dist', 'rg-system-theme.user.js'), js);
-console.log(`OK  dist/rg-system-theme.user.js  (${(js.length / 1024).toFixed(0)} Ko, CSS ${(css.length / 1024).toFixed(1)} Ko)`);
+
+// 4. Extension Edge/Chrome (alternative à Tampermonkey) : dist/extension/, à charger en mode développeur.
+//    Le CSS est injecté par le navigateur lui-même (content_scripts.css), avant le premier rendu.
+const ext = path.join(here, 'dist', 'extension');
+rmSync(ext, { recursive: true, force: true });
+mkdirSync(ext, { recursive: true });
+const manifest = readFileSync(path.join(here, 'src', 'extension', 'manifest.template.json'), 'utf8').replaceAll('__VERSION__', pkg.version);
+JSON.parse(manifest); // échoue ici si le JSON est invalide
+writeFileSync(path.join(ext, 'manifest.json'), manifest);
+copyFileSync(path.join(here, 'src', 'extension', 'content.js'), path.join(ext, 'content.js'));
+copyFileSync(path.join(here, 'src', 'extension', 'background.js'), path.join(ext, 'background.js'));
+writeFileSync(path.join(ext, 'theme.css'), css);
+writeFileSync(path.join(ext, 'fonts.css'), fonts);
+
+console.log(`OK  dist/rg-system-theme.user.js  (${(js.length / 1024).toFixed(0)} Ko, CSS ${(css.length / 1024).toFixed(1)} Ko)  +  dist/extension/`);

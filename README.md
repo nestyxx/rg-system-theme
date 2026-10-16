@@ -12,6 +12,20 @@ dans l'esprit de Webgest : Inter / Space Grotesk, palette Arobase, thème clair 
 
 Tampermonkey : activer le « Mode développeur » dans `edge://extensions` si Edge le demande.
 
+## Alternative sans Tampermonkey : extension Edge (recommandée si le userscript ne démarre pas)
+
+Le dossier `dist/extension/` est une extension Manifest V3 minimale qui fait la même chose : le navigateur injecte le CSS lui-même avant le premier rendu (aucun gestionnaire de scripts, aucun flash de l'ancien style).
+
+1. Ouvrir `edge://extensions` et activer le **Mode développeur**.
+2. **Charger l'extension décompressée** et choisir le dossier `dist\\extension`.
+3. Recharger RG System (Ctrl+F5) : la console (F12) affiche `[RG thème Arobase] extension démarrée…` puis `contrôle visuel : … (thème actif)`.
+
+- **Interrupteur** : un clic sur l'icône de l'extension active/désactive le thème et recharge la page.
+- **Clair / sombre** et **densité** : bouton en bas de la barre latérale, `Alt+Maj+T` et `Alt+Maj+D` (réglages mémorisés dans le `localStorage` du site).
+- **Mise à jour** : après `npm run build`, cliquer sur le bouton « recharger » de la carte de l'extension dans `edge://extensions`.
+- L'extension ne demande que l'accès à `dashboard.rg-supervision.com` (et `scripting`/`activeTab` pour l'interrupteur). Elle ne collecte ni n'envoie aucune donnée.
+- **Ne pas installer en même temps** le userscript et l'extension (doublons).
+
 ## Utilisation
 
 - **Clair / sombre** : bouton en bas de la barre latérale, ou menu Tampermonkey › *Thème : automatique / clair / sombre*. Le choix est mémorisé. En mode automatique, le thème suit `prefers-color-scheme`.

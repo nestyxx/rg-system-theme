@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RG System – thème Arobase
 // @namespace    https://arobase.alsace/
-// @version      0.6.2
+// @version      0.7.0
 // @description  Habillage moderne (clair/sombre) de RG System Suite, côté navigateur uniquement.
 // @author       Arobase
 // @match        https://dashboard.rg-supervision.com/*
@@ -27,7 +27,7 @@
   try { main(); } catch (e) { console.error('[RG thème Arobase] erreur au démarrage :', e); }
 
   function main() {
-  console.info('[RG thème Arobase] v0.6.2 démarré sur', location.href);
+  console.info('[RG thème Arobase] v0.7.0 démarré sur', location.href);
 
   // ---------------------------------------------------------------------------
   // 1. SÉLECTEURS RG SYSTEM – à ajuster ici si une mise à jour de RG casse le thème

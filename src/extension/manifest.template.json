@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "RG System – thème Arobase",
+  "version": "__VERSION__",
+  "description": "Habillage moderne (clair/sombre) de RG System Suite, côté navigateur uniquement. Aucune donnée collectée ni envoyée.",
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["https://dashboard.rg-supervision.com/*"],
+  "action": { "default_title": "Activer / désactiver le thème Arobase" },
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://dashboard.rg-supervision.com/*"],
+      "css": ["fonts.css", "theme.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
