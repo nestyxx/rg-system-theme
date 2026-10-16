@@ -6,13 +6,15 @@ dans l'esprit de Webgest : Inter / Space Grotesk, palette Arobase, thème clair 
 
 ## Installation
 
+> **Méthode vérifiée sur le poste d'Arobase : l'extension Edge** (section « Alternative sans Tampermonkey » ci-dessous). Le userscript Tampermonkey est correctement enregistré mais ne s'est pas exécuté sur ce poste (cause non identifiée, Tampermonkey 5.5.1 / Edge) : il reste fourni, à utiliser sur un autre poste ou si l'extension est refusée.
+
 1. Installer l'extension **Tampermonkey** dans Edge (si ce n'est pas fait).
 2. Ouvrir `dist/rg-system-theme.user.js` dans Edge (ou glisser le fichier dans la page Tampermonkey › Utilitaires › Importer), puis **Installer**.
 3. Recharger RG System. Le thème s'applique dès `document-start`, sans flash de l'ancien style.
 
 Tampermonkey : activer le « Mode développeur » dans `edge://extensions` si Edge le demande.
 
-## Alternative sans Tampermonkey : extension Edge (recommandée si le userscript ne démarre pas)
+## Extension Edge (sans Tampermonkey) — méthode recommandée
 
 Le dossier `dist/extension/` est une extension Manifest V3 minimale qui fait la même chose : le navigateur injecte le CSS lui-même avant le premier rendu (aucun gestionnaire de scripts, aucun flash de l'ancien style).
 
@@ -86,7 +88,8 @@ Vérifié = ouvert dans le navigateur, contrôlé visuellement et par un balayag
 | Fenêtres modales Bootstrap (`.modal-*`) | vérifiées sur un gabarit factice, pas sur une vraie modale RG |
 | Données (autres courbes : CPU, mémoire, réseau, antivirus…) | non vérifié individuellement (même composant dygraphs que Disque) |
 | Actions › Assist, Scripts personnalisés, App Manager, Messages ; Backup › restaurations, Activité, Statistiques, Microsoft 365 ; Configuration › Pools, Hyperviseur, Templates devices/tickets, Rapports personnalisés | non ouverts |
-| Installation réelle dans Tampermonkey / Edge | à tester |
+| Extension Edge chargée en mode développeur (dist/extension) | testée par l'utilisateur : thème appliqué en clair et en sombre |
+| Userscript dans Tampermonkey 5.5.1 / Edge | ne s'exécute pas sur le poste de test (aucune ligne dans la console) ; cause non identifiée |
 | Cybersecurity › Gérer | page promotionnelle de l'éditeur (fond blanc codé en dur), laissée telle quelle |
 
 **Courbes en sombre** : les graphiques sont dessinés en `<canvas>` avec des séries choisies pour un fond blanc. Plutôt que d'altérer les couleurs des données, le thème garde la carte du graphique claire (arrondie, ombrée) dans un écran sombre.
