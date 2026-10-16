@@ -1,7 +1,7 @@
 // Build : Tailwind CLI -> CSS minifié, polices -> data-URI, assemblage de l'extension Edge (dist/extension)
 // Usage : npm run build
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync, readdirSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -50,6 +50,11 @@ JSON.parse(manifest); // échoue ici si le JSON est invalide
 writeFileSync(path.join(ext, 'manifest.json'), manifest);
 copyFileSync(path.join(here, 'src', 'extension', 'content.js'), path.join(ext, 'content.js'));
 copyFileSync(path.join(here, 'src', 'extension', 'background.js'), path.join(ext, 'background.js'));
+for (const f of readdirSync(path.join(here, 'src', 'extension', 'icons'))) {
+  mkdirSync(path.join(ext, 'icons'), { recursive: true });
+  copyFileSync(path.join(here, 'src', 'extension', 'icons', f), path.join(ext, 'icons', f));
+}
+if (existsSync(path.join(here, 'THIRD-PARTY-NOTICES.md'))) copyFileSync(path.join(here, 'THIRD-PARTY-NOTICES.md'), path.join(ext, 'THIRD-PARTY-NOTICES.md'));
 writeFileSync(path.join(ext, 'theme.css'), css);
 writeFileSync(path.join(ext, 'fonts.css'), fonts);
 

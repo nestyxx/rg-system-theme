@@ -1,0 +1,78 @@
+/* ===================================================================
+   2. Socle : typographie, fond, sélection, barres de défilement
+   =================================================================== */
+html[data-rgx] body {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: var(--rgx-ink);
+  background: var(--rgx-bg);
+  -webkit-font-smoothing: antialiased;
+}
+html[data-rgx] #root,
+html[data-rgx] #react_root,
+html[data-rgx] #react_legacy,
+html[data-rgx] #main {
+  background: transparent;
+}
+html[data-rgx] ::selection {
+  background: var(--rgx-brand);
+  color: var(--rgx-brand-ink);
+}
+html[data-rgx] * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rgx-border) transparent;
+}
+html[data-rgx] a {
+  color: var(--rgx-brand);
+}
+html[data-rgx] a:hover,
+html[data-rgx] a:focus {
+  color: var(--rgx-brand-hover);
+}
+html[data-rgx] hr {
+  border-top-color: var(--rgx-border);
+}
+/* Le CSS d'origine force des couleurs "marque" via ces classes utilitaires */
+html[data-rgx] .color-rg {
+  color: var(--rgx-ink) !important;
+}
+html[data-rgx] .color-secondary {
+  color: var(--rgx-muted) !important;
+}
+html[data-rgx] .color-hr {
+  border-top-color: var(--rgx-border);
+}
+html[data-rgx] .border-color {
+  border-color: var(--rgx-border) !important;
+}
+html[data-rgx] h1,
+html[data-rgx] h2,
+html[data-rgx] h3,
+html[data-rgx] h4 {
+  font-family: var(--font-display);
+  color: var(--rgx-ink);
+}
+html[data-rgx] small,
+html[data-rgx] .text-muted {
+  color: var(--rgx-muted);
+}
+
+/* Accessibilité : anneau de focus visible au clavier (jamais à la souris) */
+html[data-rgx] :is(a, button, [role="button"], [tabindex], input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--rgx-brand);
+  outline-offset: 2px;
+}
+html[data-rgx] #block-menu-left :is(a, button):focus-visible {
+  outline-color: var(--rgx-brand-soft);
+}
+/* Accessibilité : pas d'animation pour qui a demandé un mouvement réduit */
+@media (prefers-reduced-motion: reduce) {
+  html[data-rgx] *,
+  html[data-rgx] *::before,
+  html[data-rgx] *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

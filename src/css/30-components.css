@@ -1,0 +1,472 @@
+/* ===================================================================
+   6. Boutons (Bootstrap 3)
+   =================================================================== */
+html[data-rgx] .btn {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  box-shadow: var(--rgx-shadow);
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, filter 0.15s;
+}
+html[data-rgx] .btn-sm,
+html[data-rgx] .btn-xs {
+  font-size: 12.5px;
+}
+html[data-rgx] .btn-default {
+  background: var(--rgx-surface);
+  border-color: var(--rgx-border);
+  color: var(--rgx-ink);
+}
+html[data-rgx] .btn-default:hover,
+html[data-rgx] .btn-default:focus,
+html[data-rgx] .btn-default.active {
+  background: var(--rgx-surface-2);
+  border-color: var(--rgx-border);
+  color: var(--rgx-ink);
+}
+/* branding-v3.css : .btn-primary avec !important → on surcharge avec la même force */
+html[data-rgx] .btn-primary {
+  background-color: var(--rgx-brand) !important;
+  border-color: var(--rgx-brand) !important;
+  color: var(--rgx-brand-ink);
+}
+html[data-rgx] .btn-primary:hover,
+html[data-rgx] .btn-primary:active,
+html[data-rgx] .btn-primary.active,
+html[data-rgx] .btn-primary:focus,
+html[data-rgx] .btn-primary:active:focus {
+  background-color: var(--rgx-brand-hover) !important;
+  border-color: var(--rgx-brand-hover) !important;
+  color: var(--rgx-brand-ink);
+}
+/* Barre d'actions de page : boutons secondaires sobres, seule l'action « Créer » reste pleine */
+html[data-rgx] .page-menu .btn-primary:not([id*="create"]) {
+  background-color: var(--rgx-surface) !important;
+  border-color: var(--rgx-border) !important;
+  color: var(--rgx-ink);
+}
+html[data-rgx] .page-menu .btn-primary:not([id*="create"]):hover,
+html[data-rgx] .page-menu .btn-primary:not([id*="create"]).active {
+  background-color: var(--rgx-surface-2) !important;
+  border-color: var(--rgx-border) !important;
+}
+html[data-rgx] .page-menu .btn-primary:not([id*="create"]) .glyphicon-white {
+  color: var(--rgx-muted);
+}
+/* Bouton « Clôturer tout » & co : rouge doux, plein au survol */
+html[data-rgx] .btn-danger {
+  background: var(--rgx-crit-bg);
+  border-color: transparent;
+  color: var(--rgx-crit);
+}
+html[data-rgx] .btn-danger:hover,
+html[data-rgx] .btn-danger:focus,
+html[data-rgx] .btn-danger:active {
+  background: var(--rgx-crit);
+  border-color: var(--rgx-crit);
+  color: #fff;
+}
+html[data-rgx] .btn-success {
+  background: var(--rgx-ok-bg);
+  border-color: transparent;
+  color: var(--rgx-ok);
+}
+html[data-rgx] .btn-success:hover {
+  background: var(--rgx-ok);
+  border-color: var(--rgx-ok);
+  color: #fff;
+}
+html[data-rgx] .btn-warning {
+  background: var(--rgx-warn-bg);
+  border-color: transparent;
+  color: var(--rgx-warn);
+}
+html[data-rgx] .btn-info {
+  background: var(--rgx-info-bg);
+  border-color: transparent;
+  color: var(--rgx-info);
+}
+html[data-rgx] .btn.disabled,
+html[data-rgx] .btn[disabled] {
+  opacity: 0.5;
+}
+html[data-rgx] .glyphicon-white {
+  color: inherit;
+}
+
+/* ===================================================================
+   7. Étiquettes, alertes, messages d'information
+   =================================================================== */
+html[data-rgx] .label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 11.5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+html[data-rgx] .label-default {
+  background: var(--rgx-surface-2);
+  color: var(--rgx-muted);
+}
+html[data-rgx] .label-info,
+html[data-rgx] .label-primary {
+  background: var(--rgx-info-bg);
+  color: var(--rgx-info);
+}
+html[data-rgx] .label-success {
+  background: var(--rgx-ok-bg);
+  color: var(--rgx-ok);
+}
+html[data-rgx] .label-warning {
+  background: var(--rgx-warn-bg);
+  color: var(--rgx-warn);
+}
+html[data-rgx] .label-danger,
+html[data-rgx] .label-important {
+  background: var(--rgx-crit-bg);
+  color: var(--rgx-crit);
+}
+html[data-rgx] .alert {
+  position: relative;
+  padding: 12px 14px 12px 40px;
+  border: 0;
+  border-left: 3px solid currentColor;
+  border-radius: var(--radius-md);
+}
+/* Icône d'état (maquette) : dessinée en CSS, couleur = celle de l'alerte */
+html[data-rgx] .alert::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 13px;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: var(--rgx-ic-info) center/contain no-repeat;
+  mask: var(--rgx-ic-info) center/contain no-repeat;
+}
+html[data-rgx] .alert-success::before {
+  -webkit-mask-image: var(--rgx-ic-circleCheck);
+  mask-image: var(--rgx-ic-circleCheck);
+}
+html[data-rgx] .alert-warning::before {
+  -webkit-mask-image: var(--rgx-ic-triangleAlert);
+  mask-image: var(--rgx-ic-triangleAlert);
+}
+html[data-rgx] .alert-danger::before {
+  -webkit-mask-image: var(--rgx-ic-circleAlert);
+  mask-image: var(--rgx-ic-circleAlert);
+}
+html[data-rgx] .alert-dismissable .close,
+html[data-rgx] .alert-dismissible .close {
+  right: 0;
+}
+html[data-rgx] .alert-info {
+  background: var(--rgx-info-bg);
+  color: var(--rgx-info);
+}
+html[data-rgx] .alert-success {
+  background: var(--rgx-ok-bg);
+  color: var(--rgx-ok);
+}
+html[data-rgx] .alert-warning {
+  background: var(--rgx-warn-bg);
+  color: var(--rgx-warn);
+}
+html[data-rgx] .alert-danger {
+  background: var(--rgx-crit-bg);
+  color: var(--rgx-crit);
+}
+html[data-rgx] .block-info {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+}
+
+/* ===================================================================
+   8. Formulaires
+   =================================================================== */
+html[data-rgx] .form-control,
+html[data-rgx] select,
+html[data-rgx] input[type="text"],
+html[data-rgx] input[type="search"],
+html[data-rgx] input[type="password"],
+html[data-rgx] input[type="number"],
+html[data-rgx] input[type="email"],
+html[data-rgx] textarea {
+  font-family: var(--font-sans);
+  background-color: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+  box-shadow: none;
+}
+html[data-rgx] .form-control:focus,
+html[data-rgx] input:focus,
+html[data-rgx] select:focus,
+html[data-rgx] textarea:focus {
+  border-color: var(--rgx-brand);
+  box-shadow: 0 0 0 3px var(--rgx-brand-soft);
+  outline: 0;
+}
+html[data-rgx] .form-control::placeholder {
+  color: var(--rgx-muted);
+}
+html[data-rgx] .form-control[disabled],
+html[data-rgx] .form-control[readonly] {
+  background-color: var(--rgx-surface-2);
+}
+html[data-rgx] label {
+  font-weight: 500;
+  color: var(--rgx-ink);
+}
+html[data-rgx] .input-group-addon {
+  background: var(--rgx-surface-2);
+  border-color: var(--rgx-border);
+  color: var(--rgx-muted);
+}
+
+/* ===================================================================
+   9. Tableaux (Bootstrap 3 : .table, .table-striped, .table-hover)
+   =================================================================== */
+html[data-rgx] table {
+  color: var(--rgx-ink);
+}
+html[data-rgx] .table > thead > tr > th,
+html[data-rgx] .table > tbody > tr > th,
+html[data-rgx] .table > tbody > tr > td,
+html[data-rgx] .table > tfoot > tr > td {
+  border-top: 1px solid var(--rgx-border);
+}
+html[data-rgx] .table > thead > tr > th {
+  border-bottom: 1px solid var(--rgx-border);
+}
+/* branding-v3.css : table th { bold, couleur marque !important } */
+html[data-rgx] table th {
+  color: var(--rgx-ink) !important;
+  font-weight: 600 !important;
+}
+html[data-rgx] .table > thead > tr > th {
+  color: var(--rgx-muted) !important;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--rgx-bg);
+}
+html[data-rgx] .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: transparent;
+}
+html[data-rgx] .table-hover > tbody > tr:hover,
+html[data-rgx] .table-striped > tbody > tr:nth-of-type(odd):hover {
+  background-color: var(--rgx-row-hover);
+}
+html[data-rgx] #content table a:not(.btn) {
+  font-weight: 500;
+}
+
+/* ===================================================================
+   10. Panneaux, modales, onglets, menus déroulants, pagination
+   =================================================================== */
+html[data-rgx] .panel,
+html[data-rgx] .well,
+html[data-rgx] .ticket-block {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] .panel-heading,
+html[data-rgx] .panel-heading-list {
+  background: var(--rgx-surface-2);
+  border-bottom: 1px solid var(--rgx-border);
+  color: var(--rgx-ink);
+}
+html[data-rgx] .modal-content {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] .modal-header,
+html[data-rgx] .modal-footer {
+  border-color: var(--rgx-border);
+}
+html[data-rgx] .modal-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+html[data-rgx] .close {
+  color: var(--rgx-muted);
+  text-shadow: none;
+}
+html[data-rgx] .nav-tabs {
+  border-bottom: 1px solid var(--rgx-border);
+}
+html[data-rgx] .nav-tabs > li > a {
+  color: var(--rgx-muted);
+  font-weight: 500;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+}
+html[data-rgx] .nav-tabs > li > a:hover {
+  background: transparent;
+  color: var(--rgx-ink);
+}
+html[data-rgx] .nav-tabs > li.active > a,
+html[data-rgx] .nav-tabs > li.active > a:hover,
+html[data-rgx] .nav-tabs > li.active > a:focus {
+  background: transparent;
+  color: var(--rgx-brand);
+  border: 0;
+  border-bottom: 2px solid var(--rgx-brand);
+}
+html[data-rgx] .dropdown-menu {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] .dropdown-menu > li > a {
+  color: var(--rgx-ink);
+}
+html[data-rgx] .dropdown-menu > li > a:hover {
+  background: var(--rgx-row-hover);
+  color: var(--rgx-ink);
+}
+/* Pagination (maquette : carrés 32 px, écart 4 px, rayon 6 px).
+   Deux variantes dans RG : Bootstrap « .pagination » (Tickets) et liste « Page 1 - 4 sur 4 » (tableaux React).
+   Dans RG, « li.active » désigne un bouton ACTIF (cliquable), pas la page courante : on ne le met donc
+   en évidence qu'au survol. La page courante éventuelle est « .current-page-indicator » ou « li.rgx-current ». */
+html[data-rgx] .pagination {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 16px 0;
+  padding: 0;
+}
+html[data-rgx] .pagination > li {
+  display: inline-flex;
+}
+html[data-rgx] .pagination > li > a,
+html[data-rgx] .pagination > li > span {
+  float: none;
+  margin: 0;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  line-height: 1;
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+  color: var(--rgx-ink);
+  transition: background-color 0.12s, border-color 0.12s, color 0.12s;
+}
+html[data-rgx] .pagination > li:first-child > a,
+html[data-rgx] .pagination > li:first-child > span,
+html[data-rgx] .pagination > li:last-child > a,
+html[data-rgx] .pagination > li:last-child > span {
+  border-radius: var(--radius-md);
+}
+html[data-rgx] .pagination > li > a:hover,
+html[data-rgx] .pagination > li > a:focus {
+  background: var(--rgx-row-hover);
+  border-color: var(--rgx-brand);
+  color: var(--rgx-brand);
+}
+html[data-rgx] .pagination > li.disabled > a,
+html[data-rgx] .pagination > li.disabled > span,
+html[data-rgx] .pagination > li.disabled > a:hover {
+  background: var(--rgx-surface);
+  border-color: var(--rgx-border);
+  color: var(--rgx-muted);
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+/* Page courante : carré encre (maquette). Bootstrap « .active » sur un <span> = page courante */
+html[data-rgx] .pagination > li.rgx-current > a,
+html[data-rgx] .pagination > li.rgx-current > span,
+html[data-rgx] .pagination > li.active > span,
+html[data-rgx] .pagination > li.active > span:hover {
+  background: var(--rgx-ink);
+  border-color: var(--rgx-ink);
+  color: var(--rgx-surface);
+}
+/* branding-v3.css colore les « .active » : on neutralise pour les liens actifs (boutons cliquables) */
+html[data-rgx] #pagination .pagination > .active > a,
+html[data-rgx] #pagination .pagination > .active > a:focus {
+  background-color: var(--rgx-surface);
+  border-color: var(--rgx-border);
+  color: var(--rgx-ink);
+}
+html[data-rgx] #pagination .pagination > .active > a:hover {
+  background-color: var(--rgx-row-hover);
+  border-color: var(--rgx-brand);
+  color: var(--rgx-brand);
+}
+html[data-rgx] #pagination.text-center {
+  display: flex;
+  justify-content: center;
+}
+/* Indicateur « Page 1 - 4 sur 4 » + choix du nombre de lignes */
+html[data-rgx] .pagination > li.current-page-indicator {
+  position: relative;
+}
+html[data-rgx] .pagination > li.current-page-indicator > span,
+html[data-rgx] .pagination > li.current-page-indicator .dropdown-toggle {
+  background: var(--rgx-surface);
+  border-color: var(--rgx-border);
+  color: var(--rgx-ink);
+  cursor: pointer;
+}
+html[data-rgx] .pagination .pagination-size-selector {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+html[data-rgx] .pagination .pagination-size-selector > .dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  white-space: nowrap;
+}
+html[data-rgx] .tooltip-inner {
+  background: var(--rgx-ink);
+  color: var(--rgx-surface);
+  border-radius: var(--radius-md);
+}
+html[data-rgx] .popover {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow-pop);
+  color: var(--rgx-ink);
+}
+
+/* Classes utilitaires de statut / de texte de RG (couleurs d'origine peu contrastées) */
+html[data-rgx] .sum-title {
+  color: var(--rgx-ink);
+}
+html[data-rgx] .color-rg-success {
+  color: var(--rgx-ok);
+}
+html[data-rgx] .color-rg-warning {
+  color: var(--rgx-warn);
+}
+html[data-rgx] .color-rg-info,
+html[data-rgx] a.color-rg-info:focus,
+html[data-rgx] a.color-rg-info:hover,
+html[data-rgx] a.color-rg-info:visited {
+  color: var(--rgx-muted);
+}

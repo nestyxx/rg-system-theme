@@ -1,0 +1,114 @@
+/* ===================================================================
+   10 bis. Écrans React (Pedigree…) : grilles, onglets MUI, boutons « BaseButton »
+   Vérifié dans le navigateur : Vues/Serveurs (tableau Bootstrap) et Pedigree (clair).
+   Les grilles React n'ont pas de classe stable (Table__Layout-sc-xxxx) : on cible
+   la balise <table> sans .table sous #root.
+   =================================================================== */
+html[data-rgx] #root table:not(.table) {
+  background: transparent;
+  border-collapse: collapse;
+}
+html[data-rgx] #root table:not(.table) th {
+  background: var(--rgx-bg);
+  color: var(--rgx-muted) !important;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 0;
+  border-bottom: 1px solid var(--rgx-border);
+}
+html[data-rgx] #root table:not(.table) td {
+  border: 0;
+  border-bottom: 1px solid var(--rgx-border);
+}
+html[data-rgx] #root table:not(.table) tbody tr:hover {
+  background: var(--rgx-row-hover);
+}
+html[data-rgx] .MuiTab-root {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  text-transform: none;
+  color: var(--rgx-muted);
+}
+html[data-rgx] .MuiTab-root.Mui-selected {
+  color: var(--rgx-brand);
+}
+html[data-rgx] .MuiTabs-indicator {
+  background-color: var(--rgx-brand);
+}
+/* Boutons styled-components : on cible le NOM du composant (stable), jamais le hash */
+html[data-rgx] [class*="BaseButton-sc"] {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] [class*="BaseButton-sc"]:not(.info):not(.primary):not(.success):not(.warning):not(.danger):not(.error) {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+}
+html[data-rgx] [class*="BaseButton-sc"]:not(.info):not(.primary):not(.success):not(.warning):not(.danger):not(.error):hover {
+  background: var(--rgx-surface-2);
+}
+html[data-rgx] [class*="BaseButton-sc"].info,
+html[data-rgx] [class*="BaseButton-sc"].primary {
+  background: var(--rgx-brand);
+  color: var(--rgx-brand-ink);
+  border: 1px solid transparent;
+}
+/* Variantes sémantiques : fond teinté + texte de la couleur (contraste correct en clair comme en sombre) */
+html[data-rgx] [class*="BaseButton-sc"].success,
+html[data-rgx] [class*="StatusChip__Layout-sc"].success {
+  background: var(--rgx-ok-bg);
+  color: var(--rgx-ok);
+  border: 1px solid color-mix(in srgb, var(--rgx-ok) 30%, transparent);
+}
+html[data-rgx] [class*="BaseButton-sc"].warning,
+html[data-rgx] [class*="StatusChip__Layout-sc"].warning {
+  background: var(--rgx-warn-bg);
+  color: var(--rgx-warn);
+  border: 1px solid color-mix(in srgb, var(--rgx-warn) 30%, transparent);
+}
+html[data-rgx] [class*="BaseButton-sc"].danger,
+html[data-rgx] [class*="BaseButton-sc"].error,
+html[data-rgx] [class*="StatusChip__Layout-sc"].danger,
+html[data-rgx] [class*="StatusChip__Layout-sc"].error {
+  background: var(--rgx-crit-bg);
+  color: var(--rgx-crit);
+  border: 1px solid color-mix(in srgb, var(--rgx-crit) 30%, transparent);
+}
+html[data-rgx] [class*="StatusChip__Layout-sc"].info {
+  background: var(--rgx-info-bg);
+  color: var(--rgx-info);
+  border: 1px solid color-mix(in srgb, var(--rgx-info) 30%, transparent);
+}
+html[data-rgx] [class*="StatusChip__Layout-sc"] {
+  border-radius: 999px;
+  font-weight: 500;
+}
+html[data-rgx] [class*="StatusChip__Layout-sc"] * {
+  color: inherit;
+}
+
+/* Écrans « vitrine » React (Rapports personnalisés…) : en-tête + cartes (media-card) sur fond clair codé en dur */
+html[data-rgx] #react_root div.body {
+  background: var(--rgx-bg);
+}
+html[data-rgx] #react_root div.header > [class*="Title-sc"] {
+  color: var(--rgx-ink);
+  font-family: var(--font-display);
+}
+html[data-rgx] #react_root div.body [class*="Content-sc"] > [class*="Layout-sc"] {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] #react_root div.body [class*="Content-sc"] > [class*="Layout-sc"] [class*="Title-sc"] {
+  color: var(--rgx-ink);
+  font-family: var(--font-display);
+}
+html[data-rgx] #react_root div.body [class*="Content-sc"] > [class*="Layout-sc"] [class*="Body-sc"] {
+  color: var(--rgx-muted);
+}

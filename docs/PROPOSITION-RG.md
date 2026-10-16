@@ -14,7 +14,8 @@ codés en dur, fonds blancs, gris `#ADADAD`).
 
 - une palette et une typographie uniques (Inter pour le texte, Space Grotesk pour les titres) ;
 - un **thème clair et un thème sombre**, tous deux basés sur des variables CSS (`--rgx-surface`, `--rgx-ink`…) ;
-- des rayons, bordures, ombres et survols cohérents (boutons, champs, tableaux, onglets, cartes, menus, modales) ;
+- des rayons, bordures, ombres et survols cohérents (boutons, champs, tableaux, onglets, cartes, menus, modales, pagination, alertes) ;
+- une **identité visuelle** : logo (pastille « RG » + nom + étiquette « suite »), en-tête de 56 px avec icônes de trait fin (style Lucide), pastilles de statut dans l'arborescence ;
 - la barre latérale, le header, l'arborescence, les grilles React, le calendrier d'automatisation, les écrans
   Pedigree / Jobs / Utilisateurs / Configuration / Vulnérabilités ;
 - aucun changement de structure, d'URL, de requête ou de donnée ; aucune dépendance chargée à l'exécution
@@ -30,7 +31,7 @@ codés en dur, fonds blancs, gris `#ADADAD`).
    `background-color` inline en JavaScript sur les `<li>` du menu (effet de survol) : un `:hover` CSS suffit et laisse le thème décider.
 4. **Réduire les `!important`** de `branding-v3.css` (`.btn-primary`, `.background-color-primary`, `.color-rg`, `.jstree-clicked`,
    `table th`) : ils obligent tout thème à les surcharger à armes égales.
-5. **Icônes en SVG `currentColor`** : les icônes d'agents (`img-sum-server`, `img-sum-workstation`…) sont des images de fond
+5. **Icônes en SVG `currentColor`** : les pictogrammes de l'en-tête (fusée, assistance, notes de version…) et du menu sont des tracés pleins aux couleurs figées ; le prototype les redessine en trait fin via des masques CSS. Les icônes d'agents (`img-sum-server`, `img-sum-workstation`…) sont des images de fond
    gris foncé, illisibles en sombre sans filtre ; des SVG héritant de `currentColor` les rendraient thémables.
 6. **Exposer des points d'accroche stables** (`data-testid`, noms de classes sémantiques) : les classes `Composant-sc-hash`
    changent à chaque build, ce qui fragilise toute personnalisation.
@@ -44,9 +45,10 @@ d'enregistrement de formulaire). Les captures ne sont pas jointes : elles contie
 
 ## Écrans couverts et limites
 
-Voir l'état par écran dans le `README.md`. La plupart des écrans (tickets, pedigree et fiche agent, utilisateurs, backup,
-configuration, réseau, vulnérabilités, actions en lecture) ont été contrôlés en clair et en sombre. Restent non vérifiés :
-quelques écrans secondaires (restaurations, pools, hyperviseur…) et les vraies fenêtres modales.
+Les 50 écrans capturés (Vues, Tickets, Pedigree et fiche agent, Données, Actions, Backup, Configuration, Gestion, Réseau, Cybersecurity,
+Téléchargements) ont été revus en clair et en sombre sur un banc de test hors ligne, avec un balayage automatique des contrastes
+(`npm test` contrôle en plus le contraste WCAG AA de toute la palette). Restent à valider sur la plateforme réelle : les fenêtres
+modales et quelques écrans non capturés (Assist, Messages, recherche globale).
 
 Point de conception à discuter : les courbes (dygraphs, `<canvas>`) utilisent des couleurs de séries pensées pour un fond
 blanc. Le prototype garde donc la carte du graphique claire en thème sombre. Un jeu de couleurs de séries par thème côté RG

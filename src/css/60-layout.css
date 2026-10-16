@@ -1,0 +1,403 @@
+/* ===================================================================
+   10 octies. Mise en page « maquette » : cartes, respiration, champ de recherche, fil d'Ariane
+   Rapproche l'interface de la maquette (maquette/direction.html) sans toucher aux dimensions
+   structurantes (menu, header, largeur de l'arbre) ni à la structure HTML de RG System.
+   =================================================================== */
+/* Zone de contenu : un peu d'air autour des écrans */
+html[data-rgx] #main {
+  padding: 16px 20px 28px;
+}
+/* Tableaux = cartes (bord, rayon, ombre). Le tableau « sum » (Vues), la liste de tickets
+   et les grilles React (composant Table__Layout) ; les graphiques et le calendrier sont exclus. */
+html[data-rgx] table.sum,
+html[data-rgx] table.ticket-table,
+html[data-rgx] table[class*="Table__Layout-sc"] {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] table.sum > tbody > tr > th,
+html[data-rgx] table.sum > tbody > tr > td {
+  background: transparent;
+}
+html[data-rgx] table.sum > tbody > tr > td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+html[data-rgx] table[class*="Table__Layout-sc"] td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+/* Coins arrondis des cellules d'angle (border-radius du tableau seul ne rogne pas les cellules) */
+html[data-rgx] table.sum > tbody > tr:first-child > th:first-child {
+  border-top-left-radius: 7px;
+}
+html[data-rgx] table.sum > tbody > tr:first-child > th:last-child {
+  border-top-right-radius: 7px;
+}
+html[data-rgx] table.sum > tbody > tr:last-child > td:first-child {
+  border-bottom-left-radius: 7px;
+}
+html[data-rgx] table.sum > tbody > tr:last-child > td:last-child {
+  border-bottom-right-radius: 7px;
+}
+/* « Trouver dans l'arborescence » : champ de recherche (la hauteur du bloc ne change pas) */
+html[data-rgx] #tree-search-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  background: var(--rgx-bg);
+}
+/* Fil d'Ariane : « / » à la place du « | » (le texte d'origine est masqué, le séparateur dessiné en CSS) */
+html[data-rgx] #header .pipe {
+  font-size: 0;
+}
+html[data-rgx] #header .pipe::after {
+  content: "/";
+  font-size: 14px;
+  color: var(--rgx-muted);
+}
+
+/* ===================================================================
+   11. Maquette : en-tête, arborescence, menu, tableaux, boutons
+   =================================================================== */
+/* --- En-tête : boutons d'icônes ronds au survol, comme la maquette --- */
+html[data-rgx] #header .icons {
+  align-items: center;
+  gap: 2px;
+}
+html[data-rgx] #header .icons > svg,
+html[data-rgx] #header .icons > a,
+html[data-rgx] #header .icons > .jimo-widget {
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s;
+}
+html[data-rgx] #header .icons > svg:hover,
+html[data-rgx] #header .icons > a:hover,
+html[data-rgx] #header .icons > .jimo-widget:hover {
+  background: var(--rgx-surface-2);
+}
+/* Bouton clair/sombre (ajouté par le script de l'extension, à droite des icônes) */
+#rgx-theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  margin: 0 2px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--rgx-muted);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+#rgx-theme-toggle:hover {
+  background: var(--rgx-surface-2);
+  color: var(--rgx-ink);
+}
+
+/* --- En-tête 56 px (maquette) : la barre de redimensionnement suit --- */
+html[data-rgx] #header .MuiToolbar-root {
+  min-height: 55px;
+  padding-left: 16px;
+  padding-right: 20px;
+}
+html[data-rgx] #dragbar {
+  top: 56px;
+}
+html[data-rgx] #header [data-testid="breadcrumbs"] {
+  font-size: 15px;
+}
+/* Icône d'arborescence (à gauche du fil d'Ariane) */
+html[data-rgx] #header svg[data-testid="tree-toggler"] {
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  padding: 7px;
+  margin-right: 8px;
+  border-radius: var(--radius-md);
+  background-color: currentColor;
+  -webkit-mask: var(--rgx-ic-listTree) center/18px 18px no-repeat;
+  mask: var(--rgx-ic-listTree) center/18px 18px no-repeat;
+}
+html[data-rgx] #header svg[data-testid="tree-toggler"] use {
+  visibility: hidden;
+}
+/* Icônes de l'en-tête : traits fins (Lucide) à la place des pictogrammes pleins d'origine */
+html[data-rgx] #header .icons > .jimo-widget {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rgx-muted);
+  cursor: pointer;
+}
+html[data-rgx] #header .icons > .jimo-widget:hover {
+  color: var(--rgx-brand);
+}
+html[data-rgx] #header .icons > .jimo-widget > svg.rocket {
+  display: none;
+}
+html[data-rgx] #header .icons > .jimo-widget::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background-color: currentColor;
+  -webkit-mask: var(--rgx-ic-rocket) center/contain no-repeat;
+  mask: var(--rgx-ic-rocket) center/contain no-repeat;
+}
+html[data-rgx] #header #btnAssistAgentlessTechnician {
+  background-color: currentColor;
+  -webkit-mask: var(--rgx-ic-headset) center/18px 18px no-repeat;
+  mask: var(--rgx-ic-headset) center/18px 18px no-repeat;
+  cursor: pointer;
+}
+html[data-rgx] #header #btnAssistAgentlessTechnician use {
+  visibility: hidden;
+}
+html[data-rgx] #header .icons > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+html[data-rgx] #header .icons > a > svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  background-color: currentColor;
+  -webkit-mask: var(--rgx-ic-fileText) center/contain no-repeat;
+  mask: var(--rgx-ic-fileText) center/contain no-repeat;
+}
+html[data-rgx] #header .icons > a > svg path {
+  display: none;
+}
+/* Pastille « Brain » : contour, étincelle de marque (maquette) */
+html[data-rgx] #header button.brain,
+html[data-rgx] #header button.brain * {
+  color: var(--rgx-ink);
+}
+html[data-rgx] #header button.brain {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  margin-right: 8px;
+  padding: 0 14px 0 10px;
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  box-shadow: var(--rgx-shadow);
+  font-size: 13px;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+html[data-rgx] #header button.brain:hover {
+  background: var(--rgx-row-hover);
+  border-color: var(--rgx-brand);
+}
+html[data-rgx] #header button.brain > img {
+  display: none;
+}
+html[data-rgx] #header button.brain::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  flex: none;
+  background-color: var(--rgx-brand);
+  -webkit-mask: var(--rgx-ic-sparkles) center/contain no-repeat;
+  mask: var(--rgx-ic-sparkles) center/contain no-repeat;
+}
+
+/* --- Logo (pastille « RG » + nom + étiquette « suite »), balisage ajouté par content.js.
+   Hauteur alignée sur l'en-tête (56 px). Sans ce balisage, le logo image d'origine reste affiché. --- */
+html[data-rgx] #block-dashboard #head-menu #brand-logo-menu:has(.rgx-logo) {
+  background: none;
+  height: 56px !important;
+}
+html[data-rgx] #head-menu .background-color-logo-menu {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+html[data-rgx] .rgx-logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 100%;
+  padding: 0 0 0 14px;
+  font: 600 15px/1 var(--font-display);
+  letter-spacing: -0.01em;
+  color: #fff;
+  white-space: nowrap;
+}
+html[data-rgx] .rgx-logo > b {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-md);
+  background: var(--rgx-brand);
+  color: var(--rgx-brand-ink);
+  font: 700 13px/1 var(--font-display);
+  letter-spacing: 0;
+}
+html[data-rgx] .rgx-logo > small {
+  padding: 1px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  font: 500 10px/1.2 var(--font-sans);
+  letter-spacing: 0.02em;
+  opacity: 0.65;
+}
+/* Bouton de réduction du menu : posé à droite de la ligne du logo (expansé), la navigation remonte comme dans la maquette */
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #head-menu {
+  position: relative;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #head-menu #block-menu {
+  position: absolute;
+  top: 0;
+  right: 4px;
+  height: 56px;
+  margin: 0;
+  width: auto;
+  display: flex;
+  align-items: center;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #head-menu #block-menu .margin-bottom-min {
+  margin: 0;
+}
+html[data-rgx] #menu-main-burger {
+  width: 26px;
+  height: 28px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+}
+/* Menu réduit : pastille seule */
+html[data-rgx] .left-menu-shrink #brand-logo-menu:has(.rgx-logo) {
+  height: 56px;
+}
+html[data-rgx] .left-menu-shrink .rgx-logo {
+  padding: 0;
+  justify-content: center;
+}
+html[data-rgx] .left-menu-shrink .rgx-logo > .rgx-logo-name,
+html[data-rgx] .left-menu-shrink .rgx-logo > small {
+  display: none;
+}
+
+/* Bouton « burger » (réduction du menu) : icône à taille lisible */
+html[data-rgx] #menu-main-burger .glyphicon {
+  width: 18px;
+  height: 18px;
+}
+
+/* --- Menu latéral : un peu d'air entre les entrées --- */
+html[data-rgx] #menu-details li.menu-lvl-0 > a {
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+/* --- Arborescence : pastilles de statut à la place des dossiers colorés ---
+   Le statut d'un nœud est porté par son attribut rel : N1 ok, N2 critique, N3 avertissement,
+   N4 info, N5 inactif. La corbeille (N6) et les agents (W…) gardent leur icône d'origine. */
+html[data-rgx] #tree li[rel="N1"] { --rgx-dot: var(--rgx-ok); }
+html[data-rgx] #tree li[rel="N2"] { --rgx-dot: var(--rgx-crit); }
+html[data-rgx] #tree li[rel="N3"] { --rgx-dot: #e08a1e; }
+html[data-rgx] #tree li[rel="N4"] { --rgx-dot: var(--rgx-info); }
+html[data-rgx] #tree li[rel="N5"] { --rgx-dot: var(--rgx-muted); }
+html[data-rgx] #tree li:is([rel="N1"], [rel="N2"], [rel="N3"], [rel="N4"], [rel="N5"]) > a > ins.jstree-icon {
+  background-image: none !important;
+  position: relative;
+}
+html[data-rgx] #tree li:is([rel="N1"], [rel="N2"], [rel="N3"], [rel="N4"], [rel="N5"]) > a > ins.jstree-icon::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--rgx-dot);
+}
+/* Sombre : les icônes noires du sprite (corbeille, postes de travail) sont éclaircies */
+html[data-rgx][data-rgx-theme="dark"] #tree li:is([rel="N6"], [rel="W"]) > a > ins.jstree-icon {
+  filter: invert(0.85);
+}
+/* Nœud sélectionné : pastille en blanc sur fond de marque */
+html[data-rgx] #tree a.jstree-clicked > ins.jstree-icon::before {
+  background: var(--rgx-brand-ink);
+}
+/* Lignes plus aérées (le pastille garde son encombrement de 16 px) */
+html[data-rgx] #tree a {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+html[data-rgx] #tree a.jstree-clicked,
+html[data-rgx] #tree a.jstree-clicked:hover {
+  height: auto !important;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+/* --- Tableaux : en-tête teinté, lignes plus hautes, survol doux --- */
+html[data-rgx] table.sum > tbody > tr > td,
+html[data-rgx] table.ticket-table td,
+html[data-rgx] table[class*="Table__Layout-sc"] td {
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+html[data-rgx] table.sum > tbody > tr > th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+html[data-rgx] table.ticket-table th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+html[data-rgx][data-rgx-density="compact"] table.sum > tbody > tr > td,
+html[data-rgx][data-rgx-density="compact"] table.ticket-table td,
+html[data-rgx][data-rgx-density="compact"] table[class*="Table__Layout-sc"] td {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+/* --- Boutons : un peu plus d'espace, icônes alignées --- */
+html[data-rgx] .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+html[data-rgx] .btn-group > .btn {
+  display: inline-flex;
+}
+/* Barres d'actions (Actualisation, Créer, Filtres, Export…) : boutons séparés comme dans la maquette.
+   Les groupes « segmentés » (data-toggle="buttons"), verticaux ou à menu déroulant restent soudés. */
+html[data-rgx] .btn-group:not([data-toggle="buttons"], .btn-group-vertical, :has(.dropdown-toggle)) {
+  display: inline-flex;
+  gap: 6px;
+}
+html[data-rgx] .btn-group:not([data-toggle="buttons"], .btn-group-vertical, :has(.dropdown-toggle)) > .btn {
+  margin-left: 0;
+  border-radius: var(--radius-md) !important;
+}
+html[data-rgx] .pull-right > .btn-group + .btn {
+  margin-left: 6px;
+}
+html[data-rgx] .btn-block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+html[data-rgx] .btn-sm {
+  padding: 5px 11px;
+}

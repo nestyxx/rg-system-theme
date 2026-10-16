@@ -11,7 +11,7 @@
   try { main(); } catch (e) { console.error('[RG thème Arobase] erreur au démarrage :', e); }
 
   function main() {
-    const SEL = { sidebar: '#block-menu-left', headerIcons: '#header .icons' };   // à ajuster si RG change sa structure
+    const SEL = { sidebar: '#block-menu-left', headerIcons: '#header .icons', logo: '#brand-logo-menu' };   // à ajuster si RG change sa structure
     const K = { enabled: 'rgx.enabled', theme: 'rgx.theme', density: 'rgx.density' };
     const get = (k, d) => { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } };
     const set = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* stockage indisponible */ } };
@@ -72,11 +72,18 @@
       host.insertBefore(b, host.lastElementChild);   // avant l'avatar du profil
       updateToggle();
     }
+    // Logo du thème (pastille « RG » + nom + étiquette « suite ») dans le bloc du logo d'origine.
+    // Tant que ce balisage est absent, le CSS laisse le logo image de RG System.
+    function ensureLogo() {
+      const host = document.querySelector(SEL.logo);
+      if (!host || host.querySelector('.rgx-logo')) return;
+      host.innerHTML = '<span class="rgx-logo" role="img" aria-label="RG system suite"><b>RG</b><span class="rgx-logo-name">RG system</span><small>suite</small></span>';
+    }
     let scheduled = false;
     const schedule = () => {
       if (scheduled) return;
       scheduled = true;
-      requestAnimationFrame(() => { scheduled = false; ensureToggle(); });
+      requestAnimationFrame(() => { scheduled = false; ensureToggle(); ensureLogo(); });
     };
     new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
     document.addEventListener('DOMContentLoaded', schedule);

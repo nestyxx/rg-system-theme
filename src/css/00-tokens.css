@@ -1,0 +1,68 @@
+/* ===================================================================
+   1. Variables (thème clair par défaut)
+   =================================================================== */
+html[data-rgx] {
+  --rgx-bg: #f6f6f4;
+  --rgx-surface: #ffffff;
+  --rgx-surface-2: #edece8;
+  --rgx-border: #e1dfda;
+  --rgx-ink: #16233f;
+  --rgx-muted: #666d7a;
+  --rgx-brand: #0b6e8f;
+  --rgx-brand-hover: #095a75;
+  --rgx-brand-soft: #c9eef8;
+  --rgx-brand-ink: #ffffff;
+  --rgx-side: #16233f;
+  --rgx-side-text: #c8d0e0;
+  --rgx-side-hover: rgba(255, 255, 255, 0.08);
+  --rgx-side-active: #0b6e8f;
+  --rgx-ok: #2a7453;
+  --rgx-ok-bg: #eaf5ef;
+  --rgx-warn: #a65606;
+  --rgx-warn-bg: #fdf3e1;
+  --rgx-crit: #c8153f;
+  --rgx-crit-bg: #fdecef;
+  --rgx-info: #0b6e8f;
+  --rgx-info-bg: #e4f4f9;
+  --rgx-row-hover: #f3f2ee;
+  --rgx-shadow: 0 1px 2px rgba(22, 35, 63, 0.06), 0 1px 1px rgba(22, 35, 63, 0.04);
+  --rgx-shadow-pop: 0 10px 30px rgba(22, 35, 63, 0.18);
+  color-scheme: light;
+
+  /* Palette d'origine de RG System (variables de :root) : les teintes utilisées comme COULEUR DE TEXTE ou d'accent
+     (gris moyens) sont ramenées sur la couleur de texte secondaire du thème. Les teintes également utilisées comme FOND
+     (vert, bleu lagon, orange…) restent intactes : elles sont traitées au cas par cas. */
+  --midgray-color: var(--rgx-muted);
+  --desc-color: var(--rgx-muted);
+  --gray-color: var(--rgx-muted);
+  --neutral-2-color: var(--rgx-muted);
+}
+
+html[data-rgx][data-rgx-theme="dark"] {
+  --rgx-bg: #0e1524;
+  --rgx-surface: #151e33;
+  --rgx-surface-2: #1c2742;
+  --rgx-border: #26324f;
+  --rgx-ink: #e8ecf5;
+  --rgx-muted: #8e9ab3;
+  --rgx-brand: #38b6d8;
+  --rgx-brand-hover: #5cc6e3;
+  --rgx-brand-soft: #123b4b;
+  --rgx-brand-ink: #06222c;
+  --rgx-side: #0a101d;
+  --rgx-side-text: #9fabc4;
+  --rgx-side-hover: rgba(255, 255, 255, 0.07);
+  --rgx-side-active: #0b6e8f;
+  --rgx-ok: #5bc79a;
+  --rgx-ok-bg: #12302a;
+  --rgx-warn: #f2a640;
+  --rgx-warn-bg: #3a2b12;
+  --rgx-crit: #fb7185;
+  --rgx-crit-bg: #3b1620;
+  --rgx-info: #38b6d8;
+  --rgx-info-bg: #0f2f3b;
+  --rgx-row-hover: #1a2540;
+  --rgx-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --rgx-shadow-pop: 0 10px 30px rgba(0, 0, 0, 0.55);
+  color-scheme: dark;
+}

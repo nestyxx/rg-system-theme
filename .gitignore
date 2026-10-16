@@ -3,3 +3,5 @@ dist/*
 !dist/extension
 .claude/
 src/icons.generated.css
+test/fixtures/
+test/forbidden.txt

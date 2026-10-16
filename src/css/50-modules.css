@@ -1,0 +1,473 @@
+/* ===================================================================
+   10 ter. Backup (Jobs), Utilisateurs, Configuration, thème sombre des composants React
+   Vérifié dans le navigateur en clair ET en sombre : Jobs, Utilisateurs (+ menu ⋮),
+   Configuration › Plugins, Pedigree, Vues › Synthèse.
+   Les composants styled-components codent des blancs en dur : on cible le NOM du
+   composant (partie avant « -sc- »), jamais le hash.
+   =================================================================== */
+html[data-rgx] .jobs {
+  background: transparent;
+}
+html[data-rgx] [class*="Expandable__Layout-sc"] {
+  background-color: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] [class*="ExpandableSummary__TitleBar-sc"],
+html[data-rgx] [class*="BackupStatus__Layout-sc"] {
+  background-color: transparent;
+  color: var(--rgx-ink);
+}
+html[data-rgx] [class*="Stats__Title-sc"] {
+  color: var(--rgx-muted);
+  font-family: var(--font-sans);
+}
+html[data-rgx] [class*="Stats__Value-sc"] {
+  font-family: var(--font-display);
+}
+/* Icônes React : gris codé en dur -> gris du thème (la fusée du header garde sa couleur) */
+html[data-rgx] [class*="StyledIconBase-sc"]:not(.rocket) {
+  color: var(--rgx-muted);
+}
+html[data-rgx] #root svg.icon-color-grey {
+  fill: var(--rgx-muted) !important;
+}
+html[data-rgx] svg.icon-color-black {
+  fill: var(--rgx-ink) !important;
+}
+/* Commutateur « Par politique / Par chronologie » */
+html[data-rgx] [class*="ViewSwitch__Layout-sc"] {
+  background: var(--rgx-surface);
+  border-color: var(--rgx-border);
+  border-radius: var(--radius-md);
+  padding: 2px;
+}
+html[data-rgx] [class*="ViewSwitch__Layout-sc"] [class*="Item__Layout-sc"] {
+  color: var(--rgx-muted);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+html[data-rgx] [class*="ViewSwitch__Layout-sc"] [class*="Item__Layout-sc"].selected {
+  background: var(--rgx-ink);
+  color: var(--rgx-surface);
+}
+/* Champs et menus MUI (sélecteur de période, menus déroulants) */
+html[data-rgx] .MuiInputBase-root,
+html[data-rgx] .MuiSelect-root,
+html[data-rgx] .MuiInputBase-input {
+  font-family: var(--font-sans);
+  color: var(--rgx-ink);
+  background-color: transparent;
+}
+html[data-rgx] .MuiInput-underline:before {
+  border-bottom-color: var(--rgx-border);
+}
+html[data-rgx] .MuiSelect-icon {
+  color: var(--rgx-muted);
+}
+html[data-rgx] .MuiPaper-root:not(.MuiAppBar-root) {
+  background-color: var(--rgx-surface);
+  color: var(--rgx-ink);
+}
+html[data-rgx] .MuiMenuItem-root {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--rgx-ink);
+}
+html[data-rgx] .MuiMenuItem-root:hover,
+html[data-rgx] .MuiMenuItem-root.Mui-selected {
+  background-color: var(--rgx-row-hover);
+}
+/* En-têtes de grille React */
+html[data-rgx] #root table:not(.table) th .title {
+  color: inherit;
+}
+/* Configuration › Plugins */
+html[data-rgx] .config-plugin-title {
+  color: var(--rgx-ink);
+}
+/* Icônes d'agents en fond d'image (gris foncé) : éclaircies en sombre uniquement.
+   Les icônes de nœud (img-sum-node-type-*) portent le STATUT par leur couleur : on n'y touche pas. */
+html[data-rgx][data-rgx-theme="dark"] .img-sum-server,
+html[data-rgx][data-rgx-theme="dark"] .img-sum-workstation,
+html[data-rgx][data-rgx-theme="dark"] .img-sum-device {
+  filter: invert(0.85);
+}
+
+/* ===================================================================
+   10 quater. Formulaires et écrans de configuration
+   Vérifié en clair et en sombre : panneaux Filtres / Créer un ticket (Tickets),
+   Configuration › Alertes, Communication, Automatisation (calendrier FullCalendar 3).
+   Les fenêtres modales Bootstrap (.modal-*) n'ont pas pu être ouvertes sans risque sur
+   des données réelles : elles ont été vérifiées sur un gabarit factice injecté en local.
+   =================================================================== */
+html[data-rgx] input[type="checkbox"],
+html[data-rgx] input[type="radio"] {
+  accent-color: var(--rgx-brand);
+}
+/* Focus clavier : l'anneau orange/bleu système de Bootstrap devient l'anneau de marque */
+html[data-rgx] .btn:focus,
+html[data-rgx] .btn.focus,
+html[data-rgx] .btn:active:focus,
+html[data-rgx] .btn.active:focus {
+  outline: 2px solid var(--rgx-brand);
+  outline-offset: 1px;
+}
+/* Sombre : bordures de champs un peu plus marquées que celles des cartes */
+html[data-rgx][data-rgx-theme="dark"] .form-control,
+html[data-rgx][data-rgx-theme="dark"] select,
+html[data-rgx][data-rgx-theme="dark"] input[type="text"],
+html[data-rgx][data-rgx-theme="dark"] textarea {
+  border-color: #34426a;
+}
+/* Configuration › Alertes : blocs d'usage à fond crème codé en dur */
+html[data-rgx] .alert-usage-container {
+  background-color: var(--rgx-surface-2);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+}
+/* Automatisation : calendrier FullCalendar 3 (thème bootstrap3) */
+html[data-rgx] .fc {
+  color: var(--rgx-ink);
+  font-family: var(--font-sans);
+}
+html[data-rgx] .fc .fc-nonbusiness {
+  background: var(--rgx-surface-2);
+}
+html[data-rgx] .fc-bootstrap3 .fc-today {
+  background-color: var(--rgx-brand-soft);
+  border-left: 0;
+}
+html[data-rgx] .fc-bootstrap3 td,
+html[data-rgx] .fc-bootstrap3 th,
+html[data-rgx] .fc-bootstrap3 .fc-divider {
+  border-color: var(--rgx-border);
+}
+html[data-rgx] .fc-bootstrap3 .fc-divider,
+html[data-rgx] .fc-bootstrap3 .fc-widget-content {
+  background: transparent;
+}
+html[data-rgx] .fc-toolbar h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--rgx-ink);
+}
+html[data-rgx] .fc-day-header {
+  color: var(--rgx-muted);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+html[data-rgx] .fc-axis {
+  color: var(--rgx-muted);
+}
+html[data-rgx] .fc-event {
+  border-radius: var(--radius-sm);
+}
+
+/* ===================================================================
+   10 quinquies. Cybersecurity › Vulnérabilités, en-tête d'identité des nœuds
+   Vérifié en sombre (page chargée avec données réelles).
+   =================================================================== */
+html[data-rgx] [class*="Identity__Layout-sc"] {
+  color: var(--rgx-ink);
+}
+html[data-rgx] [class*="LeftPanel__Card-sc"],
+html[data-rgx] [class*="Overview__CardPadded-sc"] {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] [class*="LeftPanel__StatHeader-sc"],
+html[data-rgx] [class*="Overview__CardTitle-sc"],
+html[data-rgx] [class*="ScoreDistribution__LegendText-sc"] {
+  color: var(--rgx-ink);
+}
+html[data-rgx] [class*="LeftPanel__"],
+html[data-rgx] [class*="Overview__"],
+html[data-rgx] [class*="ScoreDistribution__"] {
+  border-color: var(--rgx-border);
+}
+
+/* ===================================================================
+   10 sexies. Passe de cohérence (bordures, survols, icônes, composants rares)
+   Relevé par audit des styles calculés : tout ce qui gardait un gris/blanc
+   « historique » (#ADADAD, #C0C0C0, #FFF) ou les bleus de marque d'origine (#434C72).
+   =================================================================== */
+/* Page courante du menu : RG ajoute un liseré blanc de 2px, redondant avec la pastille */
+html[data-rgx] #menu-details li.menu-lvl-0.current {
+  border-left-color: transparent !important;
+}
+/* Avatar du profil */
+html[data-rgx] img.react-gravatar {
+  border-color: var(--rgx-border);
+  border-radius: 50%;
+}
+/* Menu contextuel de l'arborescence (clic droit, jsTree/vakata) : style seulement */
+html[data-rgx] .vakata-context,
+html[data-rgx] #vakata-contextmenu {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow-pop);
+  padding: 4px;
+  font-family: var(--font-sans);
+}
+html[data-rgx] .vakata-context li > a {
+  color: var(--rgx-ink);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+}
+html[data-rgx] .vakata-context li > a:hover,
+html[data-rgx] .vakata-context li > a.vakata-hover,
+html[data-rgx] .vakata-context .vakata-context-hover > a {
+  background: var(--rgx-row-hover);
+  color: var(--rgx-ink);
+  box-shadow: none;
+}
+html[data-rgx] .vakata-context li.vakata-separator {
+  background: var(--rgx-border);
+  border: 0;
+  margin: 4px 0;
+}
+/* Barre de chargement et points d'attente : branding-v3.css les peint en #434C72 */
+html[data-rgx] .pace .pace-progress {
+  background: var(--rgx-brand) !important;
+}
+html[data-rgx] .url-loading-animation div {
+  background-color: var(--rgx-brand);
+}
+html[data-rgx] .list-group-item {
+  background: var(--rgx-surface);
+  border-color: var(--rgx-border);
+  color: var(--rgx-ink);
+}
+html[data-rgx] .list-group-item.active,
+html[data-rgx] .list-group-item.active:hover,
+html[data-rgx] .list-group-item.active:focus {
+  background-color: var(--rgx-brand);
+  border-color: var(--rgx-brand);
+  color: var(--rgx-brand-ink);
+}
+html[data-rgx] .progress {
+  background: var(--rgx-surface-2);
+  box-shadow: none;
+  border-radius: 999px;
+}
+html[data-rgx] .progress-bar {
+  background-color: var(--rgx-brand);
+  box-shadow: none;
+}
+/* Sélecteur de date (bootstrap-datepicker) des filtres */
+html[data-rgx] .datepicker {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] .datepicker table tr td,
+html[data-rgx] .datepicker table tr th {
+  border-radius: var(--radius-sm);
+  color: var(--rgx-ink);
+}
+html[data-rgx] .datepicker table tr td.day:hover,
+html[data-rgx] .datepicker table tr td span:hover,
+html[data-rgx] .datepicker table tr th.prev:hover,
+html[data-rgx] .datepicker table tr th.next:hover,
+html[data-rgx] .datepicker table tr th.datepicker-switch:hover {
+  background: var(--rgx-row-hover);
+}
+html[data-rgx] .datepicker table tr td.active,
+html[data-rgx] .datepicker table tr td.active:hover,
+html[data-rgx] .datepicker table tr td span.active {
+  background: var(--rgx-brand);
+  color: var(--rgx-brand-ink);
+  text-shadow: none;
+}
+html[data-rgx] .datepicker table tr td.old,
+html[data-rgx] .datepicker table tr td.new,
+html[data-rgx] .datepicker table tr td.disabled {
+  color: var(--rgx-muted);
+}
+/* Survols : même transition douce partout */
+html[data-rgx] tbody tr {
+  transition: background-color 0.12s;
+}
+/* Densité compacte (bouton ou Alt+Maj+D) : lignes de tableaux plus serrées */
+html[data-rgx][data-rgx-density="compact"] .table > tbody > tr > td,
+html[data-rgx][data-rgx-density="compact"] .table > thead > tr > th {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+html[data-rgx][data-rgx-density="compact"] #root table:not(.table) td,
+html[data-rgx][data-rgx-density="compact"] #root table:not(.table) th {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* ===================================================================
+   10 septies. Liste des tickets, fiche agent (Pedigree), courbes (Données)
+   Vérifié en sombre sur de vraies données : Tickets (filtre « Tous »), fiche d'un
+   poste de travail, Données › Disque (graphiques dygraphs).
+   =================================================================== */
+/* Tickets : lignes paires à fond gris codé en dur (--neutral-6-color) */
+html[data-rgx] tr.ticket-table-even {
+  background-color: color-mix(in srgb, var(--rgx-ink) 3%, transparent);
+}
+html[data-rgx] tr.ticket:hover {
+  background-color: var(--rgx-row-hover);
+}
+/* Fiche agent : cartes et lignes zébrées à fonds blancs/gris en dur.
+   Les règles d'origine utilisent des #id (#block-info-pedigree…), d'où !important. */
+html[data-rgx] .block-container {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] .row.line-height {
+  background-color: transparent;
+}
+html[data-rgx] .row.line-height-min {
+  background-color: color-mix(in srgb, var(--rgx-ink) 3%, transparent) !important;
+}
+html[data-rgx] #block-info-pedigree div.row {
+  background-color: transparent;
+}
+html[data-rgx] #block-info-pedigree div.row:nth-child(2n) {
+  background-color: color-mix(in srgb, var(--rgx-ink) 3%, transparent);
+}
+html[data-rgx] .panel-default > .panel-heading {
+  background: var(--rgx-surface-2);
+  color: var(--rgx-ink);
+  border-color: var(--rgx-border);
+}
+html[data-rgx] .panel-group .panel-heading {
+  background-color: var(--rgx-surface-2) !important;
+  color: var(--rgx-ink);
+}
+/* Courbes (dygraphs, dessinées en canvas) : les séries sont choisies pour un fond clair.
+   On garde donc des cartes claires, même en thème sombre, avec texte foncé forcé. */
+html[data-rgx] .chart-container {
+  background: #fff;
+  color: #16233f;
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] .chart-container table th {
+  color: #5b6475 !important;
+  background: transparent !important;
+  text-transform: none;
+  letter-spacing: 0;
+}
+html[data-rgx] .chart-container table td {
+  color: #16233f;
+}
+html[data-rgx] .chart-container small,
+html[data-rgx] .chart-container .text-muted {
+  color: #6b7280;
+}
+html[data-rgx] .chart-container a {
+  color: #0b6e8f;
+}
+html[data-rgx] .chart-container .color-rg {
+  color: #16233f !important;
+}
+html[data-rgx] .chart-plugin-title {
+  background: var(--rgx-surface-2) !important;
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+}
+html[data-rgx] .chart-plugin-title * {
+  color: inherit;
+}
+
+/* Listes zébrées (Actions › Services, etc.) : fond gris codé en dur sur les lignes paires */
+html[data-rgx] .list-striped,
+html[data-rgx] .list-striped-even {
+  background-color: color-mix(in srgb, var(--rgx-ink) 3%, transparent);
+}
+html[data-rgx] .list-striped-odd {
+  background-color: transparent;
+}
+
+/* Windows Update : cartes de statistiques, colonnes figées, étiquettes, bandeau d'état.
+   Le bandeau reçoit son fond en INLINE (var(--blue-lagoon-color)) : d'où !important. */
+html[data-rgx] [class*="Stats__Layout-sc"] {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] .itemStats {
+  background: transparent;
+}
+html[data-rgx] td.sticky,
+html[data-rgx] th.sticky {
+  background-color: var(--rgx-surface);
+}
+html[data-rgx] [class*="Tag__Layout-sc"] {
+  background: var(--rgx-surface-2);
+  color: var(--rgx-muted);
+  border-radius: var(--radius-sm);
+}
+html[data-rgx] [class*="StatusBanner__Layout-sc"] {
+  background-color: var(--rgx-info-bg) !important;
+  color: var(--rgx-info);
+  border-left: 3px solid var(--rgx-info);
+  border-radius: var(--radius-md);
+}
+html[data-rgx] [class*="StatusBanner__Layout-sc"] * {
+  color: inherit;
+}
+
+/* Gestion › IA : composant « Card » générique (fond blanc en dur) */
+html[data-rgx] [class*="Card__Layout-sc"] {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] [class*="Card__Layout-sc"] strong {
+  color: inherit;
+}
+html[data-rgx] [class*="Amount__Layout-sc"],
+html[data-rgx] [class*="Amount__Layout-sc"] * {
+  color: var(--rgx-ink);
+}
+
+/* Windows Update : valeurs chiffrées et lien « Effacer les filtres » (couleurs d'origine trop pâles) */
+html[data-rgx] [class*="Stat__Value-sc"] {
+  color: var(--rgx-muted);
+}
+html[data-rgx] [class*="Stat__Value-sc"].available {
+  color: var(--rgx-ok);
+}
+html[data-rgx] [class*="Stat__Value-sc"].deploying {
+  color: var(--rgx-info);
+}
+html[data-rgx] [class*="Stat__Value-sc"].needReboot {
+  color: var(--rgx-warn);
+}
+html[data-rgx] [class*="Stat__Value-sc"].failed {
+  color: var(--rgx-crit);
+}
+html[data-rgx] [class*="ClearFilters__Button-sc"],
+html[data-rgx] [class*="Top5Table__AgentCount-sc"] {
+  color: var(--rgx-brand);
+}
+/* Synthèse : boutons de comptage des tickets (fonds vifs d'origine) — texte foncé en sombre sur les fonds clairs (vert, orange, jaune) */
+html[data-rgx][data-rgx-theme="dark"] :is(.btn-sum-ok, .btn-sum-medium, .btn-sum-low) {
+  color: #0e1524;
+}
