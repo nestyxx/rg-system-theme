@@ -68,7 +68,35 @@
   // ---------------------------------------------------------------------------
   const CSS_FONTS = /*__CSS_FONTS__*/'';
   const CSS_THEME = /*__CSS_THEME__*/'';
-  GM_addStyle(CSS_FONTS + CSS_THEME);
+  injectCss(CSS_FONTS + CSS_THEME);
+
+  // Injection du CSS : GM_addStyle d'abord ; si l'API est absente, lève une erreur ou ne rattache
+  // rien au document (selon le gestionnaire de scripts), on crée nous-mêmes une balise <style>.
+  // La CSP de RG System ne contraint que script-src : une balise <style> est autorisée.
+  function injectCss(css) {
+    let el = null, via = 'GM_addStyle';
+    try { el = (typeof GM_addStyle === 'function') ? GM_addStyle(css) : null; } catch (e) { console.warn('[RG thème Arobase] GM_addStyle a échoué :', e); }
+    if (!(el && el.nodeType === 1 && el.isConnected)) {
+      via = 'balise <style> directe';
+      el = document.createElement('style');
+      el.id = 'rgx-style';
+      el.textContent = css;
+      (document.head || document.documentElement).appendChild(el);
+    }
+    console.info('[RG thème Arobase] CSS injecté via', via, '(' + Math.round(css.length / 1024) + ' Ko)');
+    // Si la page retire la balise (reconstruction de <head>), on la remet.
+    new MutationObserver(() => {
+      if (!el.isConnected) { (document.head || document.documentElement).appendChild(el); }
+    }).observe(document, { childList: true, subtree: true });
+    // Contrôle : le thème est-il réellement visible une fois la page construite ?
+    window.addEventListener('load', () => {
+      const side = document.querySelector(SEL.sidebar);
+      if (side) {
+        const bg = getComputedStyle(side).backgroundColor;
+        console.info('[RG thème Arobase] contrôle visuel : fond de la barre latérale =', bg, bg === 'rgb(22, 35, 63)' || bg === 'rgb(10, 16, 29)' ? '(thème actif)' : '(THÈME NON APPLIQUÉ : écrasé par la page ?)');
+      }
+    });
+  }
 
   // ---------------------------------------------------------------------------
   // 4. Application du thème clair / sombre (immédiat, avant le premier rendu)

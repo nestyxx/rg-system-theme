@@ -6,13 +6,13 @@
 <style>body{margin:0;font:14px Helvetica,Arial,sans-serif;color:#333}</style>
 <script>
 // Banc de test : exécute le VRAI dist/rg-system-theme.user.js avec des substituts des API Tampermonkey.
-// Ouvrir : http://localhost:4173/harness.html  (après `npm run serve`). Paramètre ?disabled=1 pour tester l'interrupteur.
+// Ouvrir : http://localhost:4173/harness.html  (après `npm run serve`). Paramètres : ?disabled=1 (interrupteur), ?nogm=1 (sans GM_addStyle : teste le repli).
 window.__store = { 'rgx.enabled': !/disabled=1/.test(location.search) };
 window.__menu = [];
 window.GM_getValue = (k, d) => (k in window.__store ? window.__store[k] : d);
 window.GM_setValue = (k, v) => { window.__store[k] = v; };
 window.GM_registerMenuCommand = (label, fn) => { window.__menu.push({ label, fn }); };
-window.GM_addStyle = (css) => { const s = document.createElement('style'); s.id = 'gm-style'; s.textContent = css; (document.head || document.documentElement).appendChild(s); };
+if (!/nogm=1/.test(location.search)) window.GM_addStyle = (css) => { const s = document.createElement('style'); s.id = 'gm-style'; s.textContent = css; (document.head || document.documentElement).appendChild(s); };
 </script>
 <script src="rg-system-theme.user.js"></script>
 </head>
