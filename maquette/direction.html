@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RG System – direction visuelle Arobase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400,0,0&display=swap" rel="stylesheet">
+<style>
+/* ---------- Tokens (reprennent ceux de Webgest) ---------- */
+:root{
+  --font-sans:"Inter",system-ui,sans-serif; --font-display:"Space Grotesk","Inter",sans-serif; --font-mono:"JetBrains Mono",ui-monospace,monospace;
+  --bg:#f6f6f4; --surface:#ffffff; --surface-2:#edece8; --border:#e1dfda;
+  --ink:#16233f; --muted:#6b7280; --brand:#0b6e8f; --brand-soft:#c9eef8; --brand-ink:#ffffff;
+  --side:#16233f; --side-text:#c8d0e0; --side-active:#0b6e8f; --side-hover:rgba(255,255,255,.07);
+  --ok:#2e7d5b; --ok-bg:#eaf5ef; --warn:#d97706; --warn-bg:#fdf3e1; --crit:#e11d48; --crit-bg:#fdecef; --info:#0b6e8f; --info-bg:#e4f4f9;
+  --row-hover:#f3f2ee; --shadow:0 1px 2px rgba(22,35,63,.06),0 1px 1px rgba(22,35,63,.04);
+  --r-sm:4px; --r-md:6px; --r-lg:8px;
+}
+[data-theme=dark]{
+  --bg:#0e1524; --surface:#151e33; --surface-2:#1c2742; --border:#26324f;
+  --ink:#e8ecf5; --muted:#8e9ab3; --brand:#38b6d8; --brand-soft:#123b4b; --brand-ink:#06222c;
+  --side:#0a101d; --side-text:#9fabc4; --side-active:#0b6e8f; --side-hover:rgba(255,255,255,.06);
+  --ok:#5bc79a; --ok-bg:#12302a; --warn:#f2a640; --warn-bg:#3a2b12; --crit:#fb7185; --crit-bg:#3b1620; --info:#38b6d8; --info-bg:#0f2f3b;
+  --row-hover:#1a2540; --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box} html,body{margin:0;height:100%}
+body{font:14px/1.45 var(--font-sans);background:var(--bg);color:var(--ink)}
+.mi{font-family:"Material Symbols Outlined";font-weight:400;font-size:20px;line-height:1;vertical-align:middle;font-feature-settings:"liga"}
+.app{display:grid;grid-template-columns:232px 268px 1fr;grid-template-rows:56px 1fr;height:100vh}
+/* Barre latérale */
+.side{grid-row:1/3;background:var(--side);color:var(--side-text);padding:12px 10px;overflow:auto}
+.logo{font:600 17px var(--font-display);color:#fff;padding:8px 10px 16px;display:flex;align-items:center;gap:8px}
+.logo b{background:var(--brand);border-radius:var(--r-md);width:26px;height:26px;display:grid;place-items:center;font-size:13px}
+.logo small{font:500 10px var(--font-sans);opacity:.6;border:1px solid rgba(255,255,255,.25);border-radius:99px;padding:1px 6px}
+.nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r-md);color:inherit;text-decoration:none;font-weight:500;margin-bottom:2px}
+.nav a:hover{background:var(--side-hover);color:#fff}
+.nav a.on{background:var(--side-active);color:#fff}
+.nav .mi{font-size:19px;opacity:.9} .nav .chev{margin-left:auto;font-size:16px;opacity:.5}
+.nav .new{font-size:10px;background:var(--brand-soft);color:var(--brand);padding:0 6px;border-radius:99px;margin-left:4px}
+/* Barre du haut */
+.top{grid-column:2/4;display:flex;align-items:center;gap:12px;padding:0 20px;background:var(--surface);border-bottom:1px solid var(--border)}
+.crumb{font:600 15px var(--font-display);display:flex;gap:8px;align-items:center}
+.crumb span{color:var(--muted);font-weight:500}
+.top .sp{flex:1}
+.icon-btn{width:32px;height:32px;border-radius:var(--r-md);display:grid;place-items:center;color:var(--muted);border:0;background:none;cursor:pointer}
+.icon-btn:hover{background:var(--surface-2);color:var(--ink)}
+.brain{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--surface);color:var(--ink);padding:5px 12px;border-radius:99px;font-weight:500;cursor:pointer}
+.brain .mi{color:var(--brand);font-size:18px}
+/* Arborescence */
+.tree{background:var(--surface);border-right:1px solid var(--border);padding:12px;overflow:auto}
+.search{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:var(--r-md);padding:7px 10px;color:var(--muted);margin-bottom:10px;background:var(--bg)}
+.tree ul{list-style:none;margin:0;padding-left:14px} .tree>ul{padding:0}
+.tree li>div{display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:var(--r-sm);cursor:pointer;font-size:13px}
+.tree li>div:hover{background:var(--row-hover)}
+.tree li>div.sel{background:var(--brand);color:var(--brand-ink);font-weight:500}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.tree .mi{font-size:17px;color:var(--muted)} .tree .sel .mi{color:inherit}
+/* Contenu */
+.main{padding:20px 24px;overflow:auto}
+.toolbar{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface);color:var(--ink);font:500 13px var(--font-sans);cursor:pointer;box-shadow:var(--shadow)}
+.btn:hover{background:var(--surface-2)} .btn .mi{font-size:17px}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)} .btn.primary:hover{filter:brightness(1.1)}
+.btn.danger{background:var(--crit-bg);border-color:transparent;color:var(--crit)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:500;background:var(--surface-2);color:var(--muted)}
+.chip.ok{background:var(--ok-bg);color:var(--ok)} .chip.warn{background:var(--warn-bg);color:var(--warn)} .chip.crit{background:var(--crit-bg);color:var(--crit)} .chip.info{background:var(--info-bg);color:var(--info)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.card h3{margin:0;padding:14px 16px;font:600 14px var(--font-display);border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font:600 11px var(--font-sans);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--border)}
+td{padding:10px 16px;border-bottom:1px solid var(--border)} tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--row-hover)}
+td.host{font-family:var(--font-mono);font-size:12.5px;color:var(--brand);font-weight:500}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin:18px 0 14px}
+.tabs a{padding:8px 14px;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs a.on{color:var(--brand);border-color:var(--brand)}
+.alert{display:flex;gap:10px;padding:12px 14px;border-radius:var(--r-md);background:var(--info-bg);color:var(--info);margin-bottom:14px;border-left:3px solid var(--info)}
+.pager{display:flex;gap:4px;margin-top:14px}.pager span{min-width:32px;height:32px;display:grid;place-items:center;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface);color:var(--muted)}.pager .on{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.field{display:flex;flex-direction:column;gap:4px;font-weight:500;font-size:12px;color:var(--muted)}
+.field input,.field select{padding:7px 10px;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);color:var(--ink);font:14px var(--font-sans)}
+.field input:focus{outline:2px solid var(--brand-soft);border-color:var(--brand)}
+.legend{position:fixed;right:16px;bottom:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:10px 12px;box-shadow:0 6px 24px rgba(0,0,0,.15);font-size:12px;display:flex;gap:10px;align-items:center}
+.swatch{width:18px;height:18px;border-radius:4px;border:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><b>RG</b> RG system <small>suite</small></div>
+    <nav class="nav">
+      <a><span class="mi">search</span>Rechercher</a>
+      <a><span class="mi">grid_view</span>Vues<span class="mi chev">chevron_right</span></a>
+      <a class="on"><span class="mi">confirmation_number</span>Tickets</a>
+      <a><span class="mi">badge</span>Pedigree</a>
+      <a><span class="mi">monitoring</span>Données<span class="mi chev">chevron_right</span></a>
+      <a><span class="mi">lan</span>Réseau<span class="mi chev">chevron_right</span></a>
+      <a><span class="mi">play_circle</span>Actions<span class="mi chev">chevron_right</span></a>
+      <a><span class="mi">settings</span>Configuration<span class="mi chev">chevron_right</span></a>
+      <a><span class="mi">backup</span>Backup<span class="mi chev">chevron_right</span></a>
+      <a><span class="mi">shield</span>Cybersecurity<span class="mi chev">chevron_right</span></a>
+      <a><span class="mi">groups</span>Gestion<span class="new">New</span><span class="mi chev">chevron_right</span></a>
+      <a><span class="mi">download</span>Téléchargements<span class="mi chev">chevron_right</span></a>
+    </nav>
+  </aside>
+
+  <header class="top">
+    <span class="mi" style="color:var(--muted)">account_tree</span>
+    <div class="crumb">TICKETS <span>/</span> MSP DÉMO</div>
+    <div class="sp"></div>
+    <button class="brain"><span class="mi">auto_awesome</span>Brain</button>
+    <button class="icon-btn"><span class="mi">rocket_launch</span></button>
+    <button class="icon-btn"><span class="mi">forum</span></button>
+    <button class="icon-btn" id="theme" title="Basculer clair / sombre"><span class="mi">dark_mode</span></button>
+  </header>
+
+  <section class="tree">
+    <div class="search"><span class="mi">search</span>Trouver dans l'arborescence</div>
+    <ul>
+      <li><div class="sel"><span class="mi">folder_open</span>MSP DÉMO</div>
+        <ul>
+          <li><div><span class="mi">delete</span>_Poubelle</div></li>
+          <li><div><span class="dot" style="background:var(--ok)"></span>CLIENT 01</div></li>
+          <li><div><span class="dot" style="background:var(--ok)"></span>CLIENT 02</div></li>
+          <li><div><span class="dot" style="background:var(--info)"></span>MSP DÉMO</div></li>
+          <li><div><span class="dot" style="background:var(--ok)"></span>CLIENT 03</div></li>
+          <li><div><span class="dot" style="background:var(--warn)"></span>CLIENT 04</div></li>
+          <li><div><span class="dot" style="background:var(--ok)"></span>CLIENT 05</div></li>
+          <li><div><span class="dot" style="background:var(--crit)"></span>CLIENT 06</div></li>
+          <li><div><span class="dot" style="background:var(--ok)"></span>CLIENT 07</div></li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <main class="main">
+    <div class="toolbar">
+      <select class="btn" style="padding:7px 8px"><option>20 par page</option></select>
+      <span class="chip">Filtre actif : Tous les tickets actifs</span>
+      <span style="flex:1"></span>
+      <button class="btn"><span class="mi">autorenew</span>Actualisation auto</button>
+      <button class="btn primary"><span class="mi">add</span>Créer</button>
+      <button class="btn"><span class="mi">filter_list</span>Filtres</button>
+      <button class="btn"><span class="mi">ios_share</span>Export</button>
+      <button class="btn danger"><span class="mi">close</span>Clôturer tout</button>
+    </div>
+
+    <div class="card">
+      <h3><span class="mi" style="color:var(--brand)">dns</span>Synthèse des serveurs</h3>
+      <table>
+        <thead><tr><th>Client</th><th>Serveur</th><th>Statut</th><th>Dernier événement</th></tr></thead>
+        <tbody>
+          <tr><td>CLIENT 02</td><td class="host">SRV2008R2</td><td><span class="chip info">Info</span></td><td>Il y a 4 min</td></tr>
+          <tr><td>CLIENT 05</td><td class="host">SRV2012MUL</td><td><span class="chip crit">Critique</span></td><td>Il y a 12 min</td></tr>
+          <tr><td>CLIENT 07</td><td class="host">SRV2019</td><td><span class="chip warn">Avertissement</span></td><td>Il y a 1 h</td></tr>
+          <tr><td>CLIENT 08</td><td class="host">SRVAD</td><td><span class="chip ok">En ligne</span></td><td>Il y a 2 h</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tabs"><a class="on">Agents actifs</a><a>Agents désactivés</a><a>Informations</a><a>Clients</a></div>
+    <div class="alert"><span class="mi">info</span>Il n'y a pas de tickets.</div>
+    <div style="display:flex;gap:12px;align-items:end;max-width:560px">
+      <label class="field" style="flex:1">Rechercher<input placeholder="Nom de l'agent…"></label>
+      <label class="field" style="flex:1">Type<select><option>Tous</option></select></label>
+    </div>
+    <div class="pager"><span>«</span><span class="on">1</span><span>2</span><span>3</span><span>»</span></div>
+  </main>
+</div>
+
+<div class="legend">
+  <span class="swatch" style="background:var(--side)"></span>ink
+  <span class="swatch" style="background:var(--brand)"></span>brand
+  <span class="swatch" style="background:var(--bg)"></span>fond
+  <span class="swatch" style="background:var(--ok)"></span>
+  <span class="swatch" style="background:var(--warn)"></span>
+  <span class="swatch" style="background:var(--crit)"></span>
+</div>
+<script>
+const b=document.getElementById('theme');
+b.onclick=()=>{const d=document.documentElement;const dark=d.dataset.theme==='dark';d.dataset.theme=dark?'light':'dark';b.firstElementChild.textContent=dark?'dark_mode':'light_mode'};
+</script>
+</body>
+</html>

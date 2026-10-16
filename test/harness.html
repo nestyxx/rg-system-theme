@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Banc de test – userscript RG System</title>
+<style>body{margin:0;font:14px Helvetica,Arial,sans-serif;color:#333}</style>
+<script>
+// Banc de test : exécute le VRAI dist/rg-system-theme.user.js avec des substituts des API Tampermonkey.
+// Ouvrir : http://localhost:4173/harness.html  (après `npm run serve`). Paramètre ?disabled=1 pour tester l'interrupteur.
+window.__store = { 'rgx.enabled': !/disabled=1/.test(location.search) };
+window.__menu = [];
+window.GM_getValue = (k, d) => (k in window.__store ? window.__store[k] : d);
+window.GM_setValue = (k, v) => { window.__store[k] = v; };
+window.GM_registerMenuCommand = (label, fn) => { window.__menu.push({ label, fn }); };
+window.GM_addStyle = (css) => { const s = document.createElement('style'); s.id = 'gm-style'; s.textContent = css; (document.head || document.documentElement).appendChild(s); };
+</script>
+<script src="rg-system-theme.user.js"></script>
+</head>
+<body>
+<!-- Mini-DOM imitant la structure de RG System (ids et classes réels) -->
+<div id="block-menu-left" class="left-menu background-color-primary">
+  <div id="head-menu"><div id="block-menu"><button id="menu-main-burger" class="btn btn-primary">≡</button></div></div>
+  <div id="menu-details"><ul class="ul-lvl-0">
+    <li id="menu-tickets" class="shortcutMenu menu-lvl-0 current"><a href="#">Tickets</a></li>
+    <li id="menu-views" class="menu-lvl-0"><a href="#">Vues</a></li>
+  </ul></div>
+</div>
+<div id="header"><header class="MuiPaper-root MuiAppBar-root"><button class="brain">Brain</button></header></div>
+<div id="root"><div id="content"><table class="table table-striped table-hover"><thead><tr><th>Nom</th></tr></thead><tbody><tr><td>Ligne</td></tr></tbody></table></div></div>
+</body>
+</html>
