@@ -21,7 +21,7 @@ Le navigateur injecte lui-même le CSS avant le premier rendu : aucun gestionnai
 ## Utilisation
 
 - **Interrupteur général** (en cas de régression après une mise à jour de RG System) : un clic sur l'icône de l'extension désactive ou réactive le thème et recharge la page.
-- **Clair / sombre** : bouton en bas de la barre latérale ou `Alt+Maj+T`. Le choix est mémorisé ; par défaut le thème suit `prefers-color-scheme`.
+- **Clair / sombre** : bouton lune/soleil dans l'en-tête (à droite des icônes) ou `Alt+Maj+T`. Le choix est mémorisé ; par défaut le thème suit `prefers-color-scheme`.
 - **Densité des tableaux** (confortable / compacte) : `Alt+Maj+D`, mémorisée.
 
 Les réglages sont stockés dans le `localStorage` du site (`rgx.enabled`, `rgx.theme`, `rgx.density`).
@@ -47,7 +47,8 @@ Aucune ressource externe n'est chargée à l'exécution (ni CDN Tailwind, ni Goo
 | Fichier | Rôle |
 |---|---|
 | `src/theme.css` | Tout le CSS (Tailwind 4) : variables clair/sombre, puis une section par composant |
-| `src/extension/content.js` | Logique JS minimale : attributs de thème sur `<html>`, bouton, raccourcis, MutationObserver. **Le sélecteur de la barre latérale est regroupé dans l'objet `SEL` en tête de fichier.** |
+| `src/icons.mjs` | **Source unique des icônes** (style Lucide, trait 2 px) : icônes du menu, correspondance glyphicons → icônes. Le build en génère `src/icons.generated.css` (masques SVG, couleur = `currentColor`). Pour ajouter une icône : l'ajouter dans `ICONS`, puis dans `MENU` ou `GLYPHS`. |
+| `src/extension/content.js` | Logique JS minimale : attributs de thème sur `<html>`, bouton, raccourcis, MutationObserver. **Les sélecteurs de la barre latérale et de l'en-tête sont regroupés dans l'objet `SEL` en tête de fichier.** |
 | `src/extension/background.js` | Interrupteur général (clic sur l'icône) |
 | `src/extension/manifest.template.json` | Manifest V3 (version injectée par le build) |
 | `build.mjs` | Assemblage |
@@ -98,6 +99,8 @@ npm run serve    # sert dist/ et test/ sur http://localhost:4173
 Ouvrir `http://localhost:4173/harness.html` : la page charge `fonts.css`, `theme.css` et `content.js` comme le fait le manifest, sur un mini-DOM de RG System (`?off=1` pour tester l'interrupteur).
 
 ## Points d'attention connus
+
+- **Arborescence** : le statut d'un nœud est lu dans son attribut `rel` (N1 ok, N2 critique, N3 avertissement, N4 info, N5 inactif) et affiché en pastille. La corbeille et les agents gardent leur icône d'origine. Les barres de survol/sélection de jsTree sont positionnées en JavaScript d'après la hauteur des lignes : le CSS doit donc être appliqué **avant** l'initialisation de l'arbre, ce que fait l'extension (injection au démarrage).
 
 - Les classes `.shrink-menu-transform` de RG animent les fonds (≈ 0,5 s) : le changement clair/sombre est donc légèrement progressif sur la barre latérale.
 - Les icônes du menu et de l'arbre sont les sprites SVG d'origine (le statut des nœuds est porté par leur couleur : ne pas les recolorer).
