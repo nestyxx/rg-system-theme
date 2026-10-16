@@ -1,6 +1,6 @@
 {
   "name": "rg-system-theme",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Thème Arobase pour RG System Suite (extension Edge/Chrome, Tailwind CSS 4)",
   "scripts": {
     "build": "node build.mjs",

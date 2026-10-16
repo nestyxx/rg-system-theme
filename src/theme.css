@@ -1217,6 +1217,73 @@ html[data-rgx] [class*="Amount__Layout-sc"] * {
 }
 
 /* ===================================================================
+   10 octies. Mise en page « maquette » : cartes, respiration, champ de recherche, fil d'Ariane
+   Rapproche l'interface de la maquette (maquette/direction.html) sans toucher aux dimensions
+   structurantes (menu, header, largeur de l'arbre) ni à la structure HTML de RG System.
+   =================================================================== */
+/* Zone de contenu : un peu d'air autour des écrans */
+html[data-rgx] #main {
+  padding: 16px 20px 28px;
+}
+/* Tableaux = cartes (bord, rayon, ombre). Le tableau « sum » (Vues), la liste de tickets
+   et les grilles React (composant Table__Layout) ; les graphiques et le calendrier sont exclus. */
+html[data-rgx] table.sum,
+html[data-rgx] table.ticket-table,
+html[data-rgx] table[class*="Table__Layout-sc"] {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] table.sum > tbody > tr > th,
+html[data-rgx] table.sum > tbody > tr > td {
+  background: transparent;
+}
+html[data-rgx] table.sum > tbody > tr > td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+html[data-rgx] table[class*="Table__Layout-sc"] td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+/* Coins arrondis des cellules d'angle (border-radius du tableau seul ne rogne pas les cellules) */
+html[data-rgx] table.sum > tbody > tr:first-child > th:first-child {
+  border-top-left-radius: 7px;
+}
+html[data-rgx] table.sum > tbody > tr:first-child > th:last-child {
+  border-top-right-radius: 7px;
+}
+html[data-rgx] table.sum > tbody > tr:last-child > td:first-child {
+  border-bottom-left-radius: 7px;
+}
+html[data-rgx] table.sum > tbody > tr:last-child > td:last-child {
+  border-bottom-right-radius: 7px;
+}
+/* « Trouver dans l'arborescence » : champ de recherche (la hauteur du bloc ne change pas) */
+html[data-rgx] #tree-search-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  background: var(--rgx-bg);
+}
+/* Fil d'Ariane : « / » à la place du « | » (le texte d'origine est masqué, le séparateur dessiné en CSS) */
+html[data-rgx] #header .pipe {
+  font-size: 0;
+}
+html[data-rgx] #header .pipe::after {
+  content: "/";
+  font-size: 14px;
+  color: var(--rgx-muted);
+}
+
+/* ===================================================================
    11. Bouton de bascule clair/sombre (ajouté par le script de l'extension)
    =================================================================== */
 #rgx-theme-toggle {
