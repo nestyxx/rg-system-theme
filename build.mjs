@@ -11,6 +11,10 @@ const require = createRequire(import.meta.url);
 const pkg = JSON.parse(readFileSync(path.join(here, 'package.json'), 'utf8'));
 mkdirSync(path.join(here, 'dist'), { recursive: true });
 
+// 0. Icônes : src/icons.mjs -> src/icons.generated.css (importé par theme.css)
+import { buildIconsCss } from './src/icons.mjs';
+writeFileSync(path.join(here, 'src', 'icons.generated.css'), buildIconsCss());
+
 // 1. Tailwind -> dist/theme.css (minifié) et dist/theme.dev.css (lisible, pour le dev)
 const tw = path.join(here, 'node_modules', '@tailwindcss', 'cli', 'dist', 'index.mjs');
 const run = (out, extra = []) =>

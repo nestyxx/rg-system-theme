@@ -2,3 +2,4 @@ node_modules/
 dist/*
 !dist/extension
 .claude/
+src/icons.generated.css

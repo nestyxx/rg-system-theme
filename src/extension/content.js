@@ -2,7 +2,7 @@
 // Le CSS (fonts.css + theme.css) est injecté par le navigateur AVANT le premier rendu via
 // manifest.json ("content_scripts.css") : aucun flash de l'ancien style. Ce script ne fait que :
 //  - poser les attributs sur <html> (thème clair/sombre, densité) — le CSS est scopé sous html[data-rgx] ;
-//  - ajouter le bouton de bascule dans la barre latérale ;
+//  - ajouter le bouton de bascule clair/sombre dans l'en-tête (à droite des icônes) ;
 //  - gérer les raccourcis Alt+Maj+T (thème) et Alt+Maj+D (densité).
 // Réglages dans le localStorage du site (lecture synchrone, donc pas de clignotement) :
 //   rgx.enabled ('0' = thème désactivé), rgx.theme ('auto'|'light'|'dark'), rgx.density ('comfortable'|'compact').
@@ -11,7 +11,7 @@
   try { main(); } catch (e) { console.error('[RG thème Arobase] erreur au démarrage :', e); }
 
   function main() {
-    const SEL = { sidebar: '#block-menu-left' };          // à ajuster si RG change sa structure
+    const SEL = { sidebar: '#block-menu-left', headerIcons: '#header .icons' };   // à ajuster si RG change sa structure
     const K = { enabled: 'rgx.enabled', theme: 'rgx.theme', density: 'rgx.density' };
     const get = (k, d) => { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } };
     const set = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* stockage indisponible */ } };
@@ -52,25 +52,24 @@
       if (e.code === 'KeyD') { e.preventDefault(); toggleDensity(); }
     });
 
-    // Bouton de bascule (zone de la barre latérale non gérée par React)
-    const ICON_SUN  = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
-    const ICON_MOON = '<svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+    // Bouton de bascule dans l'en-tête. L'en-tête est rendu par React : l'observer ci-dessous
+    // remet le bouton s'il disparaît lors d'un nouveau rendu.
     function updateToggle() {
       const b = document.getElementById('rgx-theme-toggle');
       if (!b) return;
       const dark = effective() === 'dark';
-      b.innerHTML = (dark ? ICON_SUN : ICON_MOON) + '<span>' + (dark ? 'Thème clair' : 'Thème sombre') + '</span>';
-      b.title = 'Basculer entre thème clair et sombre (Alt+Maj+T)';
+      b.innerHTML = '<i class="rgx-i rgx-i-' + (dark ? 'sun' : 'moon') + '"></i>';
+      b.title = (dark ? 'Passer en thème clair' : 'Passer en thème sombre') + ' (Alt+Maj+T)';
     }
     function ensureToggle() {
       if (document.getElementById('rgx-theme-toggle')) return;
-      const host = document.querySelector(SEL.sidebar);
+      const host = document.querySelector(SEL.headerIcons);
       if (!host) return;
       const b = document.createElement('button');
       b.id = 'rgx-theme-toggle';
       b.type = 'button';
       b.addEventListener('click', () => setMode(effective() === 'dark' ? 'light' : 'dark'));
-      host.appendChild(b);
+      host.insertBefore(b, host.lastElementChild);   // avant l'avatar du profil
       updateToggle();
     }
     let scheduled = false;

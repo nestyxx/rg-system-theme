@@ -20,6 +20,8 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
+/* Icônes (menu, boutons) : fichier généré par build.mjs à partir de src/icons.mjs */
+@import "./icons.generated.css";
 
 /* Palette Arobase / Webgest exposée comme utilitaires Tailwind (bg-surface, text-ink…) */
 @theme inline {
@@ -1284,35 +1286,139 @@ html[data-rgx] #header .pipe::after {
 }
 
 /* ===================================================================
-   11. Bouton de bascule clair/sombre (ajouté par le script de l'extension)
+   11. Maquette : en-tête, arborescence, menu, tableaux, boutons
    =================================================================== */
-#rgx-theme-toggle {
-  position: absolute;
-  bottom: 14px;
-  left: 14px;
-  z-index: 10;
-  display: inline-flex;
+/* --- En-tête : boutons d'icônes ronds au survol, comme la maquette --- */
+html[data-rgx] #header .icons {
   align-items: center;
-  gap: 8px;
+  gap: 2px;
+}
+html[data-rgx] #header .icons > svg,
+html[data-rgx] #header .icons > a,
+html[data-rgx] #header .icons > .jimo-widget {
+  box-sizing: border-box;
+  width: 32px;
   height: 32px;
-  padding: 0 10px;
+  padding: 5px;
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s;
+}
+html[data-rgx] #header .icons > svg:hover,
+html[data-rgx] #header .icons > a:hover,
+html[data-rgx] #header .icons > .jimo-widget:hover {
+  background: var(--rgx-surface-2);
+}
+/* Bouton clair/sombre (ajouté par le script de l'extension, à droite des icônes) */
+#rgx-theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  margin: 0 2px;
   border: 0;
   border-radius: var(--radius-md);
-  background: var(--rgx-side-hover);
-  color: var(--rgx-side-text);
-  font: 500 12.5px var(--font-sans);
+  background: transparent;
+  color: var(--rgx-muted);
+  font-size: 18px;
   cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
 }
 #rgx-theme-toggle:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--rgx-surface-2);
+  color: var(--rgx-ink);
 }
-#rgx-theme-toggle svg {
-  width: 16px;
-  height: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+
+/* Bouton « burger » (réduction du menu) : icône à taille lisible */
+html[data-rgx] #menu-main-burger .glyphicon {
+  width: 18px;
+  height: 18px;
+}
+
+/* --- Menu latéral : un peu d'air entre les entrées --- */
+html[data-rgx] #menu-details li.menu-lvl-0 > a {
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+/* --- Arborescence : pastilles de statut à la place des dossiers colorés ---
+   Le statut d'un nœud est porté par son attribut rel : N1 ok, N2 critique, N3 avertissement,
+   N4 info, N5 inactif. La corbeille (N6) et les agents (W…) gardent leur icône d'origine. */
+html[data-rgx] #tree li[rel="N1"] { --rgx-dot: var(--rgx-ok); }
+html[data-rgx] #tree li[rel="N2"] { --rgx-dot: var(--rgx-crit); }
+html[data-rgx] #tree li[rel="N3"] { --rgx-dot: #e08a1e; }
+html[data-rgx] #tree li[rel="N4"] { --rgx-dot: var(--rgx-info); }
+html[data-rgx] #tree li[rel="N5"] { --rgx-dot: var(--rgx-muted); }
+html[data-rgx] #tree li:is([rel="N1"], [rel="N2"], [rel="N3"], [rel="N4"], [rel="N5"]) > a > ins.jstree-icon {
+  background-image: none !important;
+  position: relative;
+}
+html[data-rgx] #tree li:is([rel="N1"], [rel="N2"], [rel="N3"], [rel="N4"], [rel="N5"]) > a > ins.jstree-icon::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--rgx-dot);
+}
+/* Sombre : les icônes noires du sprite (corbeille, postes de travail) sont éclaircies */
+html[data-rgx][data-rgx-theme="dark"] #tree li:is([rel="N6"], [rel="W"]) > a > ins.jstree-icon {
+  filter: invert(0.85);
+}
+/* Nœud sélectionné : pastille en blanc sur fond de marque */
+html[data-rgx] #tree a.jstree-clicked > ins.jstree-icon::before {
+  background: var(--rgx-brand-ink);
+}
+/* Lignes plus aérées (le pastille garde son encombrement de 16 px) */
+html[data-rgx] #tree a {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+html[data-rgx] #tree a.jstree-clicked,
+html[data-rgx] #tree a.jstree-clicked:hover {
+  height: auto !important;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+/* --- Tableaux : en-tête teinté, lignes plus hautes, survol doux --- */
+html[data-rgx] table.sum > tbody > tr > td,
+html[data-rgx] table.ticket-table td,
+html[data-rgx] table[class*="Table__Layout-sc"] td {
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+html[data-rgx] table.sum > tbody > tr > th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+html[data-rgx] table.ticket-table th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+html[data-rgx][data-rgx-density="compact"] table.sum > tbody > tr > td,
+html[data-rgx][data-rgx-density="compact"] table.ticket-table td,
+html[data-rgx][data-rgx-density="compact"] table[class*="Table__Layout-sc"] td {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+/* --- Boutons : un peu plus d'espace, icônes alignées --- */
+html[data-rgx] .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+html[data-rgx] .btn-group > .btn {
+  display: inline-flex;
+}
+html[data-rgx] .btn-block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+html[data-rgx] .btn-sm {
+  padding: 5px 11px;
 }
