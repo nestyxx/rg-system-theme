@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RG System – thème Arobase
 // @namespace    https://arobase.alsace/
-// @version      0.6.0
+// @version      0.6.1
 // @description  Habillage moderne (clair/sombre) de RG System Suite, côté navigateur uniquement.
 // @author       Arobase
 // @match        https://dashboard.rg-supervision.com/*
@@ -23,6 +23,11 @@
  */
 (function () {
   'use strict';
+  // Toute erreur est journalisée dans la console (F12) au lieu de faire échouer le script en silence.
+  try { main(); } catch (e) { console.error('[RG thème Arobase] erreur au démarrage :', e); }
+
+  function main() {
+  console.info('[RG thème Arobase] v0.6.1 démarré sur', location.href);
 
   // ---------------------------------------------------------------------------
   // 1. SÉLECTEURS RG SYSTEM – à ajuster ici si une mise à jour de RG casse le thème
@@ -89,6 +94,12 @@
   }
   mq.addEventListener('change', () => { if (mode === 'auto') apply(); });
   apply();
+  console.info('[RG thème Arobase] thème appliqué :', effective(), '| densité :', density);
+
+  // Filet de sécurité : si la page retire nos attributs de <html>, on les remet.
+  new MutationObserver(() => {
+    if (!root.hasAttribute('data-rgx') || root.getAttribute('data-rgx-theme') !== effective()) apply();
+  }).observe(root, { attributes: true, attributeFilter: ['data-rgx', 'data-rgx-theme', 'data-rgx-density'] });
 
   // Raccourcis clavier (Alt+Maj+T : thème, Alt+Maj+D : densité) — évitent les combinaisons de RG System
   document.addEventListener('keydown', (e) => {
@@ -134,4 +145,5 @@
   }
   new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
   document.addEventListener('DOMContentLoaded', schedule);
+  }
 })();

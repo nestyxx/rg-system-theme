@@ -39,7 +39,7 @@ writeFileSync(path.join(here, 'dist', 'fonts.css'), fonts);
 const css = readFileSync(path.join(here, 'dist', 'theme.css'), 'utf8').trim();
 let js = readFileSync(path.join(here, 'src', 'userscript.template.js'), 'utf8');
 js = js
-  .replace('__VERSION__', pkg.version)
+  .replaceAll('__VERSION__', pkg.version)
   .replace("/*__CSS_FONTS__*/''", () => JSON.stringify(fonts))
   .replace("/*__CSS_THEME__*/''", () => JSON.stringify(css));
 writeFileSync(path.join(here, 'dist', 'rg-system-theme.user.js'), js);
