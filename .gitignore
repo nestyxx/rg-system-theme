@@ -1,5 +1,4 @@
 node_modules/
 dist/*
-!dist/rg-system-theme.user.js
 !dist/extension
 .claude/

@@ -1,4 +1,4 @@
-// Build : Tailwind CLI -> CSS minifié, polices -> data-URI, assemblage du .user.js
+// Build : Tailwind CLI -> CSS minifié, polices -> data-URI, assemblage de l'extension Edge (dist/extension)
 // Usage : npm run build
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
@@ -35,17 +35,9 @@ for (const [family, mod, file, weights] of FONTS) {
 }
 writeFileSync(path.join(here, 'dist', 'fonts.css'), fonts);
 
-// 3. Assemblage du userscript
-const css = readFileSync(path.join(here, 'dist', 'theme.css'), 'utf8').trim();
-let js = readFileSync(path.join(here, 'src', 'userscript.template.js'), 'utf8');
-js = js
-  .replaceAll('__VERSION__', pkg.version)
-  .replace("/*__CSS_FONTS__*/''", () => JSON.stringify(fonts))
-  .replace("/*__CSS_THEME__*/''", () => JSON.stringify(css));
-writeFileSync(path.join(here, 'dist', 'rg-system-theme.user.js'), js);
-
-// 4. Extension Edge/Chrome (alternative à Tampermonkey) : dist/extension/, à charger en mode développeur.
+// 3. Extension Edge/Chrome : dist/extension/, à charger en mode développeur (edge://extensions).
 //    Le CSS est injecté par le navigateur lui-même (content_scripts.css), avant le premier rendu.
+const css = readFileSync(path.join(here, 'dist', 'theme.css'), 'utf8').trim();
 const ext = path.join(here, 'dist', 'extension');
 rmSync(ext, { recursive: true, force: true });
 mkdirSync(ext, { recursive: true });
@@ -57,4 +49,4 @@ copyFileSync(path.join(here, 'src', 'extension', 'background.js'), path.join(ext
 writeFileSync(path.join(ext, 'theme.css'), css);
 writeFileSync(path.join(ext, 'fonts.css'), fonts);
 
-console.log(`OK  dist/rg-system-theme.user.js  (${(js.length / 1024).toFixed(0)} Ko, CSS ${(css.length / 1024).toFixed(1)} Ko)  +  dist/extension/`);
+console.log(`OK  dist/extension/  (CSS ${(css.length / 1024).toFixed(1)} Ko, polices ${(fonts.length / 1024).toFixed(0)} Ko)`);

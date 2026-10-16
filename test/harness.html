@@ -2,19 +2,12 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<title>Banc de test – userscript RG System</title>
+<title>Banc de test – extension RG System</title>
 <style>body{margin:0;font:14px Helvetica,Arial,sans-serif;color:#333}</style>
-<script>
-// Banc de test : exécute le VRAI dist/rg-system-theme.user.js avec des substituts des API Tampermonkey.
-// Ouvrir : http://localhost:4173/harness.html  (après `npm run serve`). Paramètres : ?disabled=1 (interrupteur), ?nogm=1 (sans GM_addStyle : teste le repli).
-window.__store = { 'rgx.enabled': !/disabled=1/.test(location.search) };
-window.__menu = [];
-window.GM_getValue = (k, d) => (k in window.__store ? window.__store[k] : d);
-window.GM_setValue = (k, v) => { window.__store[k] = v; };
-window.GM_registerMenuCommand = (label, fn) => { window.__menu.push({ label, fn }); };
-if (!/nogm=1/.test(location.search)) window.GM_addStyle = (css) => { const s = document.createElement('style'); s.id = 'gm-style'; s.textContent = css; (document.head || document.documentElement).appendChild(s); };
+<script>// Banc de test de l'extension : charge fonts.css + theme.css + content.js comme le ferait le manifest. Ouvrir http://localhost:4173/harness.html (npm run serve). ?off=1 simule le thème désactivé.
+if (/off=1/.test(location.search)) localStorage.setItem('rgx.enabled','0'); else localStorage.removeItem('rgx.enabled');
 </script>
-<script src="rg-system-theme.user.js"></script>
+<link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="theme.css"><script src="content.js"></script>
 </head>
 <body>
 <!-- Mini-DOM imitant la structure de RG System (ids et classes réels) -->

@@ -1,6 +1,6 @@
 # Proposition d'évolution visuelle de RG System Suite
 
-Document à destination de l'équipe RG System. Il accompagne un userscript (côté navigateur, sans toucher au
+Document à destination de l'équipe RG System. Il accompagne une extension de navigateur (côté navigateur, sans toucher au
 serveur) qui montre ce qu'une interface modernisée pourrait donner **sans changer le comportement de la plateforme**.
 
 ## Pourquoi

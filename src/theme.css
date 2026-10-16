@@ -1068,7 +1068,7 @@ html[data-rgx] .datepicker table tr td.disabled {
 html[data-rgx] tbody tr {
   transition: background-color 0.12s;
 }
-/* Densité compacte (bouton/menu Tampermonkey) : lignes de tableaux plus serrées */
+/* Densité compacte (bouton ou Alt+Maj+D) : lignes de tableaux plus serrées */
 html[data-rgx][data-rgx-density="compact"] .table > tbody > tr > td,
 html[data-rgx][data-rgx-density="compact"] .table > thead > tr > th {
   padding-top: 3px;
@@ -1217,7 +1217,7 @@ html[data-rgx] [class*="Amount__Layout-sc"] * {
 }
 
 /* ===================================================================
-   11. Bouton de bascule clair/sombre (ajouté par le userscript)
+   11. Bouton de bascule clair/sombre (ajouté par le script de l'extension)
    =================================================================== */
 #rgx-theme-toggle {
   position: absolute;

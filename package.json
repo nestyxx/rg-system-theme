@@ -1,7 +1,7 @@
 {
   "name": "rg-system-theme",
-  "version": "0.7.0",
-  "description": "Thème Arobase pour RG System Suite (userscript Tampermonkey, Tailwind CSS 4)",
+  "version": "0.7.1",
+  "description": "Thème Arobase pour RG System Suite (extension Edge/Chrome, Tailwind CSS 4)",
   "scripts": {
     "build": "node build.mjs",
     "serve": "node dev/serve.mjs"
