@@ -15,7 +15,7 @@ codés en dur, fonds blancs, gris `#ADADAD`).
 - une palette et une typographie uniques (Inter pour le texte, Space Grotesk pour les titres) ;
 - un **thème clair et un thème sombre**, tous deux basés sur des variables CSS (`--rgx-surface`, `--rgx-ink`…) ;
 - des rayons, bordures, ombres et survols cohérents (boutons, champs, tableaux, onglets, cartes, menus, modales, pagination, alertes) ;
-- une **identité visuelle** : logo (pastille « RG » + nom + étiquette « suite »), en-tête de 56 px avec icônes de trait fin (style Lucide), pastilles de statut dans l'arborescence ;
+- une **identité visuelle** : logo (pastille « RG » + nom), en-tête de 56 px avec icônes de trait fin (style Lucide), pastilles de statut dans l'arborescence ;
 - la barre latérale, le header, l'arborescence, les grilles React, le calendrier d'automatisation, les écrans
   Pedigree / Jobs / Utilisateurs / Configuration / Vulnérabilités ;
 - aucun changement de structure, d'URL, de requête ou de donnée ; aucune dépendance chargée à l'exécution
@@ -57,6 +57,10 @@ Point de conception à discuter : les courbes (dygraphs, `<canvas>`) utilisent d
 blanc. Le prototype affiche donc le graphique sur une carte sombre en inversant son dessin (inversion, rotation de teinte,
 luminosité) : les couleurs restent reconnaissables mais approximatives. Un jeu de couleurs de séries par thème côté RG
 serait plus fidèle.
+
+## Licence du prototype
+
+Le code, le CSS, les icônes redessinées et la maquette sont sous **licence MIT** : l'équipe de RG System peut en reprendre tout ou partie, librement, sans autorisation ni démarche préalable.
 
 ## Licence et polices
 

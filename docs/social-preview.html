@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Aperçu social du dépôt (1280×640)</title>
+<!-- Source de docs/img/social-preview.png : node scripts/screenshots.mjs social-preview -->
+<link rel="stylesheet" href="../dist/extension/fonts.css">
+<style>
+  :root { --ink: #e8ecf5; --muted: #9fabc4; --brand: #38b6d8; --bg1: #0b1426; --bg2: #16233f; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1280px; height: 640px; overflow: hidden; }
+  body { position: relative; font-family: Inter, system-ui, sans-serif; color: var(--ink);
+    background: radial-gradient(900px 500px at 85% 20%, rgba(56, 182, 216, 0.22), transparent 60%), linear-gradient(135deg, var(--bg1), var(--bg2)); }
+  .copy { position: absolute; left: 72px; top: 0; bottom: 0; width: 520px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+  .brand { display: flex; align-items: center; gap: 14px; font: 600 26px/1 "Space Grotesk", Inter, sans-serif; }
+  .mark { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 13px; background: #38b6d8; color: #08202a; font: 700 21px/1 "Space Grotesk", sans-serif; }
+  h1 { margin: 0; font: 700 56px/1.05 "Space Grotesk", Inter, sans-serif; letter-spacing: -0.03em; }
+  h1 em { font-style: normal; color: var(--brand); }
+  p { margin: 0; color: var(--muted); font-size: 22px; line-height: 1.45; }
+  .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .tags span { padding: 7px 14px; border: 1px solid rgba(159, 171, 196, 0.35); border-radius: 999px; color: var(--ink); font-size: 16px; font-weight: 500; }
+  .shot { position: absolute; border-radius: 14px; overflow: hidden; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08); }
+  .shot img { display: block; width: 100%; }
+  .a { right: -150px; top: 70px; width: 720px; transform: rotate(-2.5deg); }
+  .b { right: 40px; top: 300px; width: 620px; transform: rotate(2deg); }
+</style>
+</head>
+<body>
+  <div class="copy">
+    <div class="brand"><span class="mark">RG</span>RG system</div>
+    <h1>Un thème <em>clair</em> et <em>sombre</em> pour RG System Suite</h1>
+    <p>Extension Edge / Chrome, 100 % côté navigateur. Open source (MIT).</p>
+    <div class="tags"><span>Thème clair / sombre</span><span>Ctrl+K</span><span>Aucune donnée collectée</span></div>
+  </div>
+  <div class="shot a"><img src="img/rg-dark.png" alt=""></div>
+  <div class="shot b"><img src="img/rg-light.png" alt=""></div>
+</body>
+</html>

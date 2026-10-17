@@ -27,12 +27,14 @@ const SHOTS = [
   ['rg-login', '/surfaces.html?view=login&theme=light', '1000,640', 6000],
 ];
 const only = process.argv.slice(2);
+// Aperçu social (fichier local, sans serveur)
+SHOTS.push(['social-preview', 'FILE:docs/social-preview.html', '1280,640', 6000]);
 for (const [name, url, size, budget] of SHOTS) {
   if (only.length && !only.includes(name)) continue;
   const file = path.join(out, name + '.png');
   try {
     execFileSync(edge, ['--headless=new', '--disable-gpu', '--hide-scrollbars', '--force-device-scale-factor=1',
-      `--window-size=${size}`, `--virtual-time-budget=${budget}`, `--screenshot=${file}`, base + url], { stdio: 'pipe', timeout: 90000 });
+      `--window-size=${size}`, `--virtual-time-budget=${budget}`, `--screenshot=${file}`, (url.startsWith('FILE:') ? 'file:///' + path.join(root, url.slice(5)).replaceAll('\\', '/') : base + url)], { stdio: 'pipe', timeout: 90000 });
     console.log('OK  docs/img/' + name + '.png');
   } catch (e) { console.error('ÉCHEC ' + name + ' : ' + String(e.message).split('\n')[0]); }
 }
