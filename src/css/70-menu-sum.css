@@ -510,3 +510,184 @@ html[data-rgx] #tree li.jstree-open:not(.jstree-loading) > ins.jstree-icon::befo
 html[data-rgx] #tree li.jstree-open:not(.jstree-loading) > ins.jstree-icon::before {
   transform: rotate(90deg);
 }
+
+/* ===================================================================
+   14. Sous-sous-menus, polices des noms d'agents, icônes de plateforme
+   =================================================================== */
+/* Menu étendu, niveau 2 (Données › Courbes › Disque…) : libellé + chevron centrés sur la ligne, filet de liaison sous l'icône */
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-1,
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-2 {
+  background: transparent !important;
+  line-height: 30px !important;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-1 > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-1 > a > div {
+  float: none;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-1 > a > .pull-right {
+  display: flex;
+  align-items: center;
+}
+html[data-rgx] #menu-details li.menu-lvl-1:has(> ul[style*="display: block"]) > a .caret-menu,
+html[data-rgx] #menu-details li.menu-lvl-1:has(> ul.ul-lvl-2:not(.block-menu-hide)) > a .caret-menu {
+  transform: rotate(90deg);
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details ul.ul-lvl-2 {
+  margin: 0 0 4px 18px;
+  padding: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent !important;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-2 > a {
+  padding: 0 10px 0 21px;
+  line-height: 28px;
+  font-size: 13px;
+}
+/* « Hors ligne » / désactivé : on garde l'atténuation de RG mais on la rend moins forte */
+html[data-rgx] #menu-details li.menu-lvl-2.disabled,
+html[data-rgx] #menu-details li.menu-lvl-2.disabled a {
+  opacity: 0.55;
+}
+
+/* Noms d'agents (serveurs, postes) : chasse fixe, comme les noms d'hôtes de la maquette */
+html[data-rgx] [class*="AgentName"] a,
+html[data-rgx] .pedigree-card-hoverable a,
+html[data-rgx] .img-sum-server + a,
+html[data-rgx] .img-sum-workstation + a,
+html[data-rgx] .img-sum-device + a {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Icônes des agents et des plateformes : traits du thème, couleur du texte secondaire (au lieu des pictos pleins d'origine) */
+html[data-rgx] .img-sum-server,
+html[data-rgx] .img-sum-workstation,
+html[data-rgx] .img-sum-device,
+html[data-rgx] .rg-image-windows,
+html[data-rgx] .rg-image-mac,
+html[data-rgx] .rg-image-linux,
+html[data-rgx] .rg-image-hypervisor,
+html[data-rgx] .rg-image-hypervisor-grey {
+  background: currentColor !important;
+  color: var(--rgx-muted);
+  filter: none !important;
+  -webkit-mask: var(--rgx-ic-server) center/contain no-repeat;
+  mask: var(--rgx-ic-server) center/contain no-repeat;
+}
+html[data-rgx] .img-sum-workstation {
+  -webkit-mask-image: var(--rgx-ic-monitor);
+  mask-image: var(--rgx-ic-monitor);
+}
+html[data-rgx] .img-sum-device {
+  -webkit-mask-image: var(--rgx-ic-network);
+  mask-image: var(--rgx-ic-network);
+}
+html[data-rgx] .rg-image-windows {
+  -webkit-mask: var(--rgx-ic-windows) center/70% 70% no-repeat;
+  mask: var(--rgx-ic-windows) center/70% 70% no-repeat;
+}
+html[data-rgx] .rg-image-mac {
+  -webkit-mask: var(--rgx-ic-apple) center/70% 70% no-repeat;
+  mask: var(--rgx-ic-apple) center/70% 70% no-repeat;
+}
+html[data-rgx] .rg-image-linux {
+  -webkit-mask: var(--rgx-ic-terminal) center/70% 70% no-repeat;
+  mask: var(--rgx-ic-terminal) center/70% 70% no-repeat;
+}
+html[data-rgx] .rg-image-hypervisor,
+html[data-rgx] .rg-image-hypervisor-grey {
+  -webkit-mask-size: 70% 70%;
+  mask-size: 70% 70%;
+}
+
+/* Tableaux de statistiques (Vues › Statistiques) : cellules resserrées pour rester dans la carte (colonne étroite) */
+html[data-rgx] table.table-stat {
+  width: 100%;
+  max-width: 100%;
+}
+html[data-rgx] table.table-stat > thead > tr > th,
+html[data-rgx] table.table-stat > tbody > tr > td,
+html[data-rgx] table.table-stat > tbody > tr > th {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+html[data-rgx] table.table-stat > thead > tr > :first-child,
+html[data-rgx] table.table-stat > tbody > tr > :first-child {
+  padding-left: 12px;
+}
+html[data-rgx] table.table-stat > thead > tr > :last-child,
+html[data-rgx] table.table-stat > tbody > tr > :last-child {
+  padding-right: 12px;
+}
+
+/* Cartes étroites (Uptime, Actions de la fiche agent…) : la grille Bootstrap (colonnes à 15 px de marge) y laisse
+   quelques pixels de texte. Dans une carte de moins de 300 px, chaque ligne devient « libellé … valeur ». */
+html[data-rgx] .block-container {
+  container-type: inline-size;
+}
+@container (max-width: 300px) {
+  html[data-rgx] .block-container .row.line-height {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  html[data-rgx] .block-container .row.line-height > [class*="col-"] {
+    float: none;
+    width: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  html[data-rgx] .block-container .row.line-height > [class*="col-"]:first-child {
+    flex: 1;
+    min-width: 0;
+  }
+  html[data-rgx] .block-container .row.line-height > [class*="col-"]:not(:first-child) {
+    flex: none;
+  }
+}
+/* Très étroit (< 150 px) : libellé au-dessus, valeur en dessous */
+@container (max-width: 150px) {
+  html[data-rgx] .block-container .row.line-height {
+    display: block;
+    margin-bottom: 6px;
+  }
+  html[data-rgx] .block-container .row.line-height > [class*="col-"] {
+    display: block;
+    text-align: left;
+  }
+  html[data-rgx] .block-container .row.line-height > [class*="col-"]:not(:first-child) {
+    font-weight: 600;
+  }
+}
+
+/* La classe .background-color-primary de RG (fond « marque ») est forcée sur la couleur de la barre latérale ; hors de la
+   barre latérale elle sert aux libellés de champs et aux étapes d'assistants : on les remet sur les couleurs du contenu. */
+html[data-rgx] .input-group-addon.background-color-primary {
+  background-color: var(--rgx-surface-2) !important;
+  color: var(--rgx-muted);
+  border: 1px solid var(--rgx-border);
+}
+html[data-rgx] .wizard-bar.background-color-primary {
+  background-color: transparent !important;
+}
+html[data-rgx] .steps.background-color-primary {
+  background-color: var(--rgx-surface-2) !important;
+  color: var(--rgx-muted);
+  border-radius: var(--radius-md);
+}
+html[data-rgx] .steps.background-color-primary.step-active {
+  background-color: var(--rgx-brand) !important;
+  color: var(--rgx-brand-ink);
+}

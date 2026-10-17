@@ -1,5 +1,13 @@
 # Journal des modifications
 
+## 1.0.4 — 2026-10-17
+
+- **Sous-sous-menus** (Données › Courbes › Disque…) : libellé et chevron centrés, chevron pivoté à l'ouverture, filet de liaison, plus de fond propre ; libellés alignés sur ceux du niveau 1.
+- **Noms d'agents** (serveurs, postes) en JetBrains Mono dans les tableaux, les tickets et les fiches.
+- **Icônes** des agents (serveur, poste, device) et des plateformes (Windows, macOS, Linux, hyperviseur) redessinées en monochrome, couleur du texte secondaire.
+- **Statistiques** : tableau de plateformes contenu dans sa carte ; cartes étroites de la fiche agent (Uptime, Actions) lisibles via une requête de conteneur.
+- Libellés de champs (Début / Fin) et étapes d'assistant : la classe « fond marque » de RG ne les teinte plus comme la barre latérale.
+
 ## 1.0.3 — 2026-10-17
 
 - **Arborescence** : le texte ne se décale plus au survol (RG ajoutait 1 px de bordure aux lignes survolées) ; flèches d'ouverture centrées et remplacées par des chevrons (disparition des pointillés de liaison).

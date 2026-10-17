@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "RG System – thème Arobase",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Habillage moderne (clair/sombre) de RG System Suite, côté navigateur uniquement. Aucune donnée collectée ni envoyée.",
   "permissions": ["scripting", "activeTab"],
   "host_permissions": ["https://dashboard.rg-supervision.com/*"],
