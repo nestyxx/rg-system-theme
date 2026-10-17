@@ -6,7 +6,7 @@ dans l'esprit de Webgest : Inter / Space Grotesk, palette Arobase, thème clair 
 
 Le navigateur injecte lui-même le CSS avant le premier rendu : aucun gestionnaire de scripts n'est nécessaire et l'ancien style ne clignote pas.
 
-- Version : **1.4.1** (voir [CHANGELOG](CHANGELOG.md))
+- Version : **1.5.0** (voir [CHANGELOG](CHANGELOG.md))
 - Maquette de référence : [`maquette/direction.html`](maquette/direction.html)
 - Document pour l'équipe RG System : [`docs/PROPOSITION-RG.md`](docs/PROPOSITION-RG.md)
 
@@ -93,6 +93,7 @@ npm run serve    # http://localhost:4173/  -> liste des pages ; ?theme=dark pour
 - `test/harness.html` : mini-DOM de RG (`?off=1` pour tester l'interrupteur).
 - `test/fixtures/` : pages RG capturées (50 écrans : Vues, Pedigree, Données, Actions, Backup, Configuration, Gestion, Réseau, Cybersecurity, Téléchargements…). **Non versionné** (`.gitignore`) : même anonymisées, ces pages reproduisent l'interface d'un compte réel.
 - Pour (re)générer des pages : coller `test/capture.js` dans la console de RG System (connecté), appeler `await rgxCapture('#/node/root/page/…')`, enregistrer le JSON obtenu, puis `node test/fixtures-build.mjs <fichier>` (ou `node test/fixtures-all.mjs <dossier>` pour un lot). Les noms de clients de l'arborescence sont remplacés par « CLIENT 01… » ; des règles supplémentaires (noms de personnes) se déclarent dans `localStorage.__rgxAnon`.
+- `test/surfaces.html` : balisage fictif (relevé sur le site réel) de la fenêtre d'agent, du menu du profil, de la bibliothèque de scripts, des boucliers Windows Update ; `?view=login` pour la page de connexion, `?theme=dark` pour le sombre.
 - `test/scan.js` : balayage automatique d'une ou plusieurs pages (texte à contraste < 3:1, grandes surfaces claires en sombre) — voir l'en-tête du fichier.
 
 ## Tests automatiques

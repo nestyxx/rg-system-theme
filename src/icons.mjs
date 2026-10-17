@@ -69,6 +69,14 @@ export const ICONS = {
   cloud: '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>',
   gauge: '<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>',
   chevronRight: '<path d="m9 18 6-6-6-6"/>',
+  shieldCheck: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  shieldInfo: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+  shieldAlert: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/>',
+  shieldX: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m14.5 9.5-5 5"/><path d="m9.5 9.5 5 5"/>',
+  shieldPower: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M14.8 10a3.5 3.5 0 1 1-5.6 0"/>',
+  shieldPause: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M10 9v6"/><path d="M14 9v6"/>',
+  shieldHelp: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><path d="M12 16h.01"/>',
+  shieldOff: '<path d="m2 2 20 20"/><path d="M5 5a1 1 0 0 0-1 1v7c0 5 3.5 7.5 7.67 8.94a1 1 0 0 0 .67.01c2.35-.82 4.48-1.97 5.9-3.71"/><path d="M9.309 3.652A12.252 12.252 0 0 0 11.24 2.28a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1v7a9.784 9.784 0 0 1-.08 1.264"/>',
   windows: '<rect x="3" y="3" width="8" height="8" rx="1" fill="black"/><rect x="13" y="3" width="8" height="8" rx="1" fill="black"/><rect x="3" y="13" width="8" height="8" rx="1" fill="black"/><rect x="13" y="13" width="8" height="8" rx="1" fill="black"/>',
   apple: '<path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/>',
   moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
@@ -97,6 +105,18 @@ export const PLUGINS = {
   antivirus: 'bug', network: 'wifi', event: 'bell', service: 'settings', backup: 'archive', process: 'activity',
   userticket: 'ticket', 'net-action': 'network', exchange: 'mail', replica: 'copy', hardware: 'server',
   script: 'terminal', inventory: 'clipboardList',
+};
+
+// États Windows Update (sprites « sprite-wu-* » : bouclier coloré + pastille) -> [icône du thème, couleur].
+export const WU = {
+  updated: ['shieldCheck', 'var(--rgx-ok)'],
+  optional: ['shieldInfo', 'var(--rgx-info)'],
+  critical: ['shieldAlert', 'var(--rgx-warn)'],
+  reboot: ['shieldPower', 'var(--rgx-crit)'],
+  suspended: ['shieldPause', 'var(--rgx-warn)'],
+  unknown: ['shieldHelp', 'var(--rgx-muted)'],
+  disabled: ['shieldOff', 'var(--rgx-muted)'],
+  'disabled-monitoring': ['shieldOff', 'var(--rgx-muted)'],
 };
 
 // Sous-menus du menu latéral (li.menu-lvl-1, par id) -> icônes du thème.
@@ -189,6 +209,15 @@ export function buildIconsCss() {
   for (const [id, name] of Object.entries(PLUGINS)) {
     out.push(`html[data-rgx] svg:has(> use[href$="#sprite-plugin-${id}"]){${mask(name)}}`);
   }
+
+  // Statut Windows Update : bouclier du thème, couleur = état (le sprite d'origine mélange 3 couleurs et une pastille)
+  out.push('html[data-rgx] svg:has(> use[href*="#sprite-wu-"]) use{visibility:hidden}');
+  for (const [id, [name, color]] of Object.entries(WU)) {
+    out.push(`html[data-rgx] svg:has(> use[href$="#sprite-wu-${id}"]){background-color:${color};${mask(name)}}`);
+  }
+  // Assist (sprite « lumiere », fenêtre d'agent) : casque du thème
+  out.push('html[data-rgx] svg:has(> use[href$="#sprite-icon-lumiere"]) use{visibility:hidden}');
+  out.push(`html[data-rgx] svg:has(> use[href$="#sprite-icon-lumiere"]){background-color:currentColor;${mask('headset')}}`);
 
   // Glyphicons
   const classes = Object.keys(GLYPHS);

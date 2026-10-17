@@ -75,12 +75,29 @@
       host.insertBefore(b, host.lastElementChild);   // avant l'avatar du profil
       updateToggle();
     }
-    // Logo du thème (pastille « RG » + nom + étiquette « suite ») dans le bloc du logo d'origine.
+    // Logo du thème (pastille « RG » + nom) dans le bloc du logo d'origine.
     // Tant que ce balisage est absent, le CSS laisse le logo image de RG System.
     function ensureLogo() {
       const host = document.querySelector(SEL.logo);
       if (!host || host.querySelector('.rgx-logo')) return;
-      host.innerHTML = '<span class="rgx-logo" role="img" aria-label="RG system suite"><b>RG</b><span class="rgx-logo-name">RG system</span><small>suite</small></span>';
+      host.innerHTML = '<span class="rgx-logo" role="img" aria-label="RG system suite"><b>RG</b><span class="rgx-logo-name">RG system</span></span>';
+    }
+    // Avatar du profil : initiales (tirées de l'attribut alt du Gravatar, « Gravatar for a.nest@domaine » -> « AN ») sur un disque de marque,
+    // au lieu de l'identicône générée. Posé sur le bouton du profil et sur l'en-tête de son menu ; l'image reste dans le DOM.
+    function initialsOf(alt) {
+      const m = /for\s+([^@\s]+)/i.exec(alt || '');
+      if (!m) return '';
+      const parts = m[1].split(/[._+-]+/).filter(Boolean);
+      const out = parts.length > 1 ? parts[0][0] + parts[1][0] : (parts[0] || '').slice(0, 2);
+      return out.toUpperCase();
+    }
+    function ensureAvatars() {
+      document.querySelectorAll('#profile-menu-toggler, [class*="Profile__MenuHeader"]').forEach((host) => {
+        if (host.hasAttribute('data-rgx-initials')) return;
+        const img = host.querySelector('img[alt^="Gravatar"]');
+        const ini = img && initialsOf(img.getAttribute('alt'));
+        if (ini) host.setAttribute('data-rgx-initials', ini);
+      });
     }
     // Boutons d'icônes de l'en-tête. Les icônes d'origine (fusée, Assist, notes de version, et tout autre bouton ajouté
     // par RG) sont des éléments hétérogènes (div, svg, lien) qu'on ne peut ni aligner ni survoler de façon homogène.
@@ -137,7 +154,7 @@
     const schedule = () => {
       if (scheduled) return;
       scheduled = true;
-      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureLogo(); });
+      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureLogo(); ensureAvatars(); });
     };
     new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
     document.addEventListener('DOMContentLoaded', schedule);

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Banc de test – surfaces (fenêtre d'agent, menu du profil, bibliothèque de scripts, boucliers WU, connexion)</title>
+<script>
+// Balisage reproduit d'après le site réel (données fictives). ?theme=dark|light  ?view=login
+(function () {
+  var q = new URLSearchParams(location.search);
+  localStorage.setItem('rgx.theme', q.get('theme') || 'light');
+  localStorage.removeItem('rgx.enabled');
+})();
+</script>
+<style>body{margin:0;font:14px Helvetica,Arial,sans-serif;color:#333;background:#f6f6f4}.mock-title{margin:18px 0 8px;font-weight:700}.mock-row{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}#root{padding:0 20px 40px;max-width:1100px}</style>
+<link rel="stylesheet" href="/fonts.css"><link rel="stylesheet" href="/theme.css"><script src="/content.js"></script>
+</head>
+<body>
+<!-- ============ Connexion (?view=login) ============ -->
+<div id="login-mock" hidden>
+  <div class="container-fluid form-public-page"><div class="row">
+    <div class="col-md-4"><div class="block-form"><div id="brand-logo" class="margin-auto"></div>
+      <h1 class="kanit-medium title-header text-center">Se connecter</h1>
+      <div><form action="#" class="form-signin"><div class="form-group"><label class="control-label" for="usermail">Adresse email</label>
+        <input type="text" id="username" class="form-control" placeholder="Adresse email"></div>
+        <div class="form-group text-center"><button class="btn btn-primary" type="button">Se connecter</button></div></form></div></div></div>
+    <div class="col-md-8 block-img"><div><img alt="" width="400" height="300"></div></div>
+  </div></div>
+</div>
+
+<!-- ============ Application ============ -->
+<div id="app-mock">
+<div id="root">
+  <div class="mock-title">1. Fenêtre d'agent (survol)</div>
+  <div class="mock-row">
+  <div class="Popover__Layout-sc-pisoat-0 eKujPr" style="position:static"><div class="Content-sc-1qebqg5-0 iCIuwJ"><div class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded">
+    <div class="MuiCardContent-root BasePedigreeCard__StyledCardContent-sc-12hsiga-0 FlexBox__GappedBox-sc-11b8gs4-0"><div class="Identity__Layout-sc-1n1f60-0 MdHLO">
+      <svg viewBox="0 0 50 50" width="3.5em" height="3.5em" class="icon"><path fill="#bbb" d="M5 8h40v12H5zM5 28h40v12H5z"/></svg>
+      <div><div class="up"><span class="name"><div style="display:block">SRV2012-EXEMPLE</div></span></div>
+      <div class="down"><div class="HoverCopy__Layout-sc-lerb8g-0 iMGLaX"><span>#ST03-Y7-Z5</span><svg viewBox="0 0 24 24" height="1em" width="1em" fill="currentColor" class="copy"><path d="M8 4h10v12H8z"/></svg></div>
+        <span><div class="StatusChip__Layout-sc-153paai-0 hIrFRG success filled">En ligne</div></span></div></div></div></div>
+    <hr class="MuiDivider-root">
+    <div class="MuiCardContent-root BasePedigreeCard__StyledCardContent-sc-12hsiga-0 FlexBox__GappedBox-sc-11b8gs4-0"><div class="FlexBox__GappedBox-sc-11b8gs4-0">
+      <div class="FlexBox__GappedBox-sc-11b8gs4-0"><svg viewBox="0 0 20 20" height="18" width="18" fill="currentColor"><path d="M10 2a6 6 0 0 0-6 6c0 4 6 10 6 10s6-6 6-10a6 6 0 0 0-6-6z"/></svg> <span class="Typo-sc-s3ymx8-0 hhzavA" font-family="body" color="text">192.168.0.2</span> <span class="Typo-sc-s3ymx8-0">· WORKGROUP</span></div>
+      <div class="FlexBox__GappedBox-sc-11b8gs4-0"><svg viewBox="0 0 50 50" width="18" height="18" class="Windows__SVG-sc-9zpmi6-0 dhSSsy"><path fill="#27A8E0" stroke="#27A8E0" d="M5 8l17-3v18H5zM25 4l20-3v22H25zM5 27h17v18L5 42zM25 27h20v22l-20-3z"/></svg> <span class="Typo-sc-s3ymx8-0 hhzavA">Microsoft Windows Server 2012 R2 Foundation (64 bits)</span></div></div></div>
+    <hr class="MuiDivider-root">
+    <div class="MuiCardActions-root MuiCardActions-spacing"><div class="FlexBox__GappedBox-sc-11b8gs4-0 jnMlmV">
+      <a class="PictoClick__Layout-sc-1e7fmkn-0 ecDYMo" href="#"><svg viewBox="0 0 24 24" height="24" width="24" fill="currentColor" color="black" class="StyledIconBase-sc-ea9ulj-0"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 5h18v14H3zM6 9l4 3-4 3z"/></svg></a>
+      <span><button class="PictoClick__Layout-sc-1e7fmkn-0 ecDYMo" type="button"><svg viewBox="0 0 24 24" height="24" width="24" fill="currentColor" color="black"><path d="M11 2h2v10h-2zM6 6a8 8 0 1 0 12 0l-1.5 1.5a6 6 0 1 1-9 0z"/></svg></button></span>
+      <span><button class="PictoClick__Layout-sc-1e7fmkn-0 ecDYMo" type="button"><svg x="0" y="0" viewBox="0 0 512 512" width="24"><use href="dist/vectors.svg#sprite-icon-lumiere"></use></svg></button></span>
+      <span><button class="PictoClick__Layout-sc-1e7fmkn-0 ecDYMo" type="button"><svg viewBox="0 0 24 24" width="24" height="24" fill="black"><path d="M12 2 7 20h10zM3 22h18v-2H3z"/></svg></button></span>
+      <a class="PictoClick__Layout-sc-1e7fmkn-0 ecDYMo" href="#"><svg viewBox="0 0 24 24" height="24" width="24" fill="currentColor" color="black" class="StyledIconBase-sc-ea9ulj-0"><path d="M6 3h12v18H6zM9 7h6v2H9z"/></svg></a>
+    </div></div>
+  </div></div></div>
+
+  <div><div class="mock-title">2. Statuts Windows Update</div>
+    <table class="sum table table-striped table-hover"><tbody>
+      <tr><td>Mis à jour</td><td><svg class="icon-size-mini"><use href="/dist/vectors.svg#sprite-wu-updated"></use></svg></td></tr>
+      <tr><td>Optionnel</td><td><svg class="icon-size-mini"><use href="/dist/vectors.svg#sprite-wu-optional"></use></svg></td></tr>
+      <tr><td>Critique</td><td><svg class="icon-size-mini"><use href="/dist/vectors.svg#sprite-wu-critical"></use></svg></td></tr>
+      <tr><td>Redémarrage</td><td><svg class="icon-size-mini"><use href="/dist/vectors.svg#sprite-wu-reboot"></use></svg></td></tr>
+      <tr><td>Suspendu</td><td><svg class="icon-size-mini"><use href="/dist/vectors.svg#sprite-wu-suspended"></use></svg></td></tr>
+      <tr><td>Désactivé</td><td><svg class="icon-size-mini"><use href="/dist/vectors.svg#sprite-wu-disabled"></use></svg></td></tr>
+      <tr><td>Inconnu</td><td><svg class="icon-size-mini"><use href="/dist/vectors.svg#sprite-wu-unknown"></use></svg></td></tr>
+    </tbody></table></div>
+  </div>
+
+  <div class="mock-title">3. Menu du profil</div>
+  <div id="profile-menu" class="MuiPopover-root Profile__StyledMenu-sc-16cqv7q-12" style="position:static;display:inline-block">
+   <div class="MuiPaper-root MuiMenu-paper MuiPopover-paper MuiPaper-elevation6 MuiPaper-rounded"><ul class="MuiList-root MuiMenu-list MuiList-padding" role="menu">
+    <div class="Profile__CenteredContainer-sc-16cqv7q-5"><div class="Profile__MenuHeader-sc-16cqv7q-11"><img alt="Gravatar for a.nest@exemple.fr" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" height="40" width="40" class="react-gravatar"><div class="Profile__UserName-sc-16cqv7q-6">NOM Prénom</div><div class="Profile__UserMail-sc-16cqv7q-7">a.nest@exemple.fr</div><a href="#" class="Profile__StyledHref-sc-16cqv7q-2"><button class="BaseButton-sc-k575aq-0 Profile__StyledButton-sc-16cqv7q-9">Gérer mon profil</button></a></div></div>
+    <hr class="MuiDivider-root Profile__StyledDivider-sc-16cqv7q-8">
+    <li class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root" role="menuitem"><a class="Profile__StyledHref-sc-16cqv7q-2"><div class="MuiListItemIcon-root"><svg viewBox="0 0 24 24" height="20" width="20" fill="currentColor"><path d="M5 3h14v18H5z"/></svg></div>Centre d'aide</a></li>
+    <li class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root" role="menuitem"><span class="Profile__InlineFlexSpan-sc-16cqv7q-1"><div class="MuiListItemIcon-root"><svg viewBox="0 0 24 24" height="20" width="20" fill="currentColor"><path d="M4 4h16v12H8l-4 4z"/></svg></div>Support en ligne</span></li>
+    <li class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root" role="menuitem"><a href="mailto:x@exemple.fr" class="Profile__StyledHref-sc-16cqv7q-2"><div class="MuiListItemIcon-root"><svg viewBox="0 0 24 24" height="20" width="20" fill="currentColor"><path d="M3 5h18v14H3z"/></svg></div>aide@exemple.fr</a></li>
+    <hr class="MuiDivider-root Profile__StyledDivider-sc-16cqv7q-8">
+    <li class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root" role="menuitem"><a href="/logout" class="Profile__StyledHref-sc-16cqv7q-2"><div class="MuiListItemIcon-root"><svg viewBox="0 0 24 24" height="20" width="20" fill="currentColor"><path d="M11 2h2v10h-2zM6 6a8 8 0 1 0 12 0l-1.5 1.5a6 6 0 1 1-9 0z"/></svg></div>Se déconnecter</a></li>
+   </ul></div></div>
+
+  <div class="mock-title">4. Bibliothèque de scripts</div>
+  <div class="ScriptLibrary__Layout-sc-7rut4y-0"><div class="ScriptLibrary__Header-sc-7rut4y-1"><span>Bibliothèque de scripts</span></div>
+   <div class="Library__Layout-sc-43qpke-0">
+    <div class="Layout-sc-f9d9cr-0 search"><div class="search input-container"><input type="text" placeholder="Rechercher"><span class="icon-end"><div class="End__Layout-sc-4tvd5p-0">|<svg viewBox="0 0 24 24" height="1.5em" width="1.5em" fill="currentColor"><path d="M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg></div></span></div></div>
+    <button class="BaseButton-sc-k575aq-0 success">Créer un template</button>
+    <div class="Library__Cards-sc-43qpke-1 cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px;margin-top:16px">
+     <div class="Card__Wrapper-sc-12fn581-2"><div class="Card__Layout-sc-12fn581-1"><div class="Card__CardLayout-sc-12fn581-0 fAqRbp"><div class="Card__Layout-sc-1ylsxmx-0 fwOCNE">
+      <div class="Card__Header-sc-1ylsxmx-1"><span class="title">Fix_GracePeriod.ps1 - Correction licence RDS</span><div class="tags"><span role="tag" class="Tag__Layout-sc-tav4yt-0">PowerShell</span><span role="tag" class="Tag__Layout-sc-tav4yt-0">8 Semaine(s)</span></div><div class="description"></div><span class="date">04/09/2026 09:10</span>
+        <div class="ButtonGroup__Layout-sc-fsrwqv-1 actions"><button class="BaseButton-sc-k575aq-0"><svg viewBox="0 0 24 24" height="16" width="16" fill="currentColor"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg></button><button class="BaseButton-sc-k575aq-0"><svg viewBox="0 0 24 24" height="16" width="16" fill="currentColor"><path d="M8 8h12v12H8z"/></svg></button><button class="BaseButton-sc-k575aq-0"><svg viewBox="0 0 24 24" height="16" width="16" fill="currentColor"><path d="M6 6h12v14H6z"/></svg></button></div></div>
+      <div class="Card__Content-sc-1ylsxmx-2"><span class="title">Commande</span><div class="Card__Command-sc-1ylsxmx-3"><pre># ============================================
+# Fix_GracePeriod.ps1
+# Correction licence RDS - Suppression GracePeriod
+# Execute via RG System (execution planifiee)</pre><button class="BaseButton-sc-k575aq-0 button"><svg viewBox="0 0 24 24" height="16" width="16" fill="currentColor"><path d="M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg></button></div></div>
+     </div></div></div></div>
+     <div class="Card__Wrapper-sc-12fn581-2"><div class="Card__Layout-sc-12fn581-1"><div class="Card__CardLayout-sc-12fn581-0 fAqRbp"><div class="Card__Layout-sc-1ylsxmx-0 fwOCNE">
+      <div class="Card__Header-sc-1ylsxmx-1"><span class="title">Log_Cleanup.ps1 - Purge centralisée des journaux</span><div class="tags"><span role="tag" class="Tag__Layout-sc-tav4yt-0">PowerShell</span><span role="tag" class="Tag__Layout-sc-tav4yt-0">1 Jour(s)</span></div><div class="description"></div><span class="date">09/06/2026 08:57</span>
+        <div class="ButtonGroup__Layout-sc-fsrwqv-1 actions"><button class="BaseButton-sc-k575aq-0"><svg viewBox="0 0 24 24" height="16" width="16" fill="currentColor"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg></button><button class="BaseButton-sc-k575aq-0"><svg viewBox="0 0 24 24" height="16" width="16" fill="currentColor"><path d="M8 8h12v12H8z"/></svg></button><button class="BaseButton-sc-k575aq-0"><svg viewBox="0 0 24 24" height="16" width="16" fill="currentColor"><path d="M6 6h12v14H6z"/></svg></button></div></div>
+      <div class="Card__Content-sc-1ylsxmx-2"><span class="title">Commande</span><div class="Card__Command-sc-1ylsxmx-3"><pre># ============================================
+# Log_Cleanup.ps1
+# Purge centralisee des journaux du dossier C:\RG\</pre><button class="BaseButton-sc-k575aq-0 button"><svg viewBox="0 0 24 24" height="16" width="16" fill="currentColor"><path d="M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg></button></div></div>
+     </div></div></div></div>
+    </div>
+   </div></div>
+</div>
+</div>
+<script>
+if (/view=login/.test(location.search)) { document.getElementById('app-mock').hidden = true; document.getElementById('login-mock').hidden = false; document.body.removeAttribute('id'); }
+</script>
+</body>
+</html>

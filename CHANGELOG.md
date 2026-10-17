@@ -1,5 +1,19 @@
 # Journal des modifications
 
+## 1.5.0 — 2026-10-17
+
+Surfaces relevées sur le site réel (balisage lu en direct, sans rien modifier) : `96-surfaces.css`.
+
+- **Fenêtre d'agent** (survol d'un nom d'hôte) : carte du thème ; pastille d'icône compacte ; **logo Windows aux couleurs de marque** ; **actions** (terminal, redémarrer, Assist, maintenance, fiche) en boutons carrés homogènes, trait gris, marque au survol ; le pictogramme Assist (sprite multicolore) devient le casque du thème.
+- **Statut Windows Update** (boucliers du tableau de synthèse) : boucliers du thème, un par état (à jour, optionnel, critique, redémarrage, suspendu, désactivé, inconnu), couleur = état.
+- **Menu latéral** : « Rechercher » aligné comme les autres entrées (le paragraphe interne avait sa propre marge) ; logo sans l'étiquette « suite ».
+- **Profil** : avatar en **initiales** sur disque de marque (tirées de l'adresse du Gravatar, ex. a.nest → AN) à la place de l'identicône ; menu du profil refait (carte arrondie, avatar de 56 px, bouton « Gérer mon profil » en pilule, icônes grises → marque au survol, « Se déconnecter » en rouge) ; page « Mon profil » : avatar rond, titre, libellés.
+- **Bibliothèque de scripts** : cartes (titre, pastilles de langage et de durée, date, actions en boutons carrés, bloc de commande clair en thème clair au lieu du noir codé en dur, défilement au-delà de 150 px), barre de filtres homogène.
+- **Courbes** : en-tête de section sans bandeau gris (icône, titre, repli), cartes un peu plus aérées.
+- **Panneau Brain** : tiroir avec filet et ombre (son contenu est une application distincte, non stylable).
+- **Page de connexion** : carte centrée, sans l'image promotionnelle ; logo en silhouette blanche en thème sombre.
+- Banc de test : `test/surfaces.html` (balisage fictif de la fenêtre d'agent, du menu du profil, de la bibliothèque, des boucliers WU ; `?view=login`, `?theme=dark`).
+
 ## 1.4.1 — 2026-10-17
 
 - **Courbes en thème sombre** : cartes sombres (plus de carte blanche au milieu d'une page sombre). Le dessin des séries (canvas) est inversé avec rotation de teinte et surcroît de luminosité ; légendes, valeurs min / moyenne / max, titres et axes reprennent les couleurs du thème.

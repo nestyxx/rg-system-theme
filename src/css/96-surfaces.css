@@ -1,0 +1,551 @@
+/* ===================================================================
+   21. Surfaces relevées sur le site réel (v1.5) : fenêtre d'agent, boucliers Windows Update, menu du profil,
+   bibliothèque de scripts, panneau Brain, page de connexion.
+   Balisage observé en direct (classes styled-components : on cible « [class*="Nom__Partie-sc"] »).
+   =================================================================== */
+
+/* --- Menu latéral : « Rechercher » (rendu par React, sans lien) aligné et coloré comme les autres entrées --- */
+html[data-rgx] #menu-details li#search-menu .name-menu p {
+  margin: 0;
+  color: inherit;
+}
+html[data-rgx] #menu-details li#search-menu .menu-line-word {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 100%;
+}
+html[data-rgx] #menu-details li#search-menu .menu-line-word > div {
+  display: block;
+  line-height: normal;
+}
+html[data-rgx] #menu-details li#search-menu .name-menu {
+  display: block;
+  line-height: normal;
+}
+html[data-rgx] #menu-details li#search-menu.disabled {
+  opacity: 0.55;
+}
+
+/* ===================================================================
+   Fenêtre d'agent (survol d'un nom d'hôte)
+   =================================================================== */
+html[data-rgx] [class*="Popover__Layout-sc"] .MuiCard-root {
+  min-width: 320px;
+  padding: 4px 0;
+  border: 1px solid var(--rgx-border);
+  border-radius: 14px;
+  background: var(--rgx-surface);
+  box-shadow: var(--rgx-shadow-pop);
+  overflow: hidden;
+}
+html[data-rgx] [class*="BasePedigreeCard__StyledCardContent-sc"] {
+  padding: 14px 18px;
+}
+html[data-rgx] [class*="Popover__Layout-sc"] .MuiDivider-root {
+  margin: 0;
+}
+/* Identité : pastille d'icône plus compacte que dans les en-têtes de page */
+html[data-rgx] [class*="Popover__Layout-sc"] [class*="Identity__Layout-sc"] > svg.icon {
+  width: 46px !important;
+  height: 46px !important;
+  padding: 10px;
+  border-radius: 12px;
+}
+html[data-rgx] [class*="Popover__Layout-sc"] [class*="Identity__Layout-sc"] .name {
+  font-size: 20px;
+}
+/* Lignes d'information (adresse, domaine, système) : pictogramme gris, texte secondaire */
+html[data-rgx] [class*="Popover__Layout-sc"] [class*="BasePedigreeCard__StyledCardContent-sc"] svg {
+  color: var(--rgx-muted);
+}
+html[data-rgx] [class*="Popover__Layout-sc"] [class*="Typo-sc"] {
+  font-size: 13px;
+  color: var(--rgx-ink);
+}
+/* Logo Windows : aplat de marque (le tracé d'origine porte fill + stroke bleu codés en dur) */
+html[data-rgx] [class*="Windows__SVG-sc"] path {
+  fill: var(--rgx-brand) !important;
+  stroke: var(--rgx-brand) !important;
+}
+/* Actions (terminal, redémarrer, Assist, maintenance, fiche) : boutons carrés homogènes, trait gris, marque au survol */
+html[data-rgx] [class*="MuiCardActions-root"] {
+  padding: 8px 12px;
+}
+html[data-rgx] [class*="MuiCardActions-root"] > div {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 4px;
+}
+html[data-rgx] [class*="PictoClick__Layout-sc"] {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--rgx-muted);
+  cursor: pointer;
+  transition: background-color 0.12s, color 0.12s;
+}
+html[data-rgx] [class*="PictoClick__Layout-sc"]:hover:not(:disabled) {
+  background: var(--rgx-brand-soft);
+  color: var(--rgx-brand);
+}
+html[data-rgx] [class*="PictoClick__Layout-sc"]:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+html[data-rgx] [class*="PictoClick__Layout-sc"] svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  color: inherit;
+}
+/* Le pictogramme « Assist » est un sprite multicolore : remplacé par le casque du thème (icons.generated.css) */
+html[data-rgx] [class*="PictoClick__Layout-sc"] svg:has(> use) {
+  width: 20px;
+  height: 20px;
+}
+html[data-rgx] [class*="PictoClick__Layout-sc"] svg path:not([fill="none"]) {
+  fill: currentColor;
+}
+html[data-rgx] [class*="PictoClick__Layout-sc"] svg path[fill="none"] {
+  fill: none;
+}
+
+/* ===================================================================
+   Statut Windows Update (boucliers du tableau de synthèse, fiches) : boucliers du thème, couleur = état
+   =================================================================== */
+html[data-rgx] svg.icon-size-mini:has(> use[href*="#sprite-wu-"]) {
+  width: 18px;
+  height: 18px;
+}
+
+/* ===================================================================
+   Profil : avatar (initiales) et menu
+   =================================================================== */
+html[data-rgx] #profile-menu-toggler[data-rgx-initials] img {
+  display: none;
+}
+html[data-rgx] #profile-menu-toggler[data-rgx-initials]::before {
+  content: attr(data-rgx-initials);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rgx-brand), color-mix(in srgb, var(--rgx-brand) 60%, #7c5cff));
+  color: var(--rgx-brand-ink);
+  font: 600 11.5px/1 var(--font-sans);
+  letter-spacing: 0.02em;
+}
+html[data-rgx] [class*="Profile__MenuHeader-sc"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 20px 14px;
+  text-align: center;
+}
+html[data-rgx] [class*="Profile__MenuHeader-sc"][data-rgx-initials] img {
+  display: none;
+}
+html[data-rgx] [class*="Profile__MenuHeader-sc"][data-rgx-initials]::before {
+  content: attr(data-rgx-initials);
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rgx-brand), color-mix(in srgb, var(--rgx-brand) 60%, #7c5cff));
+  color: var(--rgx-brand-ink);
+  font: 600 20px/1 var(--font-display);
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 0 4px var(--rgx-brand-soft);
+}
+html[data-rgx] [class*="Profile__MenuHeader-sc"] img {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+html[data-rgx] [class*="Profile__UserName-sc"] {
+  font: 600 15px/1.3 var(--font-display);
+  color: var(--rgx-ink);
+}
+html[data-rgx] [class*="Profile__UserMail-sc"] {
+  margin-bottom: 12px;
+  font-size: 12.5px;
+  color: var(--rgx-muted);
+}
+html[data-rgx] [class*="Profile__StyledButton-sc"] {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--rgx-border);
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  font: 500 13px/1.4 var(--font-sans);
+}
+html[data-rgx] [class*="Profile__StyledButton-sc"]:hover {
+  border-color: var(--rgx-brand);
+  color: var(--rgx-brand);
+}
+html[data-rgx] #profile-menu .MuiMenu-paper {
+  min-width: 260px;
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+}
+html[data-rgx] #profile-menu .MuiDivider-root {
+  margin: 4px 0;
+}
+html[data-rgx] #profile-menu .MuiMenuItem-root {
+  margin: 0 6px;
+  padding: 0;
+}
+html[data-rgx] #profile-menu .MuiMenuItem-root > a,
+html[data-rgx] #profile-menu .MuiMenuItem-root > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  color: var(--rgx-ink);
+  text-decoration: none;
+}
+html[data-rgx] #profile-menu .MuiListItemIcon-root {
+  min-width: 0;
+  color: var(--rgx-muted);
+}
+html[data-rgx] #profile-menu .MuiListItemIcon-root svg {
+  width: 18px;
+  height: 18px;
+}
+html[data-rgx] #profile-menu .MuiMenuItem-root:hover .MuiListItemIcon-root {
+  color: var(--rgx-brand);
+}
+html[data-rgx] #profile-menu .MuiMenuItem-root:has(a[href="/logout"]) > a,
+html[data-rgx] #profile-menu .MuiMenuItem-root:has(a[href="/logout"]) .MuiListItemIcon-root {
+  color: var(--rgx-crit);
+}
+html[data-rgx] #profile-menu .MuiMenuItem-root:has(a[href="/logout"]):hover {
+  background: var(--rgx-crit-bg);
+}
+
+/* ===================================================================
+   Panneau Brain (tiroir de droite) : le contenu est une application distincte ; on habille le tiroir
+   =================================================================== */
+html[data-rgx] #mimibrain.mimibrain-open {
+  border-left: 1px solid var(--rgx-border);
+  box-shadow: -16px 0 40px rgba(15, 23, 42, 0.14);
+}
+html[data-rgx] #mimibrain-resize-handle {
+  background: transparent;
+  transition: background-color 0.15s;
+}
+html[data-rgx] #mimibrain-resize-handle:hover {
+  background: var(--rgx-brand-soft);
+}
+
+/* ===================================================================
+   Configuration › Bibliothèque de scripts
+   =================================================================== */
+html[data-rgx] [class*="ScriptLibrary__Header-sc"] {
+  padding: 8px 0 14px;
+  border-bottom: 1px solid var(--rgx-border);
+  font: 600 22px/1.3 var(--font-display);
+  color: var(--rgx-ink);
+  letter-spacing: -0.015em;
+}
+html[data-rgx] [class*="Library__Layout-sc"] {
+  padding-top: 18px;
+}
+/* Filtres : champ de recherche, sélecteur, date, bouton — même hauteur */
+html[data-rgx] [class*="Library__Layout-sc"] .input-container {
+  min-height: 40px;
+  border-radius: var(--radius-md);
+}
+html[data-rgx] [class*="End__Layout-sc"] {
+  color: transparent;   /* barre « | » décorative devant la loupe */
+}
+html[data-rgx] [class*="End__Layout-sc"] svg {
+  color: var(--rgx-muted);
+}
+/* Cartes de scripts */
+html[data-rgx] [class*="Card__CardLayout-sc"] {
+  height: 100%;
+  border: 1px solid var(--rgx-border);
+  border-radius: 14px;
+  background: var(--rgx-surface);
+  box-shadow: var(--rgx-shadow);
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+html[data-rgx] [class*="Card__CardLayout-sc"]:hover {
+  border-color: color-mix(in srgb, var(--rgx-brand) 40%, var(--rgx-border));
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] [class*="Card__Layout-sc"][class*="fwOCNE"],
+html[data-rgx] [class*="Card__CardLayout-sc"] > [class*="Card__Layout-sc"] {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 14px;
+  padding: 16px 18px;
+}
+html[data-rgx] [class*="Card__Header-sc"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "title actions" "tags actions" "date actions";
+  gap: 6px 12px;
+  align-items: start;
+}
+html[data-rgx] [class*="Card__Header-sc"] > .title {
+  grid-area: title;
+  font: 600 14.5px/1.35 var(--font-display);
+  color: var(--rgx-ink);
+  overflow-wrap: anywhere;
+}
+html[data-rgx] [class*="Card__Header-sc"] > .tags {
+  grid-area: tags;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+html[data-rgx] [class*="Card__Header-sc"] > .description {
+  display: none;
+}
+html[data-rgx] [class*="Card__Header-sc"] > .date {
+  grid-area: date;
+  font-size: 12px;
+  color: var(--rgx-muted);
+}
+html[data-rgx] [class*="Card__Header-sc"] > [class*="ButtonGroup__Layout-sc"] {
+  grid-area: actions;
+  display: flex;
+  gap: 4px;
+  align-self: start;
+}
+html[data-rgx] [class*="Tag__Layout-sc"] {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--rgx-surface-2);
+  color: var(--rgx-muted);
+  font: 500 11.5px/1.5 var(--font-sans);
+  white-space: nowrap;
+}
+html[data-rgx] [class*="Card__Header-sc"] > .tags > [role="tag"]:first-child {
+  background: var(--rgx-brand-soft);
+  color: var(--rgx-brand);
+}
+/* Boutons d'action d'une carte (modifier, dupliquer, supprimer) et bouton d'agrandissement du code */
+html[data-rgx] [class*="Card__Header-sc"] [class*="ButtonGroup__Layout-sc"] button,
+html[data-rgx] [class*="Card__Command-sc"] > button {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+  background: var(--rgx-surface);
+  color: var(--rgx-muted);
+}
+html[data-rgx] [class*="Card__Header-sc"] [class*="ButtonGroup__Layout-sc"] button:hover,
+html[data-rgx] [class*="Card__Command-sc"] > button:hover {
+  border-color: var(--rgx-brand);
+  background: var(--rgx-brand-soft);
+  color: var(--rgx-brand);
+}
+html[data-rgx] [class*="Card__Header-sc"] [class*="ButtonGroup__Layout-sc"] button:last-child:hover {
+  border-color: var(--rgx-crit);
+  background: var(--rgx-crit-bg);
+  color: var(--rgx-crit);
+}
+html[data-rgx] [class*="Card__Content-sc"] {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+html[data-rgx] [class*="Card__Content-sc"] > .title {
+  font: 600 11px/1.2 var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--rgx-muted);
+}
+/* Code : bloc sombre en thème sombre, clair en thème clair (le noir d'origine est codé en dur) */
+html[data-rgx] [class*="Card__Command-sc"] {
+  position: relative;
+  padding: 0;
+  border: 1px solid var(--rgx-border);
+  border-radius: 10px;
+  background: var(--rgx-surface-2);
+  overflow: hidden;
+}
+html[data-rgx] [class*="Card__Command-sc"] > pre {
+  max-height: 150px;
+  margin: 0;
+  padding: 12px 48px 12px 14px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--rgx-ink);
+  font: 400 12px/1.55 var(--font-mono);
+  overflow: auto;
+}
+html[data-rgx] [class*="Card__Command-sc"] > button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+/* ===================================================================
+   Page de connexion : carte centrée, sans image
+   =================================================================== */
+html[data-rgx] .form-public-page {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+  background: var(--rgx-bg);
+}
+html[data-rgx] .form-public-page > .row {
+  width: 100%;
+  max-width: 440px;
+  margin: 0;
+}
+html[data-rgx] .form-public-page .block-img {
+  display: none;
+}
+html[data-rgx] .form-public-page .col-md-4 {
+  float: none;
+  width: 100%;
+  padding: 0;
+}
+html[data-rgx] .form-public-page .block-form {
+  padding: 36px 36px 32px;
+  border: 1px solid var(--rgx-border);
+  border-radius: 20px;
+  background: var(--rgx-surface);
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] .form-public-page #brand-logo {
+  width: 200px;
+  height: 64px;
+  margin: 0 auto 8px;
+}
+html[data-rgx] .form-public-page .title-header {
+  margin: 12px 0 24px;
+  font: 600 24px/1.25 var(--font-display);
+  letter-spacing: -0.02em;
+  color: var(--rgx-ink);
+}
+html[data-rgx] .form-public-page .form-group {
+  margin-bottom: 16px;
+}
+html[data-rgx] .form-public-page .control-label {
+  margin-bottom: 6px;
+  font: 500 13px/1.4 var(--font-sans);
+  color: var(--rgx-muted);
+}
+html[data-rgx] .form-public-page .form-control {
+  height: 42px;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+html[data-rgx] .form-public-page .btn-primary {
+  width: 100%;
+  height: 42px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+html[data-rgx] #profile-menu li,
+html[data-rgx] .MuiMenu-list li {
+  list-style: none;
+}
+html[data-rgx] .form-public-page .control-label {
+  display: block;
+  width: auto;
+  text-align: left;
+}
+html[data-rgx] .form-public-page .form-control {
+  display: block;
+  width: 100%;
+  float: none;
+}
+html[data-rgx] .form-public-page #brand-logo {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+/* Le logo d'origine est foncé : en sombre, silhouette blanche */
+html[data-rgx][data-rgx-theme="dark"] .form-public-page #brand-logo {
+  filter: brightness(0) invert(1);
+}
+
+/* ===================================================================
+   Données › Courbes : en-tête de section (icône + titre + repli) et cartes de graphiques
+   =================================================================== */
+html[data-rgx] .chart-plugin-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 12px;
+  padding: 2px 2px 10px;
+  border: 0;
+  border-bottom: 1px solid var(--rgx-border);
+  border-radius: 0;
+  background: transparent !important;
+  font: 600 18px/1.3 var(--font-display);
+  letter-spacing: -0.01em;
+}
+html[data-rgx] .chart-plugin-title > .pull-left,
+html[data-rgx] .chart-plugin-title > .pull-right {
+  float: none;
+}
+html[data-rgx] .chart-plugin-title > .pull-left svg {
+  width: 22px;
+  height: 22px;
+  color: var(--rgx-brand);
+}
+html[data-rgx] .chart-plugin-title > a.pull-right {
+  margin-left: auto;
+}
+html[data-rgx] .chart-container {
+  margin-bottom: 14px;
+  padding: 10px 16px 12px;
+}
+html[data-rgx] .chart-container .dygraph-title {
+  font-size: 13.5px !important;
+  letter-spacing: -0.005em;
+}
+html[data-rgx] .chart-container .graph-legend {
+  padding-left: 8px;
+}
+
+/* ===================================================================
+   Mon profil (Gestion › Profil) : avatar rond, sections en cartes
+   =================================================================== */
+html[data-rgx] .profile-avatar img.react-gravatar {
+  width: 88px !important;
+  height: 88px !important;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px var(--rgx-brand-soft), 0 0 0 5px var(--rgx-border);
+}
+html[data-rgx] [class*="UserProfile__Layout-sc"] h3 {
+  font: 600 26px/1.2 var(--font-display);
+  letter-spacing: -0.02em;
+  color: var(--rgx-ink);
+}
+html[data-rgx] [class*="UserProfile__Layout-sc"] .tab-content,
+html[data-rgx] [class*="UserProfile__Layout-sc"] [role="tabpanel"] {
+  max-width: 980px;
+}
+html[data-rgx] [class*="UserProfile__Layout-sc"] label {
+  font: 500 12.5px/1.4 var(--font-sans);
+  color: var(--rgx-muted);
+}
