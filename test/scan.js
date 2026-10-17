@@ -122,3 +122,36 @@
     return res;
   };
 })();
+
+// Balayage d'alignement vertical : icône (svg, glyphicon, image ≤ 28 px) vs texte voisin dans le même parent.
+//   await rgxAlign(['ticket'], 'light')
+(function () {
+  const path = (e) => { const o = []; for (let x = e; x && x.tagName && o.length < 3; x = x.parentElement) o.push(x.tagName.toLowerCase() + (x.id ? '#' + x.id : '') + (typeof x.className === 'string' && x.className ? '.' + x.className.trim().split(/\s+/)[0].slice(0, 26) : '')); return o.join(' < '); };
+  function scanAlign(doc) {
+    const win = doc.defaultView; const out = []; const seen = new Set();
+    doc.querySelectorAll('svg, .glyphicon, i.rgx-i, img, ins.jstree-icon, .caret-menu').forEach((ic) => {
+      if (ic.closest('#tree, .jstree')) return;
+      const r = ic.getBoundingClientRect(); if (r.width < 6 || r.width > 40 || r.height < 6 || r.height > 40) return;
+      const cs = win.getComputedStyle(ic); if (cs.visibility === 'hidden' || cs.display === 'none') return;
+      const p = ic.parentElement; if (!p) return;
+      let txt = null; for (const n of p.childNodes) { if (n.nodeType === 3 && n.nodeValue.trim()) { txt = n; break; } if (n.nodeType === 1 && n !== ic && !n.querySelector('svg,img') && n.textContent.trim() && n.getBoundingClientRect().height < 40) { txt = n; break; } }
+      if (!txt) return;
+      const rg = doc.createRange(); rg.selectNodeContents(txt); const tr = rg.getBoundingClientRect(); if (tr.height < 4) return;
+      const d = (r.top + r.height / 2) - (tr.top + tr.height / 2);
+      if (Math.abs(d) > 3.5) { const key = path(p) + (d > 0 ? ' bas' : ' haut'); if (!seen.has(key)) { seen.add(key); out.push({ k: 'icône ' + (d > 0 ? 'plus bas' : 'plus haut') + ' de ' + Math.abs(Math.round(d)) + 'px', txt: (txt.textContent || '').trim().slice(0, 22), at: path(p) }); } }
+    });
+    return out.slice(0, 14);
+  }
+  window.rgxAlign = async function (names, theme) {
+    const res = {};
+    for (const name of names) {
+      const f = document.createElement('iframe');
+      f.style.cssText = 'position:fixed;left:0;top:0;width:1440px;height:900px;border:0;visibility:hidden';
+      f.src = '/fixtures/' + name + '.html?theme=' + theme; document.body.appendChild(f);
+      await new Promise((ok) => { f.onload = ok; setTimeout(ok, 8000); }); await new Promise((ok) => setTimeout(ok, 900));
+      try { res[name] = scanAlign(f.contentDocument); } catch (e) { res[name] = [{ k: 'erreur', txt: String(e), at: '' }]; }
+      f.remove();
+    }
+    return res;
+  };
+})();

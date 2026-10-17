@@ -342,3 +342,171 @@ html[data-rgx] .btn-xs {
   padding: 3px 9px;
   font-size: 12px;
 }
+
+/* ===================================================================
+   13. Menu latéral : mise en page en flex (icône, libellé, étiquette « New », chevron centrés sur la ligne)
+   =================================================================== */
+/* Menu étendu */
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-0 > a {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  line-height: 20px;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-0 > a > div {
+  float: none;
+  padding: 0 !important;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-0 > a > .menu-line-word {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-0 > a > .pull-right {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-0 svg.icon-menu {
+  flex: none;
+  float: none;
+  margin: 0 8px 0 0 !important;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li#search-menu .menu-line-word {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li#search-menu .menu-line-word > div {
+  padding: 0;
+}
+html[data-rgx] #menu-details li.menu-lvl-0 > a .caret-menu {
+  margin: 0 !important;
+}
+/* Étiquette « New » : pastille (maquette) à la place de l'exposant */
+html[data-rgx] #menu-details sup {
+  position: static;
+  display: inline-block;
+  margin: 0 0 0 8px !important;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--rgx-brand-soft);
+  color: var(--rgx-brand);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 14px;
+  vertical-align: middle;
+}
+
+/* Menu réduit (.left-menu-shrink, 40 px) : icônes centrées dans une pastille, ni libellé, ni chevron, ni étiquette */
+html[data-rgx] .left-menu-shrink #menu-details li.menu-lvl-0 {
+  height: 40px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+html[data-rgx] .left-menu-shrink #menu-details li.menu-lvl-0 > a,
+html[data-rgx] .left-menu-shrink #menu-details li#search-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 36px;
+  margin: 2px 4px !important;
+  padding: 0 !important;
+  border-radius: var(--radius-md);
+}
+html[data-rgx] .left-menu-shrink #menu-details li#search-menu {
+  height: 36px;
+  min-height: 0;
+  line-height: 36px;
+}
+html[data-rgx] .left-menu-shrink #menu-details li.menu-lvl-0 > a > div,
+html[data-rgx] .left-menu-shrink #menu-details li#search-menu .menu-line-word {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: none;
+  padding: 0 !important;
+}
+html[data-rgx] .left-menu-shrink #menu-details svg.icon-menu {
+  float: none;
+  margin: 0 !important;
+}
+html[data-rgx] .left-menu-shrink #menu-details .caret-menu,
+html[data-rgx] .left-menu-shrink #menu-details .pull-right,
+html[data-rgx] .left-menu-shrink #menu-details sup,
+html[data-rgx] .left-menu-shrink #menu-details .name-menu {
+  display: none !important;
+}
+/* Volet qui s'ouvre à côté de l'icône : carte du thème, titre de la section en tête */
+html[data-rgx] .left-menu-shrink #menu-details ul.ul-lvl-1 {
+  margin: -40px 0 0 44px;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow-pop);
+  background-color: color-mix(in srgb, #fff 6%, var(--rgx-side)) !important;
+}
+html[data-rgx] .left-menu-shrink #menu-details li.submenu-title {
+  height: auto;
+  padding: 6px 10px 8px;
+  line-height: 18px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rgx-side-text);
+}
+html[data-rgx] .left-menu-shrink #menu-details li.menu-lvl-1 {
+  min-height: 0;
+  height: auto;
+  width: auto;
+}
+html[data-rgx] .left-menu-shrink #menu-details li.menu-lvl-1 > a {
+  padding: 0 10px;
+  margin: 1px 0 !important;
+  line-height: 30px;
+  white-space: nowrap;
+}
+
+/* --- Arborescence : plus aucune bordure sur les états survol / sélection (RG ajoute 1 px au survol, ce qui décale le texte) --- */
+html[data-rgx] #tree li > a,
+html[data-rgx] #tree li > a.jstree-hovered,
+html[data-rgx] #tree li > a.jstree-clicked,
+html[data-rgx] #tree li > a:hover {
+  border: 0 !important;
+  padding: 0 8px 0 2px !important;
+  height: 24px !important;
+  line-height: 24px;
+}
+html[data-rgx] .left-menu-shrink #menu-details li.submenu-title:empty {
+  display: none !important;
+}
+/* Flèche d'ouverture des nœuds : centrée sur la ligne de 24 px (le sprite d'origine fait 18 px) */
+html[data-rgx] #tree li > ins.jstree-icon {
+  margin-top: 3px;
+}
+/* Flèches d'ouverture : chevrons du thème à la place du sprite (qui porte aussi les pointillés de liaison) */
+html[data-rgx] #tree li:not(.jstree-loading) > ins.jstree-icon {
+  position: relative;
+  background: none !important;
+  color: var(--rgx-muted);
+}
+html[data-rgx] #tree li.jstree-closed:not(.jstree-loading) > ins.jstree-icon::before,
+html[data-rgx] #tree li.jstree-open:not(.jstree-loading) > ins.jstree-icon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 12px;
+  height: 12px;
+  background-color: currentColor;
+  opacity: 0.7;
+  -webkit-mask: var(--rgx-ic-chevronRight) center/12px 12px no-repeat;
+  mask: var(--rgx-ic-chevronRight) center/12px 12px no-repeat;
+}
+html[data-rgx] #tree li.jstree-open:not(.jstree-loading) > ins.jstree-icon::before {
+  transform: rotate(90deg);
+}

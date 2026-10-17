@@ -1,5 +1,11 @@
 # Journal des modifications
 
+## 1.0.3 — 2026-10-17
+
+- **Arborescence** : le texte ne se décale plus au survol (RG ajoutait 1 px de bordure aux lignes survolées) ; flèches d'ouverture centrées et remplacées par des chevrons (disparition des pointillés de liaison).
+- **Menu** : mise en page en flex — icône, libellé, étiquette « New » (désormais une pastille) et chevron centrés sur la ligne ; **menu réduit refait** (icônes centrées dans des pastilles de 36 px, plus de chevrons ni de libellés, volet de sous-menu en carte avec titre de section).
+- Outils de test : `rgxAlign` (alignement vertical icône / texte) dans test/scan.js.
+
 ## 1.0.2 — 2026-10-17
 
 Deuxième série de retouches après essai sur le site réel.
