@@ -1,5 +1,17 @@
 # Journal des modifications
 
+## 2.0.0 — 2026-10-17
+
+Mise à jour majeure : analyse « à l'envers » du site (quelles classes d'origine sur quelles pages, lesquelles gardent leur style), adaptation à toutes les largeurs d'écran, audit des textes.
+
+- **Adaptation à la largeur d'écran** (nouveau). Jusqu'ici, sous ~900 px de large le contenu était inaccessible (menu 200 px + arborescence 310 px, défilement horizontal de toute la page). Désormais : menu réduit en rail d'icônes sous 1200 px, arborescence masquée sous 1000 px et ouvrable en superposition (avec voile, fermeture au clic ou à la navigation), menu et arborescence en tiroirs sous 768 px avec un bouton « menu » dans l'en-tête, en-tête compact (titre de la page, bascule de thème, avatar). L'état choisi par l'utilisateur est rétabli quand la fenêtre redevient large. Vérifié sur le site réel à 390, 768, 900, 1440 et 1920 px, en clair et en sombre : plus aucun débordement de page. Les écrans très denses défilent dans leur zone.
+- **Chasse aux styles d'origine, par mesure** : pour chaque élément visible, comparaison du style avec et sans le thème (voir `docs/DEVELOPPEMENT.md`). Corrigés : fonds gris d'origine (fil d'Ariane, panneaux d'aide, historique de sauvegarde, avatars, adornments), filets `#ddd`, textes `#333` / `#707070` / marine illisibles en sombre, cases à cocher et interrupteurs RG, champ MUI à halo bleu, pastilles de compteur, balles de chargement, polices « Helvetica » restantes, couleurs en ligne (`#008800`, `#76da76`) selon le thème.
+- **Tableaux** : toutes les familles prennent la même présentation (voir 1.8.2), plus la colonne Criticité.
+- **Menu** : infobulle « Nom — à quoi sert la section » sur chaque entrée (utile en rail d'icônes).
+- **Titres et textes** : relevé de ~750 libellés sur 49 pages, proposé à l'éditeur dans `docs/PROPOSITION-TEXTES.md` (langue, accents, genre de « template », casse, unités, actions ambiguës).
+- **Barre d'outils des tickets** : flex avec retour à la ligne (1.8.1), alignée à gauche en mobile.
+- **README et captures** régénérés (ajout d'une capture tablette) ; guide développeur complété.
+
 ## 1.8.2 — 2026-10-17
 
 Harmonisation des tableaux (inventaire de toutes les familles de tableaux sur le site réel).

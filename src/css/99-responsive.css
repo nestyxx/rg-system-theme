@@ -1,0 +1,169 @@
+/* ===================================================================
+   99. Adaptation à la largeur d'écran
+   RG System est conçu pour le bureau : menu 200 px + arborescence 310 px, soit 510 px de structure avant le moindre
+   contenu. Sous 1200 px le contenu devenait inaccessible (défilement horizontal de toute la page).
+     < 1200 px : menu réduit en rail d'icônes (content.js clique le bouton d'origine) ;
+     <  1000 px : arborescence masquée ; elle s'ouvre à la demande, en superposition, avec le bouton d'origine ;
+     <  768 px  : menu en tiroir (bouton « menu » ajouté dans l'en-tête), arborescence en tiroir, en-tête compact.
+   =================================================================== */
+html[data-rgx] #rgx-m-burger { display: none; }
+
+@media (max-width: 999px) {
+  /* La colonne de l'arborescence n'existe plus : elle passe au-dessus du contenu */
+  html[data-rgx] #block-dashboard { grid-template-columns: 200px 0 minmax(0, 1fr) !important; }
+  html[data-rgx] #block-dashboard.left-menu-shrink { grid-template-columns: 40px 0 minmax(0, 1fr) !important; }
+  html[data-rgx] #dragbar { display: none !important; }
+  html[data-rgx] #tree-block {
+    position: fixed !important;
+    top: 56px;
+    bottom: 0;
+    left: 200px;
+    width: min(340px, 86vw) !important;
+    z-index: 1100;
+    transition: transform 0.2s ease;
+    box-shadow: var(--rgx-shadow-pop);
+  }
+  html[data-rgx] #block-dashboard.left-menu-shrink #tree-block { left: 40px; }
+  html[data-rgx] #tree-block.shrunk-tree { transform: translateX(-110%); visibility: hidden; box-shadow: none; }
+  /* Voile derrière l'arborescence ouverte (un clic dessus la referme : content.js) */
+  html[data-rgx] #block-dashboard:has(#tree-block:not(.shrunk-tree))::after {
+    content: "";
+    position: fixed;
+    inset: 56px 0 0 0;
+    background: rgb(5 10 20 / 0.45);
+    z-index: 1050;
+  }
+  html[data-rgx] #root { min-width: 0; overflow-x: auto; }
+}
+
+@media (max-width: 767px) {
+  html[data-rgx] #block-dashboard {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "header" "market-bar" "content" !important;
+    grid-template-rows: 56px auto minmax(0, 1fr) !important;
+  }
+  /* Menu en tiroir */
+  html[data-rgx] #block-menu-left {
+    position: fixed !important;
+    inset: 0 auto 0 0;
+    width: min(280px, 84vw) !important;
+    z-index: 1300;
+    transform: translateX(-105%);
+    transition: transform 0.22s ease;
+    box-shadow: var(--rgx-shadow-pop);
+  }
+  html[data-rgx].rgx-m-nav #block-menu-left { transform: none; }
+  html[data-rgx] #block-menu-left #head-menu,
+  html[data-rgx] #block-menu-left #menu-details { width: 100% !important; }
+  html[data-rgx] #menu-main-burger { display: none !important; }
+  html[data-rgx].rgx-m-nav #block-dashboard::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgb(5 10 20 / 0.55);
+    z-index: 1250;
+  }
+  html[data-rgx] #tree-block { left: 0 !important; top: 56px; width: min(360px, 90vw) !important; }
+  html[data-rgx] #block-dashboard:has(#tree-block:not(.shrunk-tree))::after { inset: 56px 0 0 0; }
+
+  /* En-tête compact : bouton menu, bouton arborescence, titre qui se tronque, bascule de thème et avatar */
+  html[data-rgx] #rgx-m-burger {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin-right: 4px;
+    padding: 0;
+    border: 1px solid var(--rgx-border);
+    border-radius: var(--radius-md);
+    background: var(--rgx-surface);
+    color: var(--rgx-ink);
+    cursor: pointer;
+  }
+  html[data-rgx] #header header .MuiToolbar-root { padding-left: 10px; padding-right: 10px; gap: 4px; }
+  html[data-rgx] #header header .MuiToolbar-root > div:first-of-type { min-width: 0; flex: 1 1 auto; overflow: hidden; }
+  html[data-rgx] #header .pipe { display: none; }
+  html[data-rgx] #header .icons { flex: 0 0 auto; gap: 2px; }
+  html[data-rgx] #header .icons .rgx-hdr { display: none; }
+  html[data-rgx] #header button.brain { padding: 0 8px; }
+  html[data-rgx] #header button.brain span:not([class*="icon"]) { display: none; }
+
+  /* Contenu : marges réduites, fenêtres modales presque plein écran, colonnes Bootstrap empilées */
+  html[data-rgx] #root { padding: 8px; }
+  html[data-rgx] .modal-dialog { width: auto; margin: 8px; }
+  html[data-rgx] .modal-dialog .modal-content { max-height: calc(100vh - 16px); overflow: auto; }
+  html[data-rgx] #root .row > [class*="col-md-"],
+  html[data-rgx] #root .row > [class*="col-sm-"] { float: none; width: 100%; }
+  html[data-rgx] #root [class*="Table__Layout-sc"],
+  html[data-rgx] #root table.table:not(.table-condensed, .table-stat, .sum) { min-width: 560px; }
+  html[data-rgx] #root .table-responsive,
+  html[data-rgx] #root [class*="Table__Wrapper"],
+  html[data-rgx] #root [class*="Table__Container"] { overflow-x: auto; max-width: 100%; }
+  html[data-rgx] #rgx-pal .rgx-pal-box { width: calc(100vw - 24px); }
+}
+
+@media (max-width: 1199px) {
+  html[data-rgx] #header [class*="Header__StyledBox"] { min-width: 0; display: flex; align-items: center; overflow: hidden; flex: 1 1 auto; }
+  html[data-rgx] #header [class*="Header__StyledBox"] > svg { flex: 0 0 auto; }
+  html[data-rgx] #header [class*="Breadcrumbs__Layout"] { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 0 1 auto; }
+}
+
+@media (max-width: 899px) {
+  html[data-rgx] #header button.brain span:not([class*="icon"]) { display: none; }
+}
+
+@media (max-width: 767px) {
+  html[data-rgx] #header [class*="Header__StyledBox"] { gap: 8px; }
+  html[data-rgx] #header [class*="Breadcrumbs__Layout"]:first-of-type { flex: 0 0 auto; }
+  html[data-rgx] #header [class*="Breadcrumbs__Layout"]:last-of-type { flex: 1 1 0; color: var(--rgx-muted); -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent); }
+}
+
+@media (max-width: 767px) {
+  /* Configuration › Communication : la ligne d'en-têtes de colonnes n'a plus de sens quand les lignes sont empilées */
+  html[data-rgx] #root .row:has(> .col-md-1.text-center > strong.color-rg):not(:has(input, select, button)) { display: none; }
+  /* Tickets : barre d'outils alignée à gauche et à retour à la ligne (elle débordait à gauche) */
+  html[data-rgx] .page-menu .pull-right:not(.line-height) { justify-content: flex-start; float: none; }
+  html[data-rgx] .page-menu .btn-group { flex-wrap: wrap; max-width: 100%; }
+  html[data-rgx] .row:has(> .col-md-8 > .page-menu) > .col-md-8 { flex-basis: 100%; }
+}
+
+@media (max-width: 767px) {
+  /* Les marges Bootstrap s'empilent (#root 8 + #main 20 + container 15 + colonne 15 : 58 px de chaque côté) : on les resserre */
+  html[data-rgx] #main { padding-left: 4px; padding-right: 4px; }
+  html[data-rgx] #root .container-fluid { padding-left: 4px; padding-right: 4px; }
+  html[data-rgx] #root .row { margin-left: -8px; margin-right: -8px; }
+  html[data-rgx] #root [class*="col-xs-"], html[data-rgx] #root [class*="col-sm-"], html[data-rgx] #root [class*="col-md-"], html[data-rgx] #root [class*="col-lg-"] { padding-left: 8px; padding-right: 8px; }
+}
+
+@media (max-width: 767px) {
+  /* Pages React : rangées flex qui passent à la ligne, grilles à deux colonnes empilées, plus aucun élément plus large que l'écran */
+  html[data-rgx] #root [class*="Layout-sc"],
+  html[data-rgx] #root [class*="Header__"],
+  html[data-rgx] #root [class*="Stats__"],
+  html[data-rgx] #root [class*="FiltersLayout"],
+  html[data-rgx] #root [class*="Legend"],
+  html[data-rgx] #root .toggle-group,
+  html[data-rgx] #root .listHeader,
+  html[data-rgx] #root .MuiTabs-flexContainer { flex-wrap: wrap; }
+  html[data-rgx] #root :is([class*="Overview__Layout"], [class*="Overview__RightPanel"], [class*="Library__Layout"], [class*="Vulnerabilities__Layout"], [class*="ScriptLibrary__"]) { grid-template-columns: minmax(0, 1fr) !important; }
+  html[data-rgx] #root [class*="-sc-"][class*="__"] { max-width: 100%; min-width: 0; }
+  html[data-rgx] #root .MuiTabs-root, html[data-rgx] #root .MuiTabs-scroller { max-width: 100%; }
+  html[data-rgx] #root [class*="FeaturePreview__"], html[data-rgx] #root [class*="Trial__"] { overflow: hidden; max-width: 100%; }
+  html[data-rgx] #root .input-group { max-width: 100%; }
+  html[data-rgx] #root [class*="col-md-5"], html[data-rgx] #root [class*="col-md-6"] { max-width: 100%; }
+}
+
+@media (max-width: 767px) {
+  html[data-rgx] #root [class*="Library__Cards"] { grid-template-columns: minmax(0, 1fr) !important; }
+  html[data-rgx] #root [class*="Card__Wrapper"] { min-width: 0; max-width: 100%; }
+  html[data-rgx] #root [class*="StatusBanner__Layout"] { grid-template-columns: auto minmax(0, 1fr) auto !important; }
+  html[data-rgx] #root [class*="StatusBanner__Layout"] > span { white-space: normal; min-width: 0; }
+}
+
+@media (max-width: 767px) {
+  html[data-rgx] #root [class*="StatusBanner"] *, html[data-rgx] #root [class*="Card__"] [class*="Title"] { overflow-wrap: anywhere; }
+  html[data-rgx] #root [class*="Card__"] { max-width: 100%; overflow: hidden; }
+  html[data-rgx] #root pre, html[data-rgx] #root [class*="Command"] { max-width: 100%; overflow-x: auto; }
+}

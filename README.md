@@ -21,11 +21,16 @@
   - **recherche rapide `Ctrl+K`** (nœuds de l'arborescence et pages du menu) ;
   - **texte complet au survol** des libellés tronqués, infobulles sur les actions en simple icône ;
   - panneau de réglages dans l'icône de l'extension : thème, densité, actualisation, largeur de l'arbre ;
+  - **adaptation à la largeur d'écran** : RG est conçu pour le bureau (510 px de menu et d'arborescence avant tout contenu) ; le thème réduit le menu en rail d'icônes sous 1200 px, range l'arborescence sous 1000 px (elle s'ouvre en superposition) et passe le menu et l'arborescence en tiroirs sous 768 px, avec un en-tête compact ;
+  - infobulles sur le menu (« Pedigree — fiche et inventaire des agents du nœud »), utiles surtout quand le menu est réduit en icônes ;
   - avatar en initiales, courbes lisibles en sombre, squelettes de chargement.
+- **Cohérence vérifiée par mesure** : pour chaque élément visible de plus de 60 pages, on compare son style avec et sans le thème ; ce qui gardait le style d'origine (fonds gris, contours, textes sombres sur fond sombre, polices) a été repris, et les familles de tableaux (grilles React, listes Bootstrap, tableaux MUI, lignes-cartes) partagent la même présentation.
 
 | Courbes en sombre | Configuration | Connexion |
 |---|---|---|
 | ![Courbes](docs/img/rg-charts-dark.png) | ![Configuration](docs/img/rg-config-light.png) | ![Connexion](docs/img/rg-login.png) |
+
+![Tablette](docs/img/rg-tablet.png)
 
 La direction visuelle de départ est la maquette [`maquette/direction.html`](maquette/direction.html) (ci-dessous).
 
@@ -66,6 +71,7 @@ Les réglages sont mémorisés dans le `localStorage` du site (`rgx.*`). Interru
 - **Rechargements périodiques de la plateforme** : avec le SSO Microsoft 365, RG System recharge entièrement la page toutes les 2 à 3 minutes (renouvellement de la session par redirection vers Microsoft). Ce comportement existe **sans l'extension** (mesuré onglet inactif) et disparaît avec une connexion par mot de passe RG : il vient du renouvellement de session, pas du thème. Voir [docs/PROPOSITION-RG.md](docs/PROPOSITION-RG.md).
 - **Courbes** (canvas dygraphs) : les couleurs des séries sont choisies pour un fond blanc ; en sombre elles sont inversées avec rotation de teinte (reconnaissables, pas identiques).
 - **Contenus externes** : le widget « Nouveautés » et l'application Brain sont des applications distinctes, seul leur tiroir est habillé.
+- **Petits écrans** : la coque (menu, arborescence, en-tête) est adaptée, et les pages les plus simples tiennent dans 390 px ; les écrans très denses (assistants, grandes grilles) défilent horizontalement dans la zone de contenu.
 - **Fenêtres modales** et quelques états rares (erreurs, confirmations) sont stylés d'après les composants Bootstrap/MUI mais n'ont pas tous été vus en conditions réelles.
 - Après une mise à jour de RG System, un écran peut perdre son habillage : voir [Ajouter ou corriger un écran](docs/DEVELOPPEMENT.md#ajouter-ou-corriger-un-écran). Les sélecteurs fragiles sont regroupés en tête de `content.js` (objet `SEL`).
 
@@ -80,7 +86,7 @@ npm run serve   # banc de test local : http://localhost:4173/
 
 Architecture, ajout d'un écran, banc de test et tests : [docs/DEVELOPPEMENT.md](docs/DEVELOPPEMENT.md).
 Contribuer : [CONTRIBUTING.md](CONTRIBUTING.md). Historique : [CHANGELOG.md](CHANGELOG.md).
-Pour l'équipe de RG System : [docs/PROPOSITION-RG.md](docs/PROPOSITION-RG.md) (ce que l'éditeur pourrait intégrer nativement).
+Pour l'équipe de RG System : [docs/PROPOSITION-RG.md](docs/PROPOSITION-RG.md) (ce que l'éditeur pourrait intégrer nativement) et [docs/PROPOSITION-TEXTES.md](docs/PROPOSITION-TEXTES.md) (titres, libellés, orthographe et cohérence des textes relevés sur 49 pages).
 
 ## Licence et crédits
 

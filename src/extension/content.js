@@ -117,7 +117,35 @@
       'glyphicon-option-vertical': 'Plus d\'actions', 'glyphicon-forward': 'Dernière page', 'glyphicon-backward': 'Première page',
       'glyphicon-chevron-left': 'Précédent', 'glyphicon-chevron-right': 'Suivant', 'glyphicon-retweet': 'Réinitialiser', 'glyphicon-book': 'Documentation',
     };
+    // Menu latéral : infobulle « Nom — à quoi sert la section » (indispensable quand le menu est réduit en icônes, utile
+    // pour les intitulés peu explicites comme « Pedigree »). Les éléments qui ont déjà un title ne sont pas touchés.
+    const MENU_HELP = {
+      'rechercher': 'trouver un agent (nom, adresse IP, utilisateur, système…)',
+      'vues': 'synthèses et statistiques du nœud',
+      'tickets': 'alertes en cours et historique des tickets',
+      'pedigree': 'fiche et inventaire des agents du nœud',
+      'données': 'graphiques et mesures (processeur, disques, réseau, services…)',
+      'réseau': 'voisinage réseau détecté par les agents',
+      'actions': 'actions à distance : Assist, commande, Windows Update, scripts…',
+      'configuration': 'plugins, alertes, communication, modèles, rapports',
+      'backup': 'sauvegardes, restaurations et statistiques',
+      'cybersecurity': 'vulnérabilités détectées sur les machines',
+      'gestion': 'utilisateurs, quotas, connexion IA, profil',
+      'téléchargements': 'agents et kit de déploiement',
+    };
+    function ensureMenuTitles() {
+      document.querySelectorAll('#menu-details li.menu-lvl-0:not([data-rgx-m]) > a').forEach((a) => {
+        const name = a.querySelector('.name-menu') || a.querySelector('.menu-line-word');
+        if (!name || !name.textContent.trim()) return;
+        a.parentElement.setAttribute('data-rgx-m', '');
+        if (a.hasAttribute('title')) return;
+        const label = name.textContent.trim();
+        const help = MENU_HELP[label.toLowerCase()];
+        a.setAttribute('title', help ? label + ' — ' + help : label);
+      });
+    }
     function ensureLabels() {
+      ensureMenuTitles();
       document.querySelectorAll('#root button:not([title]):not([aria-label]):not([data-rgx-l]), #root a.btn:not([title]):not([aria-label]):not([data-rgx-l])').forEach((el) => {
         el.setAttribute('data-rgx-l', '');
         if (el.textContent.trim()) return;
@@ -135,6 +163,7 @@
       { sel: '.jimo-widget', icon: 'rocket', title: 'Nouveautés' },
       { sel: '#btnAssistAgentlessTechnician', icon: 'headset', title: 'Assist' },
       { sel: 'a[data-testid="notification-link"]', icon: 'fileText', title: 'Notes de version' },
+      { sel: '[data-testid="chat-toggler"]', icon: 'messageSquare', title: 'Messagerie' },
     ];
     const HDR_SKIP = 'button.brain, [class*="BrainButton"], #profile-menu-toggler, [class*="Profile__"], #rgx-theme-toggle, .rgx-hdr';
     function hdrIconFor(el) {
@@ -182,7 +211,7 @@
     const schedule = () => {
       if (scheduled) return;
       scheduled = true;
-      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureLogo(); ensureLoginLogo(); ensureAvatars(); ensureLabels(); });
+      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureBurger(); ensureLogo(); ensureLoginLogo(); ensureAvatars(); ensureLabels(); });
     };
     new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
     document.addEventListener('DOMContentLoaded', schedule);
@@ -232,6 +261,62 @@
       applyTreeWidth(0);
       window.dispatchEvent(new Event('resize'));
     }, true);
+
+    // ------------------------------------------------------------------------------------------------
+    // Adaptation à la largeur d'écran (le CSS est dans 99-responsive.css). RG est conçu pour le bureau :
+    //   < 1200 px : menu réduit en rail d'icônes ; < 1000 px : arborescence masquée (ouvrable en superposition) ;
+    //   < 768 px  : menu en tiroir. On passe par les boutons d'origine de RG (menu, arborescence) et on mémorise
+    //   l'état choisi par l'utilisateur pour le rétablir quand la fenêtre redevient large.
+    // ------------------------------------------------------------------------------------------------
+    const mqM = window.matchMedia('(max-width: 767px)');
+    const mqT = window.matchMedia('(max-width: 999px)');
+    const mqC = window.matchMedia('(max-width: 1199px)');
+    const fit = { shrink: null, tree: null };   // état de l'utilisateur avant notre action (null = rien changé)
+    const isShrunk = () => { const b = document.getElementById('block-dashboard'); return !!b && b.classList.contains('left-menu-shrink'); };
+    const treeHidden = () => { const t = document.getElementById('tree-block'); return !t || t.classList.contains('shrunk-tree'); };
+    const clickBurger = () => { const b = document.getElementById('menu-main-burger'); if (b) b.click(); };
+    const clickTree = () => {
+      const t = document.querySelector('#header [class*="Header__StyledBox"] > svg:first-child');
+      if (t) t.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+    };
+    function fitLayout() {
+      if (!document.getElementById('menu-main-burger') || !document.getElementById('tree-block') || !document.querySelector('#header [class*="Header__StyledBox"] > svg:first-child')) return false;
+      if (!mqC.matches) {
+        if (fit.shrink !== null) { if (isShrunk() !== fit.shrink) clickBurger(); fit.shrink = null; }
+      } else {
+        const want = !mqM.matches;   // tablette : rail d'icônes ; mobile : menu complet, dans le tiroir
+        if (isShrunk() !== want) { if (fit.shrink === null) fit.shrink = isShrunk(); clickBurger(); }
+      }
+      if (!mqT.matches) {
+        if (fit.tree !== null) { if (treeHidden() !== fit.tree) clickTree(); fit.tree = null; }
+      } else if (fit.tree === null) {
+        fit.tree = treeHidden();
+        if (!treeHidden()) clickTree();
+      }
+      if (!mqM.matches) root.classList.remove('rgx-m-nav');
+      return true;
+    }
+    [mqM, mqT, mqC].forEach((q) => q.addEventListener('change', () => { fitLayout(); window.dispatchEvent(new Event('resize')); }));
+    { let tries = 0; const t = setInterval(() => { if (fitLayout() || ++tries > 60) clearInterval(t); }, 500); }
+    const closeDrawers = () => { root.classList.remove('rgx-m-nav'); if (mqT.matches && !treeHidden()) clickTree(); };
+    // Bouton « menu » de l'en-tête (visible seulement sous 768 px, voir le CSS)
+    function ensureBurger() {
+      if (document.getElementById('rgx-m-burger')) return;
+      const bar = document.querySelector('#header header .MuiToolbar-root');
+      if (!bar) return;
+      const b = document.createElement('button');
+      b.id = 'rgx-m-burger'; b.type = 'button'; b.title = 'Menu'; b.setAttribute('aria-label', 'Menu');
+      b.innerHTML = '<i class="rgx-i rgx-i-menu"></i>';
+      b.addEventListener('click', () => { if (!treeHidden()) clickTree(); root.classList.toggle('rgx-m-nav'); });
+      bar.insertBefore(b, bar.firstChild);
+    }
+    document.addEventListener('click', (e) => {
+      const t = e.target; if (!t || !t.closest) return;
+      if (t === document.getElementById('block-dashboard') && (root.classList.contains('rgx-m-nav') || (mqT.matches && !treeHidden()))) { closeDrawers(); return; }   // clic sur le voile
+      if (mqM.matches && t.closest('#menu-details a[href^="#/"]')) setTimeout(() => root.classList.remove('rgx-m-nav'), 120);
+      if (mqT.matches && t.closest('#tree-widget a.jstree-anchor')) setTimeout(() => { if (!treeHidden()) clickTree(); }, 250);
+    }, true);
+    window.addEventListener('hashchange', () => { if (mqT.matches) setTimeout(closeDrawers, 150); });   // on a navigué : on referme les tiroirs
 
     // ------------------------------------------------------------------------------------------------
     // Liste des tickets : « Actualisation auto ». Le widget d'origine ne rafraîchit pas la liste (il faut un vrai F5).

@@ -88,6 +88,15 @@ ${css}
 ${body}
 <script src="/content.js"></script>
 <script>
+// Fixture statique : RG n'est pas là pour réagir au redimensionnement ; on reproduit l'état qu'il aurait après le clic de
+// content.js sur ses boutons (menu en rail sous 1200 px, arborescence masquée sous 1000 px).
+(function () {
+  var t = document.getElementById('tree-block'), b = document.getElementById('block-dashboard');
+  if (innerWidth < 1000 && t) t.classList.add('shrunk-tree');
+  if (innerWidth < 1200 && b) b.classList.toggle('left-menu-shrink', innerWidth >= 768);
+})();
+</script>
+<script>
 // Fixture statique : jsTree positionne ses barres de survol/sélection (span.jstree-wholerow-span) en JavaScript
 // d'après la géométrie d'origine. On les recale sur la géométrie réelle (thème appliqué).
 (function () {

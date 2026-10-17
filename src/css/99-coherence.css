@@ -1,0 +1,98 @@
+/* ===================================================================
+   99. Cohérence : éléments qui gardaient leur style d'origine
+   Relevé automatique sur le site réel (pour chaque élément visible, on compare le style calculé
+   avec et sans le thème : un élément identique dans les deux cas garde le style de RG).
+   Tout est exprimé avec les jetons du thème, donc valable en clair comme en sombre.
+   =================================================================== */
+
+/* --- Fonds gris clair d'origine (#f5f5f5, #eee, #e6e6e6) : zones de contenu, fil d'Ariane, panneaux d'aide --- */
+html[data-rgx] .backup-histo-block,
+html[data-rgx] .breadcrumb-browser,
+html[data-rgx] .asynchronous-operation.accordion-pedigree,
+html[data-rgx] [class*="HelpPanel___StyledBox"],
+html[data-rgx] [class*="Avatar__Layout-sc"] {
+  background-color: var(--rgx-surface-2);
+  color: var(--rgx-ink);
+  border-radius: var(--radius-md);
+}
+html[data-rgx] [class*="HelpPanel___StyledBox"] *,
+html[data-rgx] .breadcrumb-browser * {
+  color: inherit;
+}
+html[data-rgx] svg[class*="StyledIconBase"].icon { background-color: var(--rgx-surface-2); }
+html[data-rgx] .MuiInputAdornment-root[class*="InputAdornment-sc"] {
+  background-color: var(--rgx-surface-2);
+  color: var(--rgx-muted);
+  border: 1px solid var(--rgx-border);
+}
+html[data-rgx] .MuiInputAdornment-root[class*="InputAdornment-sc"] button { color: var(--rgx-muted); }
+html[data-rgx] .container-notify { background-color: var(--rgx-surface); }
+
+/* --- Filets gris d'origine (#ddd, #d3d3d3) --- */
+html[data-rgx] .list-striped,
+html[data-rgx] .list-striped > *,
+html[data-rgx] table.table-bordered {
+  border-color: var(--rgx-border);
+}
+
+/* --- Textes gris foncé d'origine (#333, #707070, marine) lisibles en sombre --- */
+html[data-rgx] b.title,
+html[data-rgx] .table-object,
+html[data-rgx] [class*="Session__Layout-sc"] .name,
+html[data-rgx] [class*="Session__Layout-sc"] .name * { color: var(--rgx-ink); }
+html[data-rgx] [class*="HelpText-sc"],
+html[data-rgx] [class*="HelpText-sc"] p { color: var(--rgx-muted); }
+html[data-rgx] .fc-day-header-number { color: var(--rgx-muted); }
+html[data-rgx] .MuiFormLabel-root,
+html[data-rgx] label.MuiInputLabel-root { font-family: var(--font-sans); }
+
+/* --- Cases à cocher RG (CheckBox__Layout) : contour #333 invisible en sombre --- */
+html[data-rgx] [class*="CheckBox__Layout-sc"] {
+  border-color: var(--rgx-muted);
+  background-color: var(--rgx-surface);
+}
+
+/* --- Interrupteur RG (Switch__Layout) : piste grise #ccc d'origine --- */
+html[data-rgx] [class*="Switch__Layout-sc"]:not(.is-active, .success, .switch) {
+  background-color: color-mix(in srgb, var(--rgx-muted) 45%, transparent);
+}
+html[data-rgx] [class*="Switch__Layout-sc"].is-active,
+html[data-rgx] [class*="Switch__Layout-sc"].switch,
+html[data-rgx] [class*="Switch__Layout-sc"].success { background-color: var(--rgx-ok); }
+
+/* --- Champ MUI (Input-sc) : contour gris + halo bleu Bootstrap d'origine --- */
+html[data-rgx] .MuiInputBase-root.MuiInput-root[class*="Input-sc"] {
+  background-color: var(--rgx-surface);
+  border-color: var(--rgx-border);
+  box-shadow: none;
+}
+html[data-rgx] .MuiInputBase-root.MuiInput-root[class*="Input-sc"]:focus-within {
+  border-color: var(--rgx-brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--rgx-brand) 25%, transparent);
+}
+
+/* --- Pastille de compteur (accordéon de la recherche) : fond blanc d'origine --- */
+html[data-rgx] .list-group-item .badge {
+  background-color: var(--rgx-brand-soft);
+  color: var(--rgx-brand);
+}
+
+/* --- Balles du chargement : marine d'origine invisible en sombre --- */
+html[data-rgx] [class*="Loader__Ball"] { background-color: var(--rgx-brand); }
+
+/* --- Couleurs en ligne (style="color:#008800") des pages Données : verts, rouges et bleus du thème --- */
+html[data-rgx] [style*="color: #008800"],
+html[data-rgx] [style*="color:#008800"] { color: var(--rgx-ok) !important; }
+html[data-rgx] [style*="color: #cc0000"],
+html[data-rgx] [style*="color:#cc0000"],
+html[data-rgx] [style*="color: red"] { color: var(--rgx-crit) !important; }
+html[data-rgx] [style*="color: #ff8800"],
+html[data-rgx] [style*="color: orange"] { color: var(--rgx-warn) !important; }
+
+/* --- Police : balises de texte sans classe qui gardaient « Helvetica Neue » (aide, listes, légendes) --- */
+html[data-rgx] :is(p, strong, em, li, b, small):not([class*="glyphicon"]),
+html[data-rgx] span:not([class]),
+html[data-rgx] [class*="HelpPanel"] * { font-family: var(--font-sans); }
+
+/* --- Valeurs de graphique (couleur de la série en style en ligne, ex. vert clair #76da76) : assombries en clair --- */
+html[data-rgx][data-rgx-theme="light"] .graph-stats tr[style*="color"] { filter: brightness(0.72); }

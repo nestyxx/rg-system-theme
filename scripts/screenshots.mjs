@@ -25,6 +25,7 @@ const SHOTS = [
   ['rg-charts-dark', '/fixtures/data-network--st24-d3-k7.html?theme=dark', '1440,900', 12000],
   ['rg-config-light', '/fixtures/configuration-alerts.html?theme=light', '1440,900', 12000],
   ['rg-login', '/surfaces.html?view=login&theme=light', '1000,640', 6000],
+  ['rg-tablet', '/fixtures/pedigree.html?theme=light', '820,1000', 12000],
 ];
 const only = process.argv.slice(2);
 // Aperçu social (fichier local, sans serveur)
