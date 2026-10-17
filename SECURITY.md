@@ -10,7 +10,7 @@
 
 ## Signaler une vulnérabilité
 
-Merci de **ne pas** ouvrir de ticket public pour un problème de sécurité. Écrivez au mainteneur (adresse affichée sur son profil GitHub) en décrivant le problème et la façon de le reproduire. Une réponse est donnée sous quelques jours ouvrés.
+Merci de **ne pas** ouvrir de ticket public pour un problème de sécurité. Utilisez le signalement privé de GitHub : onglet **Security** → **Report a vulnerability**, en décrivant le problème et la façon de le reproduire. Une réponse est donnée sous quelques jours ouvrés.
 
 ## Données de test
 
