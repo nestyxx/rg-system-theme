@@ -6,7 +6,7 @@ dans l'esprit de Webgest : Inter / Space Grotesk, palette Arobase, thème clair 
 
 Le navigateur injecte lui-même le CSS avant le premier rendu : aucun gestionnaire de scripts n'est nécessaire et l'ancien style ne clignote pas.
 
-- Version : **1.0.1** (voir [CHANGELOG](CHANGELOG.md))
+- Version : **1.0.2** (voir [CHANGELOG](CHANGELOG.md))
 - Maquette de référence : [`maquette/direction.html`](maquette/direction.html)
 - Document pour l'équipe RG System : [`docs/PROPOSITION-RG.md`](docs/PROPOSITION-RG.md)
 

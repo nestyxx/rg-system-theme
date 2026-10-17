@@ -1,5 +1,15 @@
 # Journal des modifications
 
+## 1.0.2 — 2026-10-17
+
+Deuxième série de retouches après essai sur le site réel.
+
+- **Menu** : pastilles inscrites dans la barre (marge et espace intérieur de 10 px portés par le `<li>`, plus de dépendance aux classes de RG) ; **icônes devant chaque entrée de sous-menu** (Vues, Données, Actions, Configuration, Backup…), retrait réduit, libellés alignés sur ceux du premier niveau ; le parent d'un sous-menu contenant la page courante porte la pastille de marque ; chevrons en trait fin.
+- **Arborescence** : le lien occupe toute la largeur de sa ligne (survol et sélection en barre pleine largeur) ; les barres jsTree positionnées en JavaScript, à l'origine du survol décalé, sont traversées par la souris.
+- **Tableaux de synthèse** : première et dernière colonne à 16 px du bord ; pastilles d'état refaites (« ok » discret avec point, problèmes en couleurs pleines, forme en pilule) ; pastille connecté / hors ligne centrée ; en-têtes de colonnes alignés.
+- **Champs flottants React** (double bordure) et **petits boutons** (marge intérieure de 1 px) corrigés.
+- Outil : `rgxLayout` (test/scan.js) détecte les textes collés au bord d'une carte et les contrôles sans marge intérieure.
+
 ## 1.0.1 — 2026-10-17
 
 Retouches après essai sur le site réel (Vues › Serveurs).

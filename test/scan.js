@@ -78,3 +78,47 @@
     return res;
   };
 })();
+
+// Balayage de mise en page : texte collé au bord d'une carte / d'un contrôle, champs sans marge intérieure.
+//   await rgxLayout(['ticket'], 'light')
+(function () {
+  const path = (e) => { const o = []; for (let x = e; x && x.tagName && o.length < 3; x = x.parentElement) o.push(x.tagName.toLowerCase() + (x.id ? '#' + x.id : '') + (typeof x.className === 'string' && x.className ? '.' + x.className.trim().split(/\s+/)[0].slice(0, 26) : '')); return o.join(' < '); };
+  function scanLayout(doc) {
+    const win = doc.defaultView; const out = []; const seen = new Set();
+    const isCard = (cs, r) => r.width > 150 && r.height > 24 && parseFloat(cs.borderLeftWidth) > 0 && cs.borderLeftStyle !== 'none' && cs.borderLeftColor !== 'rgba(0, 0, 0, 0)';
+    const w = doc.createTreeWalker(doc.querySelector('#root') || doc.body, NodeFilter.SHOW_TEXT); let n;
+    while ((n = w.nextNode())) {
+      if (!n.nodeValue.trim()) continue;
+      const el = n.parentElement; if (!el || /^(SCRIPT|STYLE|OPTION)$/.test(el.tagName)) continue;
+      const rg = doc.createRange(); rg.selectNodeContents(n); const tr = rg.getBoundingClientRect(); if (tr.width < 2) continue;
+      for (let c = el; c && c !== doc.body; c = c.parentElement) {
+        const cs = win.getComputedStyle(c), r = c.getBoundingClientRect();
+        if (c.tagName !== 'TABLE' && !/^(DIV|SECTION|TD|TH|UL|LI|BUTTON|A|SPAN|INPUT|LABEL)$/.test(c.tagName)) continue;
+        if (!isCard(cs, r)) continue;
+        const dl = tr.left - r.left, dr = r.right - tr.right;
+        if ((dl < 6 || dr < 6) && tr.width < r.width - 2) {
+          const key = path(c) + (dl < 6 ? ' L' : ' R'); if (!seen.has(key)) { seen.add(key); out.push({ k: 'texte collé au bord ' + Math.round(Math.min(dl, dr)) + 'px', txt: n.nodeValue.trim().slice(0, 24), at: path(c) }); }
+        }
+        break;
+      }
+    }
+    doc.querySelectorAll('button, .btn, input:not([type=checkbox]):not([type=radio]):not([type=hidden]), select, textarea').forEach((e) => {
+      const cs = win.getComputedStyle(e), r = e.getBoundingClientRect(); if (r.width < 20 || r.height < 12 || cs.visibility === 'hidden' || cs.display === 'none') return;
+      const hasText = (e.value || e.textContent || '').trim().length > 0;
+      if (hasText && parseFloat(cs.paddingLeft) < 6 && cs.borderLeftStyle !== 'none' && parseFloat(cs.borderLeftWidth) > 0) { const key = 'pad ' + path(e); if (!seen.has(key)) { seen.add(key); out.push({ k: 'contrôle sans marge intérieure (' + cs.paddingLeft + ')', txt: (e.value || e.textContent).trim().slice(0, 20), at: path(e) }); } }
+    });
+    return out.slice(0, 14);
+  }
+  window.rgxLayout = async function (names, theme) {
+    const res = {};
+    for (const name of names) {
+      const f = document.createElement('iframe');
+      f.style.cssText = 'position:fixed;left:0;top:0;width:1440px;height:900px;border:0;visibility:hidden';
+      f.src = '/fixtures/' + name + '.html?theme=' + theme; document.body.appendChild(f);
+      await new Promise((ok) => { f.onload = ok; setTimeout(ok, 8000); }); await new Promise((ok) => setTimeout(ok, 900));
+      try { res[name] = scanLayout(f.contentDocument); } catch (e) { res[name] = [{ k: 'erreur', txt: String(e), at: '' }]; }
+      f.remove();
+    }
+    return res;
+  };
+})();

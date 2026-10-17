@@ -62,6 +62,13 @@ export const ICONS = {
   clipboardList: '<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"/>',
   folder: '<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',
   monitor: '<rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/>',
+  package: '<path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/>',
+  puzzle: '<path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"/>',
+  messageSquare: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  zap: '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+  cloud: '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>',
+  gauge: '<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>',
+  chevronRight: '<path d="m9 18 6-6-6-6"/>',
   moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
 };
@@ -88,6 +95,24 @@ export const PLUGINS = {
   antivirus: 'bug', network: 'wifi', event: 'bell', service: 'settings', backup: 'archive', process: 'activity',
   userticket: 'ticket', 'net-action': 'network', exchange: 'mail', replica: 'copy', hardware: 'server',
   script: 'terminal', inventory: 'clipboardList',
+};
+
+// Sous-menus du menu latéral (li.menu-lvl-1, par id) -> icônes du thème.
+export const SUBMENU = {
+  'menu-overview': 'grid', 'menu-sum-servers': 'server', 'menu-sum-workstations': 'monitor', 'menu-sum-devices': 'network',
+  'menu-sum-stats': 'chart', 'menu-asynchronous-operations': 'refresh',
+  'menu-charts': 'chart', 'menu-listings': 'clipboardList',
+  btnNetworkNeighborhood: 'network',
+  'menu-actions-lumiere': 'headset', 'menu-actions-system': 'terminal', 'menu-actions-customscripts': 'terminal',
+  'menu-actions-windowsupdate': 'download', 'menu-actions-disquette': 'package', 'menu-actions-appmanager': 'package',
+  'menu-actions-services': 'settings', 'menu-actions-messages': 'mail',
+  'menu-plugins': 'puzzle', 'menu-alerts': 'bell', 'menu-communication': 'messageSquare', 'menu-reactengine': 'zap',
+  'menu-library': 'fileText', 'menu-pools': 'copy', 'menu-templates': 'fileText',
+  'menu-configuration-report-custom': 'chart', 'menu-configuration-report-supervision': 'chart', 'menu-configuration-hypervisor': 'server',
+  'menu-jobs': 'play', 'menu-backup': 'archive', 'menu-vbo': 'cloud', 'menu-reports-backup': 'fileText',
+  'menu-security-cybersecurity': 'shield', 'menu-security-antivirus': 'bug', 'menu-security-vulnerabilities': 'triangleAlert',
+  'menu-users': 'users', 'menu-ai-billing': 'sparkles', 'menu-quotas': 'gauge', 'menu-profile': 'idcard',
+  'menu-downloads-deploymentkit': 'download', 'menu-downloads-agent': 'download', 'menu-downloads-agent-mac': 'download', 'menu-downloads-agent-linux': 'download',
 };
 
 // Glyphicons Bootstrap 3 (police d'icônes d'origine) -> icônes du thème.
@@ -149,6 +174,11 @@ export function buildIconsCss() {
   out.push('html[data-rgx] #menu-details li.menu-lvl-0 svg.icon-menu{background-color:currentColor;opacity:.9}');
   for (const [id, name] of Object.entries(MENU)) {
     out.push(`html[data-rgx] #menu-details li#${id} svg.icon-menu{${mask(name).replaceAll('center/contain', 'center/18px 18px')}}`);
+  }
+
+  // Sous-menus : icône devant le libellé (menu étendu)
+  for (const [id, name] of Object.entries(SUBMENU)) {
+    out.push(`html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-1#${id} > a::before{${mask(name)}}`);
   }
 
   // Plugins (en-têtes des tableaux de synthèse, listes de plugins…) : le dessin d'origine est masqué, l'icône du thème peinte à la place

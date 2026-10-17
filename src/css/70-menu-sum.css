@@ -12,10 +12,26 @@ html[data-rgx] #menu-details a.current:hover {
 html[data-rgx] #menu-details li.current {
   background: transparent !important;
 }
-/* Entrée « Rechercher » : rendue par React, sans lien <a> ; elle reçoit la même pastille que les autres */
+
+/* --- Menu étendu : chaque entrée est une pastille inscrite dans la barre (marge de 10 px de chaque côté,
+   espace intérieur de 10 px), comme dans la maquette. La marge est portée par le <li> : elle ne dépend pas des classes
+   utilitaires de RG. Menu réduit (.left-menu-shrink) : dimensions d'origine. --- */
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-0 {
+  width: 180px;
+  margin-left: 10px;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-0 > a {
+  margin: 1px 0 !important;
+  padding: 0 6px 0 10px;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details .icon-menu {
+  margin-right: 8px;
+}
+/* « Rechercher » : rendue par React, sans lien <a> — la pastille est portée par le <li> lui-même */
 html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li#search-menu {
-  width: auto;
-  margin: 1px 10px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding-left: 10px;
   border-radius: var(--radius-md);
   transition: background-color 0.15s;
 }
@@ -31,50 +47,150 @@ html[data-rgx] #menu-details li#search-menu:hover {
   background-color: var(--rgx-side-hover) !important;
   color: #fff;
 }
-/* Sous-menus (menu étendu) : plus de cadre, libellés alignés sur ceux du premier niveau */
+/* Le parent d'un sous-menu qui contient la page courante porte la pastille de marque (comme une entrée active) */
+html[data-rgx] #menu-details li.menu-lvl-0:has(li.current) > a {
+  background: var(--rgx-side-active);
+  color: #fff;
+}
+/* Chevrons : trait fin à la place du triangle en bordures (ouvert = pivoté d'un quart de tour) */
+html[data-rgx] #menu-details .caret-menu {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin: 8px 0 0 !important;
+  border: 0 !important;
+  background: currentColor;
+  -webkit-mask: var(--rgx-ic-chevronRight) center/14px 14px no-repeat;
+  mask: var(--rgx-ic-chevronRight) center/14px 14px no-repeat;
+  transition: transform 0.15s;
+}
+html[data-rgx] #menu-details .caret-menu.caret-down,
+html[data-rgx] #menu-details li.menu-lvl-0:has(> ul.ul-lvl-1:not(.block-menu-hide)) > a .caret-menu {
+  transform: rotate(90deg);
+}
+
+/* --- Sous-menus (menu étendu) : sans cadre, icône devant chaque libellé, libellés alignés sur ceux du premier niveau --- */
 html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details ul.ul-lvl-1 {
   background-color: transparent !important;
   border: 0;
-  margin: 0 10px 6px;
+  margin: 0 0 6px;
+  padding: 0;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-1 {
+  min-height: 0;
   padding: 0;
 }
 html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-1 > a {
-  padding: 0 10px 0 38px;
-  margin: 1px 0;
+  position: relative;
+  margin: 1px 0 !important;
+  padding: 0 10px 0 40px;
+  overflow: clip;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   line-height: 30px;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-1 > a::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  background-color: currentColor;
+  opacity: 0.85;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* Sous-sous-menus (Courbes › Disque, Listings › Services…) : retrait supplémentaire, pas d'icône */
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details ul.ul-lvl-2 {
+  background-color: transparent !important;
+  border: 0;
+  margin: 0 0 4px;
+  padding: 0;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-2 > a {
+  margin: 1px 0 !important;
+  padding: 0 10px 0 54px;
+  overflow: clip;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 28px;
 }
 html[data-rgx] #menu-details li.menu-lvl-1.current > a {
   font-weight: 500;
 }
 
-/* --- Arborescence : survol --- Les barres de survol / sélection du plugin jsTree « wholerow » sont positionnées en
-   JavaScript d'après la géométrie mesurée à l'initialisation ; dès que les lignes changent de hauteur (polices, thème)
-   elles se décalent. On les rend invisibles (elles gardent leur rôle de zone cliquable) : le survol et la sélection
-   sont portés par le lien lui-même, toujours aligné. */
+/* --- Arborescence : survol et sélection ---
+   Le plugin jsTree « wholerow » superpose des barres (survol / sélection) positionnées en JavaScript d'après la géométrie
+   mesurée à l'initialisation : dès que la hauteur des lignes change (polices, thème), elles se décalent, ce qui allume la
+   MAUVAISE ligne au survol et peut faire sélectionner la mauvaise ligne au clic. On les neutralise (invisibles et
+   traversées par la souris) et le lien occupe lui-même toute la largeur de sa ligne : survol et clic sont toujours alignés. */
+html[data-rgx] #tree .jstree-wholerow,
+html[data-rgx] #tree .jstree-wholerow-span {
+  pointer-events: none;
+}
 html[data-rgx] #tree .jstree-wholerow-span,
 html[data-rgx] #tree .jstree-wholerow-hovered,
 html[data-rgx] #tree .jstree-wholerow-clicked {
   background: transparent !important;
   box-shadow: none;
 }
+html[data-rgx] #tree li > a {
+  display: inline-block;
+  box-sizing: border-box;
+  width: calc(100% - 18px);
+  height: 24px;
+  padding: 0 8px 0 2px;
+  line-height: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+}
+html[data-rgx] #tree li > ins.jstree-icon:first-child,
+html[data-rgx] #tree li > ins.jstree-icon {
+  vertical-align: top;
+}
+html[data-rgx] #tree a.jstree-clicked,
+html[data-rgx] #tree a.jstree-clicked:hover {
+  height: 24px !important;
+  padding: 0 8px 0 2px;
+}
 
 /* --- Tableaux de synthèse (Vues) --- */
+/* Marges intérieures : première et dernière colonne à 16 px du bord de la carte */
+html[data-rgx] table.sum > tbody > tr > :first-child,
+html[data-rgx] table.ticket-table > tbody > tr > :first-child,
+html[data-rgx] table[class*="Table__Layout-sc"] tr > :first-child {
+  padding-left: 16px;
+}
+html[data-rgx] table.sum > tbody > tr > :last-child,
+html[data-rgx] table.ticket-table > tbody > tr > :last-child,
+html[data-rgx] table[class*="Table__Layout-sc"] tr > :last-child {
+  padding-right: 16px;
+}
 /* Dossier du nœud : contour du thème, coloré par statut (N1 ok … N5 inactif) à la place du dossier plein d'origine */
 html[data-rgx] .img-sum[class*="img-sum-node-type-"] {
   background: var(--rgx-dot, var(--rgx-muted));
   -webkit-mask: var(--rgx-ic-folder) center/16px 16px no-repeat;
   mask: var(--rgx-ic-folder) center/16px 16px no-repeat;
+  margin-right: 4px;
 }
 html[data-rgx] .img-sum-node-type-N1 { --rgx-dot: var(--rgx-ok); }
 html[data-rgx] .img-sum-node-type-N2 { --rgx-dot: var(--rgx-crit); }
 html[data-rgx] .img-sum-node-type-N3 { --rgx-dot: #e08a1e; }
 html[data-rgx] .img-sum-node-type-N4 { --rgx-dot: var(--rgx-info); }
 html[data-rgx] .img-sum-node-type-N5 { --rgx-dot: var(--rgx-muted); }
-/* Pastille connecté / hors ligne : disque plein de 8 px (le style « étiquette » d'origine donnait un rond délavé) */
+/* Pastille connecté / hors ligne : disque plein de 8 px, centré sur l'icône de mise à jour */
 html[data-rgx] .icon-agent-onoffline {
   width: 8px;
   height: 8px;
-  margin: 12px 8px 0 0;
+  margin: 8px 8px 0 0;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -83,16 +199,79 @@ html[data-rgx] .icon-agent-onoffline {
 html[data-rgx] .icon-agent-onoffline.label-success { background: var(--rgx-ok); }
 html[data-rgx] .icon-agent-onoffline.label-danger { background: var(--rgx-crit); }
 html[data-rgx] .icon-agent-onoffline.label-warning { background: var(--rgx-warn); }
-/* En-têtes de colonnes (plugins) : icônes du thème, centrées au-dessus des pastilles */
+/* En-têtes de colonnes (plugins) : icônes du thème ou libellés, centrés au-dessus des pastilles */
 html[data-rgx] svg.icon-color-grey-light,
 html[data-rgx] .sum-icons-plugins svg {
   color: var(--rgx-muted);
 }
+html[data-rgx] .sum-icons-plugins {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+}
 html[data-rgx] .sum-icons-plugins svg {
   display: block;
+  flex: none;
   width: 20px;
   height: 20px;
-  margin: 8px auto;
+  margin: 0;
+}
+html[data-rgx] .sum-icons-plugins .sum-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--rgx-muted);
+}
+/* Pastilles d'état des plugins (une par colonne) : « ok » discret, problèmes en couleurs pleines */
+html[data-rgx] .btn-sum {
+  height: 20px;
+  min-height: 0;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+  box-shadow: none;
+}
+html[data-rgx] .btn-sum.btn-sum-ok {
+  position: relative;
+  background: var(--rgx-ok-bg);
+  border: 1px solid color-mix(in srgb, var(--rgx-ok) 35%, transparent);
+}
+html[data-rgx] .btn-sum.btn-sum-ok:hover,
+html[data-rgx] .btn-sum.btn-sum-ok:focus {
+  background: color-mix(in srgb, var(--rgx-ok) 18%, var(--rgx-ok-bg));
+}
+html[data-rgx] .btn-sum.btn-sum-ok::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--rgx-ok);
+}
+html[data-rgx] .btn-sum.btn-sum-critical {
+  background: var(--rgx-crit);
+  border-color: var(--rgx-crit);
+  color: #fff;
+}
+html[data-rgx] .btn-sum.btn-sum-medium {
+  background: #e08a1e;
+  border-color: #e08a1e;
+  color: #1b1205;
+}
+html[data-rgx] .btn-sum.btn-sum-low {
+  background: #f1d54a;
+  border-color: #f1d54a;
+  color: #1b1205;
+}
+html[data-rgx] .btn-sum .glyphicon {
+  width: 11px;
+  height: 11px;
+  margin-right: 2px;
 }
 
 /* --- Arborescence : agents (W poste, S serveur, D device, E hyperviseur) et corbeille (N6) en icônes du thème ---
@@ -122,4 +301,44 @@ html[data-rgx] #tree li[rel] > a.jstree-clicked > ins.jstree-icon {
 }
 html[data-rgx] #tree li:is([rel="W"], [rel="S"], [rel="D"], [rel="E"]) > a {
   font-weight: 500;
+}
+html[data-rgx] #tree li > a > ins.jstree-icon {
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/* --- Champs React « flottants » (.input-container : bordure dessinée par un <fieldset>) : le style générique des
+   <input> y ajoutait une seconde bordure et un fond --- */
+html[data-rgx] .input-container {
+  --input-status-color: var(--rgx-muted);
+  background: var(--rgx-surface);
+  border-radius: var(--radius-md);
+}
+html[data-rgx] .input-container:focus-within {
+  --input-status-color: var(--rgx-brand);
+}
+html[data-rgx] .input-container input {
+  border: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: 0;
+  color: var(--rgx-ink);
+}
+html[data-rgx] .input-container fieldset {
+  border-color: var(--rgx-border);
+  border-radius: var(--radius-md);
+}
+html[data-rgx] .input-container:focus-within > fieldset {
+  border-color: var(--rgx-brand);
+}
+html[data-rgx] .input-container .label,
+html[data-rgx] .input-container legend {
+  color: var(--rgx-muted);
+}
+
+/* Petits boutons (.btn-xs) : marge intérieure lisible (1px 5px d'origine) */
+html[data-rgx] .btn-xs {
+  padding: 3px 9px;
+  font-size: 12px;
 }
