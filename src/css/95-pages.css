@@ -1,0 +1,158 @@
+/* ===================================================================
+   19. Gabarits de page : en-tête d'identité, onglets, en-têtes de tableaux React, icônes de plateforme
+   =================================================================== */
+
+/* --- En-tête d'identité d'un nœud / agent (Pedigree, Jobs, Activité…) : pastille d'icône + titre + identifiant --- */
+html[data-rgx] [class*="Identity__Layout-sc"] {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+html[data-rgx] [class*="Identity__Layout-sc"] > svg.icon {
+  flex: none;
+  box-sizing: border-box;
+  width: 52px !important;
+  height: 52px !important;
+  padding: 12px;
+  border-radius: 14px;
+  background: color-mix(in srgb, currentColor 13%, var(--rgx-surface));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 22%, transparent);
+}
+/* Le dossier d'origine superpose un aplat et un contour : on ne garde que l'aplat */
+html[data-rgx] [class*="Identity__Layout-sc"] > svg.icon > path[fill] + path:not([fill]) {
+  display: none;
+}
+html[data-rgx] [class*="Identity__Layout-sc"] .name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--rgx-ink);
+}
+html[data-rgx] [class*="Identity__Layout-sc"] .down {
+  margin-top: 4px;
+}
+html[data-rgx] [class*="HoverCopy__Layout-sc"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--rgx-surface-2);
+  color: var(--rgx-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+}
+html[data-rgx] [class*="HoverCopy__Layout-sc"] svg {
+  width: 13px;
+  height: 13px;
+  opacity: 0.7;
+}
+
+/* --- Onglets MUI (sous-menus de page) : compacts, alignés à gauche, trait de marque --- */
+html[data-rgx] .MuiTabs-root {
+  min-height: 0;
+  border-bottom: 1px solid var(--rgx-border);
+}
+html[data-rgx] .MuiTabs-flexContainer {
+  gap: 2px;
+}
+html[data-rgx] .MuiTab-root {
+  min-width: 0;
+  min-height: 0;
+  padding: 10px 16px;
+  font-size: 13.5px;
+  letter-spacing: 0;
+  line-height: 1.4;
+  opacity: 1;
+  transition: color 0.15s, background-color 0.15s;
+}
+html[data-rgx] .MuiTab-root:hover {
+  color: var(--rgx-ink);
+  background: var(--rgx-row-hover);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+html[data-rgx] .MuiTab-root.Mui-selected,
+html[data-rgx] .MuiTab-root.Mui-selected:hover {
+  color: var(--rgx-brand);
+  font-weight: 600;
+}
+html[data-rgx] .MuiTabs-indicator {
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+}
+html[data-rgx] .MuiTab-wrapper {
+  flex-direction: row;
+  gap: 6px;
+}
+html[data-rgx] .pedigree-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+html[data-rgx] .pedigree-header .MuiTabs-root {
+  flex: 1;
+}
+
+/* --- En-têtes de colonnes des tableaux React : libellé + icônes (filtre, tri, masquer) sur UNE ligne ---
+   Le composant d'origine les empile (grille titre / icônes). Les icônes restent discrètes, pleines au survol. */
+html[data-rgx] [class*="Th__Layout-sc"] {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+}
+html[data-rgx] [class*="Th__Layout-sc"] > .title {
+  flex: 0 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+html[data-rgx] [class*="Th__Layout-sc"] > svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--rgx-muted);
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 0.12s, color 0.12s;
+}
+html[data-rgx] [class*="Th__Layout-sc"] > svg:hover {
+  color: var(--rgx-brand);
+  opacity: 1;
+}
+html[data-rgx] [class*="Th__Layout-sc"] > svg.hideColumn {
+  display: none;
+}
+html[data-rgx] th:hover [class*="Th__Layout-sc"] > svg.hideColumn {
+  display: block;
+}
+
+/* --- Icônes de plateforme (colonne « Plateforme », fiches) : Windows aux couleurs de marque, les autres en gris --- */
+html[data-rgx] .rg-image-windows {
+  color: var(--rgx-brand);
+}
+html[data-rgx] .rg-image-windows,
+html[data-rgx] .rg-image-mac,
+html[data-rgx] .rg-image-linux,
+html[data-rgx] .rg-image-hypervisor,
+html[data-rgx] .rg-image-hypervisor-grey {
+  width: 22px;
+  height: 22px;
+}
+
+/* --- Pied d'en-tête de liste : « 35 résultats (35 visibles) » et barre d'outils --- */
+html[data-rgx] [class*="ResultsCount"],
+html[data-rgx] [class*="Results__"] {
+  color: var(--rgx-muted);
+  font-size: 12.5px;
+}
+html[data-rgx] #root table:not(.table) thead th,
+html[data-rgx] #root table[class*="Table__Layout-sc"] thead th {
+  vertical-align: middle;
+  white-space: nowrap;
+}

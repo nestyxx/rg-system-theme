@@ -6,7 +6,7 @@ dans l'esprit de Webgest : Inter / Space Grotesk, palette Arobase, thème clair 
 
 Le navigateur injecte lui-même le CSS avant le premier rendu : aucun gestionnaire de scripts n'est nécessaire et l'ancien style ne clignote pas.
 
-- Version : **1.2.1** (voir [CHANGELOG](CHANGELOG.md))
+- Version : **1.3.0** (voir [CHANGELOG](CHANGELOG.md))
 - Maquette de référence : [`maquette/direction.html`](maquette/direction.html)
 - Document pour l'équipe RG System : [`docs/PROPOSITION-RG.md`](docs/PROPOSITION-RG.md)
 
@@ -63,6 +63,7 @@ Aucune ressource externe n'est chargée à l'exécution (ni CDN Tailwind, ni Goo
 | `src/css/40-react.css` | Écrans React : grilles, onglets MUI, `BaseButton`, pastilles de statut, écrans « vitrine » |
 | `src/css/50-modules.css` | Modules : Jobs, Configuration, calendrier, vulnérabilités, menu clic droit, Pace, sélecteur de date, tickets, fiche agent, courbes… |
 | `src/css/60-layout.css` | Mise en page de la maquette : en-tête 56 px et icônes, logo, pagination des listes, boutons, tableaux |
+| `src/css/95-pages.css` | Gabarits de page : en-tête d'identité, onglets, en-têtes de tableaux, icônes de plateforme |
 | `src/css/80-polish.css`, `90-extra.css` | Reprise typographique, tickets, configuration, courbes ; socle étendu (Bootstrap 3 + MUI) pour les écrans non capturés |
 | `src/css/70-menu-sum.css` | Retouches issues des essais sur le site réel : menu (entrée courante, sous-menus, Rechercher), survol de l'arbre, icônes des agents, tableaux de synthèse |
 | `src/icons.mjs` | **Source unique des icônes** (style Lucide, trait 2 px). Le build en génère `src/icons.generated.css` (variables `--rgx-ic-*` + masques CSS, couleur = `currentColor`). Pour ajouter une icône : l'ajouter dans `ICONS`, puis dans `MENU` ou `GLYPHS`, ou l'utiliser via `var(--rgx-ic-nom)` dans le CSS. |

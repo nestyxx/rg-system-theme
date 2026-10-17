@@ -1,5 +1,14 @@
 # Journal des modifications
 
+## 1.3.0 — 2026-10-17
+
+Gabarits de page (`95-pages.css`).
+
+- **En-tête d'identité** (nœud, agent) : icône dans une pastille teintée de 52 px, titre en Space Grotesk 24 px, identifiant en pastille à chasse fixe avec icône de copie.
+- **Onglets** (Agents actifs / désactivés / Informations / Clients…) : compacts, alignés à gauche, filet de séparation, trait de marque ; plus de largeur minimale de 160 px.
+- **En-têtes de tableaux React** : libellé et icônes (filtre, tri) sur **une seule ligne**, icônes discrètes, pleines au survol ; « masquer la colonne » n'apparaît qu'au survol de l'en-tête.
+- **Icône Windows** (tableau, fiches) aux couleurs de marque ; Mac, Linux et hyperviseur en gris.
+
 ## 1.2.1 — 2026-10-17
 
 - **Fenêtres flottantes** (survol d'un agent, popovers MUI) : carte du thème (bordure, rayon, ombre), séparateurs, icônes grises avec survol de marque ; composants « Typo » de RG (famille portée par des attributs HTML) ramenés sur Inter / Space Grotesk / JetBrains Mono. Réglage fait sans accès au DOM exact de la fenêtre d'agent : à affiner avec son balisage.
