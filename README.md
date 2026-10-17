@@ -6,7 +6,7 @@ dans l'esprit de Webgest : Inter / Space Grotesk, palette Arobase, thème clair 
 
 Le navigateur injecte lui-même le CSS avant le premier rendu : aucun gestionnaire de scripts n'est nécessaire et l'ancien style ne clignote pas.
 
-- Version : **1.5.0** (voir [CHANGELOG](CHANGELOG.md))
+- Version : **1.6.0** (voir [CHANGELOG](CHANGELOG.md))
 - Maquette de référence : [`maquette/direction.html`](maquette/direction.html)
 - Document pour l'équipe RG System : [`docs/PROPOSITION-RG.md`](docs/PROPOSITION-RG.md)
 
@@ -28,7 +28,7 @@ Le navigateur injecte lui-même le CSS avant le premier rendu : aucun gestionnai
 - **Clair / sombre** : bouton lune/soleil dans l'en-tête (à droite des icônes) ou `Alt+Maj+T`. Le choix est mémorisé ; par défaut le thème suit `prefers-color-scheme`.
 - **Densité des tableaux** (confortable / compacte) : `Alt+Maj+D`, mémorisée.
 - **Largeur de l'arborescence** : glisser la poignée entre l'arbre et le contenu. La largeur minimale d'origine (≈ 300 px) est supprimée : on peut descendre jusqu'à 120 px. La largeur est mémorisée ; **double-clic sur la poignée** = largeur d'origine.
-- **Tickets › Actualisation auto** : le widget d'origine ne recharge pas la liste (il faut un F5). Tant que le bouton est activé, la page est rechargée à sa fréquence (60 s par défaut) quand vous êtes inactif depuis 8 s, sans champ en cours de saisie ni fenêtre modale ouverte ; l'état survit au rechargement. Désactivable : `localStorage.setItem('rgx.autoReload', '0')` sur le site.
+- **Tickets › Actualisation auto** : le widget d'origine ne rafraîchit pas la liste (il faut un F5). Tant que le bouton est activé, la liste est rafraîchie à sa fréquence (60 s par défaut) quand vous êtes inactif depuis 8 s, **sans recharger la plateforme** : le script clique sur l'entrée « Tickets » du menu, ce qui refait le rendu de la page (arborescence, menu et onglets restent en place). Aucun rafraîchissement si un champ est en cours de saisie, si une fenêtre modale ou le détail d'un ticket est ouvert. Désactivable : `localStorage.setItem('rgx.autoReload', '0')` sur le site.
 
 Les réglages sont stockés dans le `localStorage` du site (`rgx.enabled`, `rgx.theme`, `rgx.density`, `rgx.treeWidth`, `rgx.autoReload`).
 

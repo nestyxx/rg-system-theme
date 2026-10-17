@@ -1,0 +1,282 @@
+/* ===================================================================
+   22. Fiche agent, criticité, barre latérale, connexion, passe globale (v1.6)
+   =================================================================== */
+
+/* ===================================================================
+   Fiche agent (Pedigree) : pastilles d'état, panneau d'actions, lignes Informations
+   =================================================================== */
+/* Pastilles en haut à droite (Windows Update, antivirus, sauvegarde, température) : même disque de 34 px,
+   neutre par défaut, teinté quand l'état est « ok » (le disque gris foncé et le picto blanc d'origine disparaissent) */
+html[data-rgx] #block-icons-status-pedigree {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  float: right;
+}
+html[data-rgx] #block-icons-status-pedigree > .pull-left {
+  float: none;
+}
+html[data-rgx] #block-icons-status-pedigree .icon-pattern,
+html[data-rgx] #block-icons-status-pedigree .line-height-10 {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  margin: 0;
+  padding: 0 !important;
+  float: none;
+  border: 1px solid var(--rgx-border);
+  border-radius: 50%;
+  background: var(--rgx-surface) !important;
+  color: var(--rgx-muted);
+  line-height: 1;
+}
+html[data-rgx] #block-icons-status-pedigree .icon-pattern.label-success {
+  border-color: color-mix(in srgb, var(--rgx-ok) 35%, transparent);
+  background: var(--rgx-ok-bg) !important;
+  color: var(--rgx-ok);
+}
+html[data-rgx] #block-icons-status-pedigree .icon-pattern.label-important,
+html[data-rgx] #block-icons-status-pedigree .icon-pattern.label-danger {
+  border-color: color-mix(in srgb, var(--rgx-crit) 35%, transparent);
+  background: var(--rgx-crit-bg) !important;
+  color: var(--rgx-crit);
+}
+html[data-rgx] #block-icons-status-pedigree svg {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  color: inherit;
+}
+/* Panneau d'actions : une ligne = libellé à gauche, bouton carré de 32 px à droite, tous identiques */
+html[data-rgx] #pedigree-block-actions .row {
+  margin: 0;
+}
+html[data-rgx] #pedigree-block-actions .row > [class*="col-"] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  float: none;
+  min-height: 42px;
+  padding: 5px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--rgx-border) 55%, transparent);
+}
+html[data-rgx] #pedigree-block-actions .row:last-child > [class*="col-"] {
+  border-bottom: 0;
+}
+html[data-rgx] #pedigree-block-actions .pull-right,
+html[data-rgx] #pedigree-block-actions .btn-group {
+  float: none;
+  margin-left: auto;
+}
+html[data-rgx] #pedigree-block-actions .btn {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--rgx-muted);
+}
+html[data-rgx] #pedigree-block-actions .btn:hover {
+  border-color: var(--rgx-brand);
+  background: var(--rgx-brand-soft);
+  color: var(--rgx-brand);
+}
+html[data-rgx] #pedigree-block-actions .btn svg {
+  width: 16px;
+  height: 16px;
+}
+html[data-rgx] #pedigree-block-actions #btn-disable-agent:hover {
+  border-color: var(--rgx-crit);
+  background: var(--rgx-crit-bg);
+  color: var(--rgx-crit);
+}
+/* Lignes « Informations » : libellé | valeur sur une ligne flexible ; une valeur longue ou un champ de saisie ne déborde plus sur la ligne suivante */
+html[data-rgx] #block-info-pedigree .row.line-height {
+  display: flex;
+  align-items: center;
+  height: auto;
+  min-height: 34px;
+  padding: 4px 0;
+  line-height: 1.45;
+}
+html[data-rgx] #block-info-pedigree .row.line-height::before,
+html[data-rgx] #block-info-pedigree .row.line-height::after {
+  display: none;
+}
+html[data-rgx] #block-info-pedigree .row.line-height > .col-md-4 {
+  flex: 0 0 34%;
+  float: none;
+  width: auto;
+}
+html[data-rgx] #block-info-pedigree .row.line-height > .col-md-8 {
+  display: flex;
+  flex: 1 1 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  float: none;
+  width: auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+html[data-rgx] #block-info-pedigree .rg-image-windows,
+html[data-rgx] #block-info-pedigree .rg-image-mac,
+html[data-rgx] #block-info-pedigree .rg-image-linux {
+  flex: none;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+}
+html[data-rgx] #block-info-pedigree .input-group {
+  flex: 1 1 260px;
+  max-width: 420px;
+}
+
+/* ===================================================================
+   Criticité (tickets, statistiques, règle d'escalade) : barres de niveau
+   3 barres = critique, 2 = moyenne, 1 = faible ; couleur du thème au lieu de carrés pleins à ombre
+   =================================================================== */
+html[data-rgx] :is(div, td, span):has(> .icon-criticality) {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  vertical-align: middle;
+}
+html[data-rgx] .icon-criticality {
+  float: none;
+  width: 7px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  border-radius: 3px;
+  box-shadow: none;
+}
+html[data-rgx] .icon-criticality.criticality-color-critical { background: var(--rgx-crit); }
+html[data-rgx] .icon-criticality.criticality-color-medium { background: var(--rgx-warn); }
+html[data-rgx] .icon-criticality.criticality-color-low { background: #d9a400; }
+html[data-rgx][data-rgx-theme="dark"] .icon-criticality.criticality-color-low { background: #f2c230; }
+
+/* ===================================================================
+   Barre latérale : hamburger de réduction du menu, marge haute de l'arborescence
+   =================================================================== */
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #head-menu #block-menu {
+  right: 10px;   /* bord droit aligné sur celui des pastilles du menu (200 − 10 px) */
+}
+html[data-rgx] #tree {
+  padding-top: 8px;
+}
+
+/* ===================================================================
+   Page de connexion : même logo que la plateforme
+   =================================================================== */
+html[data-rgx] .form-public-page #brand-logo:has(.rgx-logo) {
+  display: flex;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  margin: 0 auto 6px;
+  background: none;
+  filter: none;
+}
+html[data-rgx] .form-public-page .rgx-logo {
+  height: auto;
+  padding: 0;
+  gap: 10px;
+  color: var(--rgx-ink);
+  font-size: 24px;
+}
+html[data-rgx] .form-public-page .rgx-logo > b {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  font-size: 19px;
+}
+
+/* ===================================================================
+   Passe globale : curseurs et titres, avec la même logique partout
+   =================================================================== */
+html[data-rgx] :is(button, [role="button"], a[href], summary, label[for], select, input[type="checkbox"], input[type="radio"], input[type="submit"], input[type="button"], input[type="range"],
+  .btn, .cursor-pointer, .dropdown-toggle, .nav-tabs a, .nav-pills a, .pagination a, .MuiButtonBase-root, .MuiTab-root, .MuiSwitch-root, .MuiChip-clickable,
+  [class*="PictoClick__"], [class*="BaseButton-sc"], .pedigree-card-hoverable a, .jstree-anchor, .panel-heading[data-toggle], .panel-title a) {
+  cursor: pointer;
+}
+html[data-rgx] :is(input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="range"]), textarea) {
+  cursor: text;
+}
+html[data-rgx] :is(button, .btn, select, input, textarea, [role="button"], .MuiButtonBase-root)[disabled],
+html[data-rgx] :is(.btn, [class*="PictoClick__"], [class*="BaseButton-sc"], li, a).disabled,
+html[data-rgx] [aria-disabled="true"] {
+  cursor: not-allowed;
+}
+/* Échelle de titres unique (les composants qui définissent leur propre taille gardent la leur) */
+html[data-rgx] :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--rgx-ink);
+  margin-top: 0;
+}
+html[data-rgx] #root :where(h1) { font-size: 28px; line-height: 1.2; }
+html[data-rgx] #root :where(h2) { font-size: 22px; line-height: 1.25; }
+html[data-rgx] #root :where(h3) { font-size: 18px; line-height: 1.3; }
+html[data-rgx] #root :where(h4) { font-size: 15px; line-height: 1.35; }
+html[data-rgx] #root :where(h5) { font-size: 13.5px; line-height: 1.4; }
+html[data-rgx] #root :where(h6) {
+  font: 600 11.5px/1.4 var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--rgx-muted);
+}
+/* Valeur à côté d'un picto (système d'exploitation) : sur une seule ligne ; seuls les champs de saisie peuvent passer à la ligne */
+html[data-rgx] #block-info-pedigree .row.line-height > .col-md-8:not(:has(.input-group)) {
+  flex-wrap: nowrap;
+}
+
+/* Même barres de niveau pour la variante « criticality-square-* » (Configuration › Communication) */
+html[data-rgx] :is(div, td, span):has(> [class*="criticality-square-"]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  vertical-align: middle;
+}
+html[data-rgx] [class*="criticality-square-"] {
+  width: 7px;
+  height: 18px;
+  margin: 0;
+  border-radius: 3px;
+}
+html[data-rgx] .criticality-square-critical { background-color: var(--rgx-crit); }
+html[data-rgx] .criticality-square-medium { background-color: var(--rgx-warn); }
+html[data-rgx] .criticality-square-low { background-color: #d9a400; }
+html[data-rgx][data-rgx-theme="dark"] .criticality-square-low { background-color: #f2c230; }
+/* Champs d'un groupe (horaires) : jamais plus étroits qu'une heure « 00:00 » */
+html[data-rgx] .input-group > input.form-control {
+  min-width: 58px;
+}
+html[data-rgx] .form-public-page .title-header {
+  text-align: center;
+}
+
+/* Textes restés en Roboto (police héritée d'une feuille de RG) : ramenés sur Inter */
+html[data-rgx] .input-container label.label,
+html[data-rgx] .overviewMessage,
+html[data-rgx] [class*="Trial__"],
+html[data-rgx] [class*="Trial__"] span,
+html[data-rgx] [class*="Display__"],
+html[data-rgx] .section > .header .title,
+html[data-rgx] [class*="LastScan__"],
+html[data-rgx] [class*="LastScan__"] * {
+  font-family: var(--font-sans);
+}
+/* Longs libellés de templates : retour à la ligne plutôt que débordement */
+html[data-rgx] [id^="device-templates-list"] .row,
+html[data-rgx] [id^="template-"] {
+  overflow-wrap: anywhere;
+}
+html[data-rgx] #block-info-pedigree .input-group {
+  flex: 1 1 220px;
+  max-width: 100%;
+}

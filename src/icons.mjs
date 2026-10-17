@@ -77,6 +77,21 @@ export const ICONS = {
   shieldPause: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M10 9v6"/><path d="M14 9v6"/>',
   shieldHelp: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><path d="M12 16h.01"/>',
   shieldOff: '<path d="m2 2 20 20"/><path d="M5 5a1 1 0 0 0-1 1v7c0 5 3.5 7.5 7.67 8.94a1 1 0 0 0 .67.01c2.35-.82 4.48-1.97 5.9-3.71"/><path d="M9.309 3.652A12.252 12.252 0 0 0 11.24 2.28a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1v7a9.784 9.784 0 0 1-.08 1.264"/>',
+  chevronLeft: '<path d="m15 18-6-6 6-6"/>',
+  chevronsRight: '<path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/>',
+  chevronsLeft: '<path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/>',
+  book: '<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/>',
+  repeat: '<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
+  ellipsisVertical: '<circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>',
+  square: '<rect width="14" height="14" x="5" y="5" rx="2"/>',
+  thumbsUp: '<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>',
+  list: '<path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/>',
+  arrowDownAZ: '<path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M20 8h-5"/><path d="M15 10V6.5a2.5 2.5 0 0 1 5 0V10"/><path d="M15 14h5l-5 6h5"/>',
+  arrowDownWideNarrow: '<path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M11 4h10"/><path d="M11 8h7"/><path d="M11 12h4"/>',
+  shuffle: '<path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"/><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"/><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"/>',
+  power: '<path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/>',
+  wrench: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6.001 6.001 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/>',
+  thermometer: '<path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>',
   windows: '<rect x="3" y="3" width="8" height="8" rx="1" fill="black"/><rect x="13" y="3" width="8" height="8" rx="1" fill="black"/><rect x="3" y="13" width="8" height="8" rx="1" fill="black"/><rect x="13" y="13" width="8" height="8" rx="1" fill="black"/>',
   apple: '<path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/>',
   moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
@@ -117,6 +132,12 @@ export const WU = {
   unknown: ['shieldHelp', 'var(--rgx-muted)'],
   disabled: ['shieldOff', 'var(--rgx-muted)'],
   'disabled-monitoring': ['shieldOff', 'var(--rgx-muted)'],
+};
+
+// Sprites « sprite-icon-* » hors menu (fenêtre d'agent, panneau d'actions de la fiche agent, pastilles d'état) -> icône du thème.
+export const SPRITES = {
+  lumiere: 'headset', command: 'terminal', maintenance: 'wrench', calendar: 'calendar', flag: 'flag',
+  appmanager: 'package', asynchronous: 'refresh', security: 'shield', backup: 'database', thermometer: 'thermometer',
 };
 
 // Sous-menus du menu latéral (li.menu-lvl-1, par id) -> icônes du thème.
@@ -160,6 +181,28 @@ export const GLYPHS = {
   'glyphicon-circle-arrow-down': 'arrowDown',
   'glyphicon-download-alt': 'download',
   'glyphicon-cog': 'settings',
+  'glyphicon-edit': 'pencil',
+  'glyphicon-chevron-right': 'chevronRight',
+  'glyphicon-chevron-left': 'chevronLeft',
+  'glyphicon-bell': 'bell',
+  'glyphicon-forward': 'chevronsRight',
+  'glyphicon-backward': 'chevronsLeft',
+  'glyphicon-book': 'book',
+  'glyphicon-retweet': 'repeat',
+  'glyphicon-warning-sign': 'triangleAlert',
+  'glyphicon-option-vertical': 'ellipsisVertical',
+  'glyphicon-sort': 'arrowDownUp',
+  'glyphicon-info-sign': 'info',
+  'glyphicon-triangle-bottom': 'chevronDown',
+  'glyphicon-share-alt': 'upload',
+  'glyphicon-play': 'play',
+  'glyphicon-stop': 'square',
+  'glyphicon-thumbs-up': 'thumbsUp',
+  'glyphicon-th-list': 'list',
+  'glyphicon-sort-by-order': 'arrowDownWideNarrow',
+  'glyphicon-sort-by-alphabet': 'arrowDownAZ',
+  'glyphicon-random': 'shuffle',
+  'glyphicon-off': 'power',
 };
 
 // Encodage minimal d'un SVG en data-URI (les guillemets doubles passent en simples).
@@ -216,8 +259,10 @@ export function buildIconsCss() {
     out.push(`html[data-rgx] svg:has(> use[href$="#sprite-wu-${id}"]){background-color:${color};${mask(name)}}`);
   }
   // Assist (sprite « lumiere », fenêtre d'agent) : casque du thème
-  out.push('html[data-rgx] svg:has(> use[href$="#sprite-icon-lumiere"]) use{visibility:hidden}');
-  out.push(`html[data-rgx] svg:has(> use[href$="#sprite-icon-lumiere"]){background-color:currentColor;${mask('headset')}}`);
+  for (const [id, name] of Object.entries(SPRITES)) {
+    out.push(`html[data-rgx] svg:not(.icon-menu):has(> use[href$="#sprite-icon-${id}"]) use{visibility:hidden}`);
+    out.push(`html[data-rgx] svg:not(.icon-menu):has(> use[href$="#sprite-icon-${id}"]){background-color:currentColor;${mask(name)}}`);
+  }
 
   // Glyphicons
   const classes = Object.keys(GLYPHS);

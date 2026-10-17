@@ -1,5 +1,15 @@
 # Journal des modifications
 
+## 1.6.0 — 2026-10-17
+
+- **Actualisation auto des tickets : plus de rechargement de la plateforme.** La liste est rafraîchie en cliquant par script sur l'entrée « Tickets » du menu (vérifié sur le site réel : les éléments de la page sont remplacés, arborescence et menu restent en place). Pas de rafraîchissement si un champ est en cours de saisie, si une fenêtre ou le détail d'un ticket est ouvert.
+- **Fiche agent** : pastilles d'état en haut à droite (Windows Update, antivirus, sauvegarde, température) en disques homogènes de 34 px, teintés selon l'état ; panneau d'actions (Assist, Commande, Maintenance, Promouvoir, Désactiver, Redémarrer) en boutons carrés identiques ; lignes « Informations » en flex (la ligne « Système d'exploitation » et le champ « Date d'installation » ne se chevauchent plus).
+- **Criticité** (tickets, statistiques, Configuration › Communication) : barres de niveau (3 = critique, 2 = moyenne, 1 = faible) aux couleurs du thème, au lieu de carrés pleins à ombre.
+- **Icônes** : 22 glyphicons de plus remplacés par le jeu du thème (modifier, chevrons, pagination première/dernière page, menu « … », tri, cloche, livre, pouce…) ; sprites Commande, Maintenance, Calendrier, Drapeau, App Manager, Opérations, Sécurité, Sauvegarde, Température remplacés eux aussi.
+- **Connexion** : même logo que la barre latérale (pastille « RG » + nom) ; titre centré.
+- **Barre latérale** : hamburger de réduction aligné sur le bord droit des pastilles du menu ; marge haute au-dessus du premier niveau de l'arborescence.
+- **Passe globale** : curseurs (main sur tout ce qui est cliquable, texte sur les champs, interdit sur le désactivé) ; échelle de titres unique (h1 → h6) ; polices Roboto résiduelles ramenées sur Inter (libellés flottants, Stats, Trial, vulnérabilités, profil) ; infobulles et libellés accessibles ajoutés aux actions en simple icône (« Supprimer », « Modifier », « Actualiser »…) sans écraser ceux de RG ; champs d'horaires jamais plus étroits qu'une heure.
+
 ## 1.5.0 — 2026-10-17
 
 Surfaces relevées sur le site réel (balisage lu en direct, sans rien modifier) : `96-surfaces.css`.

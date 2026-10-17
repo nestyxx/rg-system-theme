@@ -82,6 +82,12 @@
       if (!host || host.querySelector('.rgx-logo')) return;
       host.innerHTML = '<span class="rgx-logo" role="img" aria-label="RG system suite"><b>RG</b><span class="rgx-logo-name">RG system</span></span>';
     }
+    // Page de connexion : même logo que la barre latérale (pastille « RG » + nom), à la place de l'image d'origine.
+    function ensureLoginLogo() {
+      const host = document.querySelector('.form-public-page #brand-logo');
+      if (!host || host.querySelector('.rgx-logo')) return;
+      host.innerHTML = '<span class="rgx-logo" role="img" aria-label="RG system suite"><b>RG</b><span class="rgx-logo-name">RG system</span></span>';
+    }
     // Avatar du profil : initiales (tirées de l'attribut alt du Gravatar, « Gravatar for a.nest@domaine » -> « AN ») sur un disque de marque,
     // au lieu de l'identicône générée. Posé sur le bouton du profil et sur l'en-tête de son menu ; l'image reste dans le DOM.
     function initialsOf(alt) {
@@ -97,6 +103,28 @@
         const img = host.querySelector('img[alt^="Gravatar"]');
         const ini = img && initialsOf(img.getAttribute('alt'));
         if (ini) host.setAttribute('data-rgx-initials', ini);
+      });
+    }
+    // Infobulles : une action en simple icône (sans texte, sans title ni aria-label) reçoit un libellé tiré de son pictogramme,
+    // pour que toutes les actions iconiques de la plateforme s'annoncent au survol et au lecteur d'écran de la même façon.
+    // Les libellés déjà posés par RG ne sont jamais écrasés.
+    const ICON_LABELS = {
+      'glyphicon-trash': 'Supprimer', 'glyphicon-remove': 'Supprimer', 'glyphicon-edit': 'Modifier', 'glyphicon-pencil': 'Modifier',
+      'glyphicon-plus': 'Ajouter', 'glyphicon-refresh': 'Actualiser', 'glyphicon-search': 'Rechercher', 'glyphicon-filter': 'Filtrer',
+      'glyphicon-ok': 'Valider', 'glyphicon-info-sign': 'Informations', 'glyphicon-question-sign': 'Aide', 'glyphicon-share': 'Exporter',
+      'glyphicon-download-alt': 'Télécharger', 'glyphicon-thumbs-up': 'Promouvoir', 'glyphicon-off': 'Redémarrer', 'glyphicon-cog': 'Réglages',
+      'glyphicon-play': 'Démarrer', 'glyphicon-stop': 'Arrêter', 'glyphicon-calendar': 'Calendrier', 'glyphicon-time': 'Heure',
+      'glyphicon-option-vertical': 'Plus d\'actions', 'glyphicon-forward': 'Dernière page', 'glyphicon-backward': 'Première page',
+      'glyphicon-chevron-left': 'Précédent', 'glyphicon-chevron-right': 'Suivant', 'glyphicon-retweet': 'Réinitialiser', 'glyphicon-book': 'Documentation',
+    };
+    function ensureLabels() {
+      document.querySelectorAll('#root button:not([title]):not([aria-label]):not([data-rgx-l]), #root a.btn:not([title]):not([aria-label]):not([data-rgx-l])').forEach((el) => {
+        el.setAttribute('data-rgx-l', '');
+        if (el.textContent.trim()) return;
+        for (const g of el.querySelectorAll('.glyphicon')) {
+          const k = [...g.classList].find((c) => ICON_LABELS[c]);
+          if (k) { el.setAttribute('title', ICON_LABELS[k]); el.setAttribute('aria-label', ICON_LABELS[k]); return; }
+        }
       });
     }
     // Boutons d'icônes de l'en-tête. Les icônes d'origine (fusée, Assist, notes de version, et tout autre bouton ajouté
@@ -154,7 +182,7 @@
     const schedule = () => {
       if (scheduled) return;
       scheduled = true;
-      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureLogo(); ensureAvatars(); });
+      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureLogo(); ensureLoginLogo(); ensureAvatars(); ensureLabels(); });
     };
     new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
     document.addEventListener('DOMContentLoaded', schedule);
@@ -206,10 +234,10 @@
     }, true);
 
     // ------------------------------------------------------------------------------------------------
-    // Liste des tickets : « Actualisation auto ». Le widget d'origine ne recharge pas la liste (il faut
-    // un vrai F5). Tant que le bouton est activé, la page est rechargée à la fréquence du widget
-    // (data-frequency, 60 s par défaut) quand l'utilisateur est inactif ; l'état survit au rechargement
-    // (sessionStorage). Désactivable : localStorage rgx.autoReload = '0'.
+    // Liste des tickets : « Actualisation auto ». Le widget d'origine ne rafraîchit pas la liste (il faut un vrai F5).
+    // Tant que le bouton est activé, la liste est rafraîchie à la fréquence du widget (data-frequency, 60 s par
+    // défaut) quand l'utilisateur est inactif, sans recharger la plateforme. L'état survit (sessionStorage).
+    // Désactivable : localStorage rgx.autoReload = '0'.
     // ------------------------------------------------------------------------------------------------
     const AR = { sel: 'button.refresh-widget', key: 'rgx.autoTickets', idleMs: 8000 };
     const ss = {
@@ -224,27 +252,30 @@
       const b = e.target && e.target.closest ? e.target.closest(AR.sel) : null;
       if (b && e.isTrusted) ss.set(!ss.get());   // le clic de l'utilisateur bascule l'état voulu
     }, true);
-    const armedAt = Date.now();
-    let restored = false;
+    let lastRun = Date.now();
+    // Actualisation « douce » : un clic sur l'entrée « Tickets » du menu refait le rendu de la page des tickets
+    // (liste, filtres, widget) SANS recharger la plateforme (arborescence, menu, onglets restent en place).
+    // Vérifié sur le site réel : les éléments de la page sont remplacés, la page n'est pas rechargée.
     function arTick() {
       if (!arEnabled() || !onTicketRoute()) return;
       const btn = document.querySelector(AR.sel);
       if (!btn) return;
-      if (ss.get() && !restored) {   // après un rechargement : réactive le bouton par le gestionnaire d'origine de RG
-        restored = true;
-        if (!btn.classList.contains('active')) btn.click();
+      if (!ss.get()) return;
+      if (!btn.classList.contains('active')) {   // nouvelle page (ou rendu refait) : réactive le bouton par le gestionnaire d'origine
+        btn.click();
         return;
       }
-      restored = true;
-      if (!ss.get()) return;
       const freq = Math.max(15, parseInt(btn.getAttribute('data-frequency'), 10) || 60) * 1000;
-      if (Date.now() - armedAt < freq || document.hidden) return;
+      if (Date.now() - lastRun < freq || document.hidden) return;
       if (Date.now() - lastInput < AR.idleMs) return;   // l'utilisateur est en train d'agir : on repousse
       const a = document.activeElement;
       if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;
-      if (document.querySelector('.modal.in, .modal.show, .bootstrap-datetimepicker-widget')) return;
-      console.info('[RG thème Arobase] actualisation automatique des tickets');
-      location.reload();
+      if (document.querySelector('.modal.in, .modal.show, .bootstrap-datetimepicker-widget, tr.ticket-detail-open-top')) return;   // détail ou fenêtre ouverts : on ne les écrase pas
+      const link = document.querySelector('#menu-tickets > a');
+      if (!link) return;
+      lastRun = Date.now();
+      console.info('[RG thème Arobase] actualisation de la liste des tickets');
+      link.click();
     }
     setInterval(arTick, 4000);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) arTick(); });
