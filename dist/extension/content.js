@@ -345,7 +345,32 @@
         }
         items.push({ kind: 'Nœud', label, hint: path.slice(-2).join(' › '), run: () => a.click() });
       });
+      // Agents et nœuds cités dans la page courante (tableaux de synthèse, listes) : trouvables même si leur branche n'est pas ouverte
+      const seen = new Set();
+      document.querySelectorAll('#root a[href^="#/node/"]').forEach((a) => {
+        const href = a.getAttribute('href'); if (seen.has(href)) return;
+        const label = (a.textContent || '').replace(/\s+/g, ' ').trim(); if (!label || label.length > 60) return;
+        seen.add(href);
+        items.push({ kind: 'Agent', label, hint: '', run: () => { location.hash = href; } });
+      });
       return items;
+    }
+    // Recherche RG : ouvre la page « Rechercher » et y reporte le texte saisi (lecture seule : c'est la recherche d'agents de RG)
+    function runRgSearch(text) {
+      location.hash = '#/node/root/page/search';
+      let tries = 0;
+      const t = setInterval(() => {
+        const inp = document.querySelector('#root input[placeholder*="Rechercher"]');
+        if (inp || ++tries > 30) {
+          clearInterval(t);
+          if (!inp) return;
+          const set = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+          set.call(inp, text); inp.dispatchEvent(new Event('input', { bubbles: true }));
+          const btn = inp.closest('.input-container, div') && inp.closest('.input-container, div').querySelector('svg[role="button"], button');
+          if (btn) btn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+          inp.focus();
+        }
+      }, 200);
     }
     let pal = null;
     function closePalette() { if (pal) { pal.remove(); pal = null; } }
@@ -362,9 +387,11 @@
         const q = norm(input.value).split(/\s+/).filter(Boolean);
         shown = items.map((it) => ({ it, s: (() => { const l = norm(it.label); const h = norm(it.hint); if (!q.every((t) => l.includes(t) || h.includes(t))) return -1; return (l.startsWith(q[0] || '') ? 0 : 1) + (q.every((t) => l.includes(t)) ? 0 : 2); })() }))
           .filter((x) => x.s >= 0).sort((a, b) => a.s - b.s).slice(0, 14).map((x) => x.it);
+        const raw = input.value.trim();
+        if (raw) shown.push({ kind: 'RG', label: 'Rechercher « ' + raw + ' » dans RG System', hint: 'tous les agents', run: () => runRgSearch(raw) });
         sel = Math.min(sel, Math.max(0, shown.length - 1));
         list.textContent = '';
-        if (!shown.length) { const li = document.createElement('li'); li.className = 'rgx-pal-empty'; li.textContent = 'Aucun résultat dans les nœuds chargés (ouvrez la branche de l\'arborescence pour l\'inclure).'; list.appendChild(li); return; }
+        if (!shown.length) { const li = document.createElement('li'); li.className = 'rgx-pal-empty'; li.textContent = 'Tapez un nom de nœud, d\'agent ou de page.'; list.appendChild(li); return; }
         shown.forEach((it, i) => {
           const li = document.createElement('li'); li.setAttribute('role', 'option'); if (i === sel) li.className = 'on';
           const k = document.createElement('em'); k.textContent = it.kind; const t = document.createElement('span'); t.textContent = it.label;

@@ -1,5 +1,17 @@
 # Journal des modifications
 
+## 1.8.0 — 2026-10-17
+
+Audit en direct sur la plateforme réelle, extension chargée (clair et sombre).
+
+- **Polices** : Roboto, imposée par plusieurs composants RG, est remplacée par Inter via un alias `@font-face` (plus de police résiduelle).
+- **Recherche rapide `Ctrl+K`** : ajoute les agents de la page et un choix « Rechercher « x » dans RG System ».
+- **Icônes** : flèches, disquette, états Windows Update et sprites (sélecteur `xlink:href`).
+- **Sombre** : sélecteur MUI de la page Jobs (fond blanc imposé par RG, y compris au focus).
+- **Mise en page** : Configuration › Communication en grille à 7 colonnes, champs `select` / `input-group` à largeur minimale, accordéons, pastilles d'icônes, règles de relance, espacement des cellules.
+- **Lisibilité** : chiffres des statistiques et légendes de graphiques plus contrastés en clair.
+- **Tests** : limite de taille CSS portée à 600 Ko.
+
 ## 1.7.1 — 2026-10-17
 
 - **Actualisation auto des tickets : état visible.** Tant qu'elle est active, le bouton est teinté, son icône tourne et un compte à rebours (« 42 s ») indique la prochaine actualisation (« … » si elle attend que vous ayez fini d'agir) ; l'infobulle le précise. Le décompte repart de zéro à chaque activation.

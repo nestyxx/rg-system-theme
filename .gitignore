@@ -6,3 +6,4 @@ src/icons.generated.css
 test/fixtures/
 test/forbidden.txt
 communication/
+.playwright-mcp/

@@ -92,6 +92,8 @@ export const ICONS = {
   power: '<path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/>',
   wrench: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6.001 6.001 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/>',
   thermometer: '<path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>',
+  arrowLeft: '<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+  save: '<path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/>',
   windows: '<rect x="3" y="3" width="8" height="8" rx="1" fill="black"/><rect x="13" y="3" width="8" height="8" rx="1" fill="black"/><rect x="3" y="13" width="8" height="8" rx="1" fill="black"/><rect x="13" y="13" width="8" height="8" rx="1" fill="black"/>',
   apple: '<path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/>',
   moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
@@ -137,7 +139,7 @@ export const WU = {
 // Sprites « sprite-icon-* » hors menu (fenêtre d'agent, panneau d'actions de la fiche agent, pastilles d'état) -> icône du thème.
 export const SPRITES = {
   lumiere: 'headset', command: 'terminal', maintenance: 'wrench', calendar: 'calendar', flag: 'flag',
-  appmanager: 'package', asynchronous: 'refresh', security: 'shield', backup: 'database', thermometer: 'thermometer',
+  appmanager: 'package', asynchronous: 'refresh', security: 'shield', backup: 'database', thermometer: 'thermometer', message: 'messageSquare',
 };
 
 // Sous-menus du menu latéral (li.menu-lvl-1, par id) -> icônes du thème.
@@ -203,6 +205,10 @@ export const GLYPHS = {
   'glyphicon-sort-by-alphabet': 'arrowDownAZ',
   'glyphicon-random': 'shuffle',
   'glyphicon-off': 'power',
+  'glyphicon-arrow-left': 'arrowLeft',
+  'glyphicon-arrow-down': 'arrowDown',
+  'glyphicon-arrow-up': 'arrowUp',
+  'glyphicon-floppy-disk': 'save',
 };
 
 // Encodage minimal d'un SVG en data-URI (les guillemets doubles passent en simples).
@@ -215,6 +221,9 @@ const uri = (inner) =>
     .replace(/</g, '%3C')
     .replace(/>/g, '%3E') +
   '")';
+
+// « use[href…] » ET « use[xlink:href…] » (React rend parfois l'un, parfois l'autre)
+const USE = (op, v) => `:is(use[href${op}"${v}"],use[xlink\\:href${op}"${v}"])`;
 
 // Chaque icône est déclarée UNE fois, dans une variable CSS ; les règles ne font que la référencer.
 const mask = (name) => {
@@ -247,21 +256,21 @@ export function buildIconsCss() {
   }
 
   // Plugins (en-têtes des tableaux de synthèse, listes de plugins…) : le dessin d'origine est masqué, l'icône du thème peinte à la place
-  out.push('html[data-rgx] svg:has(> use[href*="#sprite-plugin-"]){background-color:currentColor}');
-  out.push('html[data-rgx] svg:has(> use[href*="#sprite-plugin-"]) use{visibility:hidden}');
+  out.push(`html[data-rgx] svg:has(> ${USE('*=','#sprite-plugin-')}){background-color:currentColor}`);
+  out.push(`html[data-rgx] svg:has(> ${USE('*=','#sprite-plugin-')}) use{visibility:hidden}`);
   for (const [id, name] of Object.entries(PLUGINS)) {
-    out.push(`html[data-rgx] svg:has(> use[href$="#sprite-plugin-${id}"]){${mask(name)}}`);
+    out.push(`html[data-rgx] svg:has(> ${USE('$=','#sprite-plugin-'+id)}){${mask(name)}}`);
   }
 
   // Statut Windows Update : bouclier du thème, couleur = état (le sprite d'origine mélange 3 couleurs et une pastille)
-  out.push('html[data-rgx] svg:has(> use[href*="#sprite-wu-"]) use{visibility:hidden}');
+  out.push(`html[data-rgx] svg:has(> ${USE('*=','#sprite-wu-')}) use{visibility:hidden}`);
   for (const [id, [name, color]] of Object.entries(WU)) {
-    out.push(`html[data-rgx] svg:has(> use[href$="#sprite-wu-${id}"]){background-color:${color};${mask(name)}}`);
+    out.push(`html[data-rgx] svg:has(> ${USE('$=','#sprite-wu-'+id)}){background-color:${color};${mask(name)}}`);
   }
   // Assist (sprite « lumiere », fenêtre d'agent) : casque du thème
   for (const [id, name] of Object.entries(SPRITES)) {
-    out.push(`html[data-rgx] svg:not(.icon-menu):has(> use[href$="#sprite-icon-${id}"]) use{visibility:hidden}`);
-    out.push(`html[data-rgx] svg:not(.icon-menu):has(> use[href$="#sprite-icon-${id}"]){background-color:currentColor;${mask(name)}}`);
+    out.push(`html[data-rgx] svg:not(.icon-menu):has(> ${USE('$=','#sprite-icon-'+id)}) use{visibility:hidden}`);
+    out.push(`html[data-rgx] svg:not(.icon-menu):has(> ${USE('$=','#sprite-icon-'+id)}){background-color:currentColor;${mask(name)}}`);
   }
 
   // Glyphicons

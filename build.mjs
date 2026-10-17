@@ -35,6 +35,11 @@ for (const [family, mod, file, weights] of FONTS) {
   for (const w of weights) {
     const b64 = readFileSync(path.join(dir, 'files', `${file}-latin-${w}-normal.woff2`)).toString('base64');
     fonts += `@font-face{font-family:"${family}";font-style:normal;font-weight:${w};font-display:swap;src:url(data:font/woff2;base64,${b64}) format("woff2")}`;
+    // Alias : plusieurs composants de RG imposent « Roboto » avec une spécificité que le thème ne peut pas battre sans !important.
+    // Une @font-face « Roboto » qui pointe sur Inter règle le cas partout, sans toucher aux sélecteurs.
+    if (family === 'Inter' && (w === 400 || w === 600)) {
+      fonts += `@font-face{font-family:"Roboto";font-style:normal;font-weight:${w === 400 ? '100 500' : '600 900'};font-display:swap;src:url(data:font/woff2;base64,${b64}) format("woff2")}`;
+    }
   }
 }
 writeFileSync(path.join(here, 'dist', 'fonts.css'), fonts);

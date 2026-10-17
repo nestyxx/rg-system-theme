@@ -312,3 +312,87 @@ html[data-rgx] #accordion-events .panel-heading > a,
 html[data-rgx] #accordion-usertickets .panel-heading > a {
   color: var(--rgx-ink);
 }
+
+/* ===================================================================
+   Passe v1.8 : relevés sur le site réel (navigateur piloté, session connectée)
+   =================================================================== */
+/* Grands chiffres des statistiques (Jobs, Vulnérabilités, Windows Update) : police d'affichage du thème */
+html[data-rgx] [class*="Stats__Value"],
+html[data-rgx] [class*="Stats__Display"] {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+/* Chiffres colorés et légendes de courbes aux teintes pâles : assombris en clair pour atteindre un contraste lisible */
+html[data-rgx]:not([data-rgx-theme="dark"]) [class*="Stats__Value"],
+html[data-rgx]:not([data-rgx-theme="dark"]) .graph-legend span {
+  filter: brightness(0.78);
+}
+/* Listes déroulantes : jamais plus étroites que « 12 heures » ou « 27.0.0 » */
+html[data-rgx] select.form-control {
+  min-width: 84px;
+}
+html[data-rgx] .input-group > input.form-control {
+  min-width: 72px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+/* Pastilles rondes d'état (sauvegarde, sécurité, température) : un seul style, partout */
+html[data-rgx] .icon-pattern {
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  padding: 0 !important;
+  border: 1px solid var(--rgx-border);
+  border-radius: 50%;
+  background: var(--rgx-surface) !important;
+  color: var(--rgx-muted);
+}
+html[data-rgx] .icon-pattern > svg,
+html[data-rgx] .icon-pattern svg {
+  width: 18px;
+  height: 18px;
+  color: inherit;
+}
+html[data-rgx] .icon-pattern.label-success {
+  border-color: color-mix(in srgb, var(--rgx-ok) 35%, transparent);
+  background: var(--rgx-ok-bg) !important;
+  color: var(--rgx-ok);
+}
+/* Fiche agent : libellés d'action sur plusieurs lignes sans double interligne */
+html[data-rgx] #pedigree-block-actions .row > [class*="col-"] {
+  line-height: 1.3;
+}
+html[data-rgx] #block-info-pedigree .row.line-height > .col-md-4 {
+  flex-basis: 38%;
+}
+/* Page Rechercher : les cartes de résultats ne passent plus leur compteur à la ligne */
+html[data-rgx] [class*="Accordion"],
+html[data-rgx] [class*="Collapsible"] {
+  min-width: 240px;
+}
+
+/* Configuration › Communication : colonnes réparties pour que « 12 heures » et les horaires « 22:00 » tiennent (en-têtes et lignes partagent la même grille de 7 colonnes) */
+html[data-rgx] .row:has(> .col-md-4:nth-child(3):nth-last-child(5)) > :nth-child(1) { width: 6%; }
+html[data-rgx] .row:has(> .col-md-4:nth-child(3):nth-last-child(5)) > :nth-child(2) { width: 6%; }
+html[data-rgx] .row:has(> .col-md-4:nth-child(3):nth-last-child(5)) > :nth-child(3) { width: 41%; }
+html[data-rgx] .row:has(> .col-md-4:nth-child(3):nth-last-child(5)) > :nth-child(4) { width: 13%; }
+html[data-rgx] .row:has(> .col-md-4:nth-child(3):nth-last-child(5)) > :nth-child(5) { width: 13%; }
+html[data-rgx] .row:has(> .col-md-4:nth-child(3):nth-last-child(5)) > :nth-child(6) { width: 12%; }
+html[data-rgx] .row:has(> .col-md-4:nth-child(3):nth-last-child(5)) > :nth-child(7) { width: 9%; }
+html[data-rgx] .row:has(> .col-md-4:nth-child(3):nth-last-child(5)) > [class*="col-"] {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+html[data-rgx] .raiserule-rate,
+html[data-rgx] .raiserule-maxRaises {
+  width: 100%;
+}
+/* Tableaux React larges (Pedigree…) : cellules un peu plus serrées pour montrer plus de colonnes sans défilement */
+html[data-rgx] [class*="Td__TableData"],
+html[data-rgx] [class*="Th__Layout"] {
+  padding-left: 10px;
+  padding-right: 10px;
+}

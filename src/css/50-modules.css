@@ -61,6 +61,12 @@ html[data-rgx] .MuiInputBase-input {
   color: var(--rgx-ink);
   background-color: transparent;
 }
+/* RG impose un fond blanc sur le select MUI (états normal et :focus) via styled-components */
+html[data-rgx] [class*="Input-sc"] .MuiSelect-root,
+html[data-rgx] [class*="Input-sc"] .MuiSelect-select:focus,
+html[data-rgx] .MuiSelect-select.MuiSelect-select:focus {
+  background-color: transparent;
+}
 html[data-rgx] .MuiInput-underline:before {
   border-bottom-color: var(--rgx-border);
 }

@@ -55,7 +55,7 @@ const ext_urls = [...css.matchAll(/url\(\s*["']?(https?:)?\/\/[^)]+/g)].map((m) 
 check(ext_urls.length === 0, 'aucune ressource externe (url(http…))' + (ext_urls.length ? ' : ' + ext_urls[0] : ''));
 check(!/@import\s+(url\()?["']?https?:/.test(css), 'aucun @import distant');
 for (const f of ['popup.html', 'popup.css', 'popup.js']) check(existsSync(path.join(ext, f)), `fichier présent : ${f}`);
-check(css.length < 400 * 1024, `taille raisonnable (${(css.length / 1024).toFixed(0)} Ko)`);
+check(css.length < 600 * 1024, `taille raisonnable (${(css.length / 1024).toFixed(0)} Ko)`);
 const unscoped = [...read('dist', 'theme.dev.css').matchAll(/^(?!\s)([^@\s}/*][^{]*)\{/gm)].map((m) => m[1].trim()).filter((s) => !/html\[data-rgx\]|^\.rgx-|^#rgx-|^:root|^\*|^@|^from|^to|^\d+%/.test(s));
 check(unscoped.length === 0, 'toutes les règles sont sous html[data-rgx]' + (unscoped.length ? ' : ' + unscoped.slice(0, 3).join(' ; ') : ''));
 
