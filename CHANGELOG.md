@@ -1,5 +1,13 @@
 # Journal des modifications
 
+## 1.8.1 — 2026-10-17
+
+Tests en direct des interactions (compte à rebours, palette, Brain, menu replié, infobulles).
+
+- **Barre d'outils des tickets** : avec le compte à rebours de l'actualisation auto, « Clôturer tout » passait à la ligne et, quand la zone est étroite (menu replié, panneau Brain ouvert), les boutons recouvraient le sélecteur « par page ». La rangée est maintenant en flex avec retour à la ligne propre.
+- **Infobulles RG** (statut, Windows Update…) : marine du thème, bordure fine, coins arrondis, interligne aéré.
+- Vérifié sur le site réel : le compte à rebours se relance sans recharger la page, la recherche RG de la palette `Ctrl+K` renseigne et lance bien la recherche.
+
 ## 1.8.0 — 2026-10-17
 
 Audit en direct sur la plateforme réelle, extension chargée (clair et sombre).

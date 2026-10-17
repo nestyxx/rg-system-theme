@@ -396,3 +396,23 @@ html[data-rgx] [class*="Th__Layout"] {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+/* Barre d'outils des tickets : la colonne vide ne doit pas réduire la place des boutons (le badge de l'actualisation auto les élargit) */
+html[data-rgx] .row:has(> .col-md-8 > .page-menu) { display: flex; flex-wrap: wrap; align-items: flex-start; }
+html[data-rgx] .row:has(> .col-md-8 > .page-menu)::before,
+html[data-rgx] .row:has(> .col-md-8 > .page-menu)::after { display: none; }
+html[data-rgx] .row:has(> .col-md-8 > .page-menu) > .col-md-2 { float: none; width: auto; flex: 0 0 auto; }
+html[data-rgx] .row:has(> .col-md-8 > .page-menu) > .col-md-2:not(:has(*)) { display: none; }
+html[data-rgx] .row:has(> .col-md-8 > .page-menu) > .col-md-8 { float: none; width: auto; flex: 1 1 420px; min-width: 0; }
+html[data-rgx] .page-menu .pull-right:not(.line-height) { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+
+/* Infobulles RG (pastilles de statut, boucliers Windows Update…) : marine du thème, bordure fine, texte aéré */
+html[data-rgx] [class*="Tooltip__TootlipBox-sc"] {
+  background: var(--rgx-side);
+  color: #fff;
+  border: 1px solid color-mix(in srgb, #fff 16%, transparent);
+  border-radius: 8px;
+  padding: 7px 10px;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgb(2 8 20 / .35);
+}
