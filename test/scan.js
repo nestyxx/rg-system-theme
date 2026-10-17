@@ -208,3 +208,30 @@
     return res;
   };
 })();
+
+// Balayage typographique : familles de polices réellement utilisées par le texte visible, par page.
+//   await rgxFonts(['ticket'], 'light')  ->  { page: { 'Inter': nbTextes, 'Roboto': n, ... , exemples: {...} } }
+(function () {
+  const path = (e) => { const o = []; for (let x = e; x && x.tagName && o.length < 3; x = x.parentElement) o.push(x.tagName.toLowerCase() + (x.id ? '#' + x.id : '') + (typeof x.className === 'string' && x.className ? '.' + x.className.trim().split(/\s+/)[0].slice(0, 26) : '')); return o.join(' < '); };
+  window.rgxFonts = async function (names, theme) {
+    const res = {};
+    for (const name of names) {
+      const f = document.createElement('iframe');
+      f.style.cssText = 'position:fixed;left:0;top:0;width:1440px;height:900px;border:0;visibility:hidden';
+      f.src = '/fixtures/' + name + '.html?theme=' + theme; document.body.appendChild(f);
+      await new Promise((ok) => { f.onload = ok; setTimeout(ok, 8000); }); await new Promise((ok) => setTimeout(ok, 900));
+      const doc = f.contentDocument, win = f.contentWindow; const fam = {}; const ex = {};
+      const w = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT); let n;
+      while ((n = w.nextNode())) {
+        if (!n.nodeValue.trim()) continue; const el = n.parentElement; if (!el || /^(SCRIPT|STYLE)$/.test(el.tagName)) continue;
+        const r = el.getBoundingClientRect(); if (r.width < 2 || r.height < 2) continue;
+        const cs = win.getComputedStyle(el); if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        const first = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
+        fam[first] = (fam[first] || 0) + 1;
+        if (!/^(Inter|Space Grotesk|JetBrains Mono)$/.test(first) && !ex[first]) ex[first] = n.nodeValue.trim().slice(0, 20) + ' @ ' + path(el);
+      }
+      res[name] = { fam, ex }; f.remove();
+    }
+    return res;
+  };
+})();

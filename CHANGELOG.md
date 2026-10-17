@@ -1,5 +1,16 @@
 # Journal des modifications
 
+## 1.2.0 — 2026-10-17
+
+Reprise de l'en-tête, de la typographie et du socle de composants.
+
+- **En-tête** : boutons d'icônes **identiques** (32 px, survol en pastille, même alignement) — les éléments d'origine (fusée, Assist, notes de version, et tout bouton ajouté par RG, repris automatiquement) restent dans le DOM, masqués, et reçoivent le clic ; avatar du profil rond, cerclé, anneau de marque au survol ; menus MUI (profil, sélecteurs) dans le style du thème.
+- **Typographie** : plus aucun texte en Roboto ni Helvetica Neue (boutons, champs, commutateur Courant/Tous, colonnes MUI) ; titres de courbes et légendes dans les polices du thème.
+- **Synthèse (Vues)** : les pastilles d'une ligne ne passent plus à la ligne (rangées « éclatées »).
+- **Tickets** : détail d'un ticket (cadre gris de 4 px remplacé par un liseré de marque, cartes homogènes, titres en petites capitales) ; sélecteur « par page » aligné sur les boutons.
+- **Configuration** : accordéons et listes de plugins en cartes blanches ; listes de templates en une carte par ligne (icône | nom | actions).
+- **Socle étendu** (`90-extra.css`) : dialogues, pastilles, interrupteurs, infobulles, tiroirs, champs, validation de formulaire, nav-pills, fil d'Ariane, barres de progression, code… pour les écrans non capturés (modales, Assist, Messages, recherche, profil).
+
 ## 1.1.0 — 2026-10-17
 
 Premières évolutions de comportement (au-delà du style).

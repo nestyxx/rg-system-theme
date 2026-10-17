@@ -723,3 +723,108 @@ html[data-rgx] table.sum > tbody > tr > td:first-child .ellipsis-content {
 html[data-rgx] table.sum > tbody > tr > td:first-child {
   min-width: 190px;
 }
+
+/* ===================================================================
+   16. En-tête : boutons d'icônes homogènes (balisage ajouté par content.js), profil, menus MUI
+   =================================================================== */
+/* Les éléments d'origine restent dans le DOM (ils reçoivent le clic) mais ne s'affichent plus */
+html[data-rgx] #header .icons > [data-rgx-src] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+html[data-rgx] #header .icons {
+  gap: 2px;
+}
+html[data-rgx] .rgx-hdr {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+html[data-rgx] .rgx-hbtn,
+html[data-rgx] #rgx-theme-toggle {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--rgx-muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+html[data-rgx] .rgx-hbtn:hover,
+html[data-rgx] #rgx-theme-toggle:hover {
+  background: var(--rgx-surface-2);
+  color: var(--rgx-ink);
+}
+html[data-rgx] .rgx-hbtn:active,
+html[data-rgx] #rgx-theme-toggle:active {
+  background: var(--rgx-border);
+}
+html[data-rgx] .rgx-hbtn .rgx-i,
+html[data-rgx] #rgx-theme-toggle .rgx-i {
+  width: 18px;
+  height: 18px;
+  vertical-align: 0;
+}
+/* Profil : avatar rond cerclé, anneau de marque au survol */
+html[data-rgx] #profile-menu-toggler {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  margin: 0 0 0 6px;
+  padding: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--rgx-border);
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+html[data-rgx] #profile-menu-toggler:hover,
+html[data-rgx] #profile-menu-toggler[aria-expanded="true"] {
+  box-shadow: 0 0 0 2px var(--rgx-brand);
+}
+html[data-rgx] #profile-menu-toggler img {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50%;
+  object-fit: cover;
+}
+/* Menus et fenêtres flottantes MUI (menu du profil, sélecteurs…) */
+html[data-rgx] .MuiPopover-paper,
+html[data-rgx] .MuiMenu-paper {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] .MuiMenuItem-root {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--rgx-ink);
+  min-height: 34px;
+  gap: 8px;
+  border-radius: var(--radius-sm);
+  margin: 0 4px;
+}
+html[data-rgx] .MuiMenuItem-root:hover {
+  background: var(--rgx-row-hover);
+}
+html[data-rgx] .MuiList-padding {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}

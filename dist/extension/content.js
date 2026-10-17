@@ -82,11 +82,62 @@
       if (!host || host.querySelector('.rgx-logo')) return;
       host.innerHTML = '<span class="rgx-logo" role="img" aria-label="RG system suite"><b>RG</b><span class="rgx-logo-name">RG system</span><small>suite</small></span>';
     }
+    // Boutons d'icônes de l'en-tête. Les icônes d'origine (fusée, Assist, notes de version, et tout autre bouton ajouté
+    // par RG) sont des éléments hétérogènes (div, svg, lien) qu'on ne peut ni aligner ni survoler de façon homogène.
+    // On les masque (ils restent dans le DOM, au même endroit) et on affiche à leur place des boutons identiques
+    // qui leur transmettent le clic. Tout bouton inconnu est repris automatiquement (icône « message » par défaut).
+    const HDR_KNOWN = [
+      { sel: '.jimo-widget', icon: 'rocket', title: 'Nouveautés' },
+      { sel: '#btnAssistAgentlessTechnician', icon: 'headset', title: 'Assist' },
+      { sel: 'a[data-testid="notification-link"]', icon: 'fileText', title: 'Notes de version' },
+    ];
+    const HDR_SKIP = 'button.brain, [class*="BrainButton"], #profile-menu-toggler, [class*="Profile__"], #rgx-theme-toggle, .rgx-hdr';
+    function hdrIconFor(el) {
+      const t = [el.id, typeof el.className === 'string' ? el.className : (el.className && el.className.baseVal) || '', el.getAttribute('data-testid'), el.getAttribute('aria-label'), el.getAttribute('title')].join(' ').toLowerCase();
+      if (/bell|notif|alert/.test(t)) return 'bell';
+      if (/help|aide|question/.test(t)) return 'help';
+      return 'messageSquare';
+    }
+    function ensureHeaderButtons() {
+      const host = document.querySelector(SEL.headerIcons);
+      if (!host) return;
+      const sources = [];
+      for (const k of HDR_KNOWN) { const el = host.querySelector(':scope > ' + k.sel); if (el) sources.push({ el, icon: k.icon, title: k.title }); }
+      for (const el of host.children) {
+        if (el.matches(HDR_SKIP) || sources.some((s) => s.el === el)) continue;
+        if (!el.hasAttribute('data-rgx-src') && el.offsetWidth === 0 && el.offsetHeight === 0) continue;   // élément vide / invisible
+        sources.push({ el, icon: hdrIconFor(el), title: el.getAttribute('aria-label') || el.getAttribute('title') || el.getAttribute('data-testid') || '' });
+      }
+      let group = host.querySelector(':scope > .rgx-hdr');
+      const sig = sources.map((s) => s.icon + ':' + (s.el.id || s.el.className)).join('|');
+      if (group && group.getAttribute('data-sig') === sig && sources.every((s) => s.el.hasAttribute('data-rgx-src'))) return;
+      if (group) group.remove();
+      group = document.createElement('div');
+      group.className = 'rgx-hdr';
+      group.setAttribute('data-sig', sig);
+      for (const s of sources) {
+        s.el.setAttribute('data-rgx-src', '');
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'rgx-hbtn';
+        b.title = s.title;
+        if (s.title) b.setAttribute('aria-label', s.title);
+        b.innerHTML = '<i class="rgx-i rgx-i-' + s.icon + '"></i>';
+        b.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          if (s.el.tagName === 'A' && s.el.href) { window.open(s.el.href, s.el.target || '_blank', 'noopener'); return; }
+          s.el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+        });
+        group.appendChild(b);
+      }
+      const anchor = document.getElementById('rgx-theme-toggle') || host.querySelector('#profile-menu-toggler') || null;
+      host.insertBefore(group, anchor);
+    }
     let scheduled = false;
     const schedule = () => {
       if (scheduled) return;
       scheduled = true;
-      requestAnimationFrame(() => { scheduled = false; ensureToggle(); ensureLogo(); });
+      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureLogo(); });
     };
     new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
     document.addEventListener('DOMContentLoaded', schedule);

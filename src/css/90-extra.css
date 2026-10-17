@@ -1,0 +1,367 @@
+/* ===================================================================
+   18. Socle étendu : composants Bootstrap 3 et MUI peu ou pas visibles sur les écrans capturés
+   (fenêtres de dialogue, pastilles, interrupteurs, infobulles, tiroirs, formulaires validés…).
+   Tout est branché sur les variables du thème : clair et sombre suivent.
+   =================================================================== */
+
+/* --- Bootstrap 3 --- */
+html[data-rgx] .badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--rgx-brand-soft);
+  color: var(--rgx-brand);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+html[data-rgx] .btn .badge {
+  background: color-mix(in srgb, currentColor 18%, transparent);
+  color: inherit;
+}
+html[data-rgx] .nav-pills > li > a {
+  border-radius: var(--radius-md);
+  color: var(--rgx-muted);
+  font-weight: 500;
+}
+html[data-rgx] .nav-pills > li > a:hover,
+html[data-rgx] .nav-pills > li > a:focus {
+  background: var(--rgx-row-hover);
+  color: var(--rgx-ink);
+}
+html[data-rgx] .nav-pills > li.active > a,
+html[data-rgx] .nav-pills > li.active > a:hover,
+html[data-rgx] .nav-pills > li.active > a:focus {
+  background: var(--rgx-brand);
+  color: var(--rgx-brand-ink);
+}
+html[data-rgx] .breadcrumb {
+  padding: 0;
+  margin-bottom: 14px;
+  background: transparent;
+  font-size: 12.5px;
+}
+html[data-rgx] .breadcrumb > li + li::before {
+  content: "/";
+  padding: 0 8px;
+  color: var(--rgx-muted);
+}
+html[data-rgx] .breadcrumb > .active {
+  color: var(--rgx-muted);
+}
+html[data-rgx] .progress {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--rgx-surface-2);
+  box-shadow: none;
+  overflow: hidden;
+}
+html[data-rgx] .progress-bar {
+  background-color: var(--rgx-brand);
+  box-shadow: none;
+  font-size: 0;
+}
+html[data-rgx] .progress-bar-success { background-color: var(--rgx-ok); }
+html[data-rgx] .progress-bar-warning { background-color: #e08a1e; }
+html[data-rgx] .progress-bar-danger { background-color: var(--rgx-crit); }
+html[data-rgx] .progress-bar-info { background-color: var(--rgx-info); }
+html[data-rgx] .well {
+  background: var(--rgx-surface-2);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+html[data-rgx] .thumbnail {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+}
+html[data-rgx] .close {
+  color: var(--rgx-muted);
+  text-shadow: none;
+  opacity: 1;
+}
+html[data-rgx] .close:hover,
+html[data-rgx] .close:focus {
+  color: var(--rgx-ink);
+  opacity: 1;
+}
+/* Formulaires : libellés, aide, états de validation */
+html[data-rgx] .control-label,
+html[data-rgx] .form-group > label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--rgx-muted);
+}
+html[data-rgx] .help-block {
+  font-size: 12px;
+  color: var(--rgx-muted);
+}
+html[data-rgx] .has-error .form-control,
+html[data-rgx] .has-error .input-group-addon {
+  border-color: var(--rgx-crit);
+  box-shadow: none;
+}
+html[data-rgx] .has-error .control-label,
+html[data-rgx] .has-error .help-block,
+html[data-rgx] .has-error .checkbox,
+html[data-rgx] .has-error .radio {
+  color: var(--rgx-crit);
+}
+html[data-rgx] .has-success .form-control { border-color: var(--rgx-ok); box-shadow: none; }
+html[data-rgx] .has-success .control-label,
+html[data-rgx] .has-success .help-block { color: var(--rgx-ok); }
+html[data-rgx] .has-warning .form-control { border-color: var(--rgx-warn); box-shadow: none; }
+html[data-rgx] .has-warning .control-label,
+html[data-rgx] .has-warning .help-block { color: var(--rgx-warn); }
+html[data-rgx] input[type="checkbox"],
+html[data-rgx] input[type="radio"],
+html[data-rgx] input[type="range"],
+html[data-rgx] progress {
+  accent-color: var(--rgx-brand);
+}
+/* Couleurs de texte et de fond utilitaires */
+html[data-rgx] .text-danger { color: var(--rgx-crit); }
+html[data-rgx] .text-success { color: var(--rgx-ok); }
+html[data-rgx] .text-warning { color: var(--rgx-warn); }
+html[data-rgx] .text-info,
+html[data-rgx] .text-primary { color: var(--rgx-brand); }
+html[data-rgx] .text-muted { color: var(--rgx-muted); }
+html[data-rgx] .bg-danger { background: var(--rgx-crit-bg); color: var(--rgx-crit); }
+html[data-rgx] .bg-success { background: var(--rgx-ok-bg); color: var(--rgx-ok); }
+html[data-rgx] .bg-warning { background: var(--rgx-warn-bg); color: var(--rgx-warn); }
+html[data-rgx] .bg-info,
+html[data-rgx] .bg-primary { background: var(--rgx-info-bg); color: var(--rgx-info); }
+/* Texte technique */
+html[data-rgx] code {
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--rgx-surface-2);
+  color: var(--rgx-ink);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+html[data-rgx] pre {
+  padding: 10px 12px;
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+  background: var(--rgx-surface-2);
+  color: var(--rgx-ink);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+html[data-rgx] pre code {
+  padding: 0;
+  background: transparent;
+}
+html[data-rgx] kbd {
+  border-radius: var(--radius-sm);
+  background: var(--rgx-ink);
+  color: var(--rgx-surface);
+  font-family: var(--font-mono);
+  box-shadow: none;
+}
+html[data-rgx] mark,
+html[data-rgx] .mark {
+  background: color-mix(in srgb, #f1d54a 55%, transparent);
+  color: inherit;
+  border-radius: 3px;
+}
+html[data-rgx] blockquote {
+  border-left: 3px solid var(--rgx-border);
+  color: var(--rgx-muted);
+}
+html[data-rgx] .lead {
+  font-size: 15px;
+  color: var(--rgx-ink);
+}
+
+/* --- MUI : dialogues, pastilles, interrupteurs, infobulles, tiroirs, champs --- */
+html[data-rgx] .MuiBackdrop-root:not(.MuiBackdrop-invisible) {
+  background-color: rgba(14, 21, 36, 0.55);
+}
+html[data-rgx] .MuiDialog-paper {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: 12px;
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] .MuiDialogTitle-root {
+  padding: 16px 20px 8px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--rgx-ink);
+}
+html[data-rgx] .MuiDialogTitle-root .MuiTypography-root {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+}
+html[data-rgx] .MuiDialogContent-root {
+  color: var(--rgx-ink);
+}
+html[data-rgx] .MuiDialogContentText-root {
+  color: var(--rgx-muted);
+}
+html[data-rgx] .MuiDialogActions-root {
+  padding: 12px 20px;
+  border-top: 1px solid var(--rgx-border);
+  gap: 8px;
+}
+html[data-rgx] .MuiDivider-root {
+  border-color: var(--rgx-border);
+  background-color: var(--rgx-border);
+}
+html[data-rgx] .MuiChip-root {
+  height: 24px;
+  border-radius: 999px;
+  background: var(--rgx-surface-2);
+  color: var(--rgx-ink);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+}
+html[data-rgx] .MuiChip-outlined {
+  background: transparent;
+  border: 1px solid var(--rgx-border);
+}
+html[data-rgx] .MuiChip-colorPrimary {
+  background: var(--rgx-brand-soft);
+  color: var(--rgx-brand);
+}
+html[data-rgx] .MuiChip-deleteIcon {
+  color: var(--rgx-muted);
+}
+html[data-rgx] .MuiSwitch-track {
+  background-color: var(--rgx-border);
+  opacity: 1;
+}
+html[data-rgx] .MuiSwitch-thumb {
+  background-color: var(--rgx-surface);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+html[data-rgx] .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+  background-color: var(--rgx-brand);
+  opacity: 1;
+}
+html[data-rgx] .MuiSwitch-switchBase.Mui-checked .MuiSwitch-thumb {
+  background-color: #fff;
+}
+html[data-rgx] .MuiCheckbox-root,
+html[data-rgx] .MuiRadio-root {
+  color: var(--rgx-muted);
+}
+html[data-rgx] .MuiCheckbox-root.Mui-checked,
+html[data-rgx] .MuiRadio-root.Mui-checked {
+  color: var(--rgx-brand);
+}
+html[data-rgx] .MuiTooltip-tooltip {
+  background: var(--rgx-ink);
+  color: var(--rgx-surface);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 12px;
+}
+html[data-rgx] .MuiTooltip-arrow {
+  color: var(--rgx-ink);
+}
+html[data-rgx] .MuiSnackbarContent-root {
+  background: var(--rgx-ink);
+  color: var(--rgx-surface);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+}
+html[data-rgx] .MuiAlert-root {
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+}
+html[data-rgx] .MuiAlert-standardSuccess { background: var(--rgx-ok-bg); color: var(--rgx-ok); }
+html[data-rgx] .MuiAlert-standardWarning { background: var(--rgx-warn-bg); color: var(--rgx-warn); }
+html[data-rgx] .MuiAlert-standardError { background: var(--rgx-crit-bg); color: var(--rgx-crit); }
+html[data-rgx] .MuiAlert-standardInfo { background: var(--rgx-info-bg); color: var(--rgx-info); }
+html[data-rgx] .MuiDrawer-paper {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border-color: var(--rgx-border);
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] .MuiAutocomplete-paper,
+html[data-rgx] .MuiAutocomplete-listbox {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border-radius: var(--radius-lg);
+}
+html[data-rgx] .MuiAutocomplete-paper {
+  border: 1px solid var(--rgx-border);
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] .MuiAutocomplete-option {
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+html[data-rgx] .MuiAutocomplete-option[data-focus="true"],
+html[data-rgx] .MuiAutocomplete-option:hover {
+  background: var(--rgx-row-hover);
+}
+html[data-rgx] .MuiAutocomplete-option[aria-selected="true"] {
+  background: var(--rgx-brand-soft);
+}
+html[data-rgx] .MuiInputBase-root,
+html[data-rgx] .MuiInputBase-input {
+  color: var(--rgx-ink);
+  font-size: 13.5px;
+}
+html[data-rgx] .MuiOutlinedInput-notchedOutline {
+  border-color: var(--rgx-border);
+  border-radius: var(--radius-md);
+}
+html[data-rgx] .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--rgx-muted);
+}
+html[data-rgx] .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--rgx-brand);
+  border-width: 1px;
+}
+html[data-rgx] .MuiFormLabel-root,
+html[data-rgx] .MuiInputLabel-root {
+  color: var(--rgx-muted);
+  font-size: 13px;
+}
+html[data-rgx] .MuiInputLabel-root.Mui-focused,
+html[data-rgx] .MuiFormLabel-root.Mui-focused {
+  color: var(--rgx-brand);
+}
+html[data-rgx] .MuiFormHelperText-root {
+  color: var(--rgx-muted);
+  font-size: 12px;
+}
+html[data-rgx] .MuiFormHelperText-root.Mui-error,
+html[data-rgx] .MuiInputLabel-root.Mui-error {
+  color: var(--rgx-crit);
+}
+html[data-rgx] .MuiSelect-icon,
+html[data-rgx] .MuiSvgIcon-root {
+  color: var(--rgx-muted);
+}
+html[data-rgx] .MuiSvgIcon-colorPrimary {
+  color: var(--rgx-brand);
+}
+html[data-rgx] .MuiLinearProgress-root {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--rgx-surface-2);
+}
+html[data-rgx] .MuiLinearProgress-bar {
+  background: var(--rgx-brand);
+}
+html[data-rgx] .MuiCircularProgress-root {
+  color: var(--rgx-brand);
+}
+/* Panneau « Brain » (tiroir de droite) */
+html[data-rgx] #mimibrain {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border-left: 1px solid var(--rgx-border);
+  box-shadow: var(--rgx-shadow-pop);
+}
