@@ -296,7 +296,7 @@ html[data-rgx] [class*="color-rg-information"] { color: var(--rgx-info) !importa
 html[data-rgx] [class*="color-rg-warning"] { color: var(--rgx-warn) !important; }
 html[data-rgx] [class*="color-rg-danger"] { color: var(--rgx-crit) !important; }
 /* Mon profil : légendes et titres de section */
-html[data-rgx] .deploy-caption { color: var(--rgx-muted); }
+html[data-rgx] .deploy-caption { color: var(--rgx-muted) !important; }
 html[data-rgx] .section .header .title { font-family: var(--font-display) !important; }
 /* Aperçu de la notification (Actions › Messages) : carte arrondie, police du thème */
 html[data-rgx] .container-notify {
@@ -415,4 +415,131 @@ html[data-rgx] [class*="Tooltip__TootlipBox-sc"] {
   padding: 7px 10px;
   line-height: 1.45;
   box-shadow: 0 8px 24px rgb(2 8 20 / .35);
+}
+
+/* ===================================================================
+   Harmonisation des tableaux : même présentation que les grilles React
+   (carte à bord arrondi, en-tête discret en capitales, filets fins).
+   Familles concernées : listes Bootstrap (services, inventaire logiciel…),
+   tableaux de statistiques, tableaux MUI (quotas, profil).
+   Les mini-tableaux sous les graphiques (Min / Moy / Max), le calendrier
+   et l'inventaire d'applications restent volontairement compacts.
+   =================================================================== */
+html[data-rgx] table.table:not(.sum):not(.table-stat):not(.table-bordered):not(.table-condensed),
+html[data-rgx] table#services-states-all,
+html[data-rgx] table.table-stat,
+html[data-rgx] table.MuiTable-root {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: var(--rgx-shadow);
+}
+html[data-rgx] table.table:not(.sum):not(.table-stat):not(.table-bordered):not(.table-condensed) > thead > tr > th,
+html[data-rgx] table#services-states-all > thead > tr > th,
+html[data-rgx] table.table-stat > thead > tr > th,
+html[data-rgx] table.MuiTable-root th {
+  background: var(--rgx-bg);
+  color: var(--rgx-muted) !important;
+  font-size: 11.5px;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-top: 0;
+  border-bottom: 1px solid var(--rgx-border);
+  vertical-align: middle;
+}
+/* Coins : le rayon du tableau ne rogne pas les cellules d'angle */
+html[data-rgx] table.table:not(.sum):not(.table-stat):not(.table-bordered):not(.table-condensed) > thead > tr:first-child > th:first-child,
+html[data-rgx] table#services-states-all > thead > tr:first-child > th:first-child,
+html[data-rgx] table.table-stat > thead > tr:first-child > th:first-child { border-top-left-radius: 7px; }
+html[data-rgx] table.table:not(.sum):not(.table-stat):not(.table-bordered):not(.table-condensed) > thead > tr:first-child > th:last-child,
+html[data-rgx] table#services-states-all > thead > tr:first-child > th:last-child,
+html[data-rgx] table.table-stat > thead > tr:first-child > th:last-child { border-top-right-radius: 7px; }
+/* Filets et cellules des listes de données : mêmes valeurs que les grilles React */
+html[data-rgx] table.table:not(.sum):not(.table-stat):not(.table-bordered):not(.table-condensed) > tbody > tr > td,
+html[data-rgx] table#services-states-all > tbody > tr > td { border-top: 1px solid var(--rgx-border); }
+html[data-rgx] table.table:not(.sum):not(.table-stat):not(.table-bordered):not(.table-condensed) > tbody > tr:first-child > td,
+html[data-rgx] table#services-states-all > tbody > tr:first-child > td { border-top: 0; }
+html[data-rgx] table.table:not(.sum):not(.table-stat):not(.table-bordered):not(.table-condensed) > tbody > tr > td { padding: 9px 16px; }
+html[data-rgx] table.table:not(.sum):not(.table-stat):not(.table-bordered):not(.table-condensed) > thead > tr > th { padding: 11px 16px; }
+html[data-rgx] table#services-states-all > tbody > tr > td { padding: 6px 16px; }
+html[data-rgx] table#services-states-all > thead > tr > th { padding: 10px 16px; }
+/* Tableau MUI : le texte restait noir (rgba(0,0,0,.87)) sur fond sombre */
+html[data-rgx] table.MuiTable-root td,
+html[data-rgx] .MuiTableCell-root { color: var(--rgx-ink); border-bottom-color: var(--rgx-border); }
+html[data-rgx] table.MuiTable-root th.MuiTableCell-root { color: var(--rgx-muted); }
+
+/* Titres d’en-tête imbriqués (<strong class="color-rg">, titres de colonnes triées MUI) : héritent du style de l’en-tête */
+html[data-rgx] table.table:not(.sum):not(.table-stat):not(.table-bordered):not(.table-condensed) > thead th strong,
+html[data-rgx] table#services-states-all > thead th strong,
+html[data-rgx] table.MuiTable-root th strong,
+html[data-rgx] table.MuiTable-root th [class*="SortedColumn__Column"] {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+
+/* Cellule de tableau : un td en inline-flex sortait de la mise en page du tableau (colonne réduite à la largeur des barres, filets coupés) */
+html[data-rgx] td:has(> .icon-criticality),
+html[data-rgx] td:has(> [class*="criticality-square-"]) {
+  display: table-cell;
+  white-space: nowrap;
+}
+html[data-rgx] td > .icon-criticality,
+html[data-rgx] td > [class*="criticality-square-"] {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 3px;
+}
+
+/* Champ sans attribut type (ligne de commande d'Actions › Système) : fond #333 imposé par RG -> champ du thème */
+html[data-rgx] #root input:not([type])[class*="Input-sc"] {
+  font-family: var(--font-sans);
+  background-color: var(--rgx-surface);
+  color: var(--rgx-ink);
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+  padding: 0 12px;
+}
+html[data-rgx] #root input:not([type])[class*="Input-sc"]:focus {
+  border-color: var(--rgx-brand);
+  outline: 0;
+}
+
+/* Gestion › Utilisateurs : liste en lignes-cartes. En-tête de colonnes = même style que les autres tableaux (capitales, discret) */
+html[data-rgx] b.color-rg[class*="col-md-"] > .MuiBox-root {
+  color: var(--rgx-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+/* Pictogramme du titre (react-icons, 3 em, plein) : taille et teinte des autres titres de page */
+html[data-rgx] [class*="Header__Title-sc"] > svg[class*="StyledIconBase"] {
+  width: 30px;
+  height: 30px;
+  color: var(--rgx-brand);
+}
+
+/* Journal d'événements et autres listes en lignes-cartes : en-tête de colonnes (cellules « text-bold color-rg » côte à côte) */
+html[data-rgx] .col-md-12 > .text-bold.color-rg[class*="col-md-"]:has(+ .text-bold.color-rg[class*="col-md-"]),
+html[data-rgx] .col-md-12 > .text-bold.color-rg[class*="col-md-"] + .text-bold.color-rg[class*="col-md-"] {
+  color: var(--rgx-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Recherche : termes trouvés (jaune vif #ffff8c d'origine, texte clair illisible en sombre) */
+html[data-rgx] .es_highlight {
+  background: var(--rgx-warn-bg);
+  color: var(--rgx-ink);
+  border-radius: 3px;
+  padding: 0 2px;
+  box-shadow: inset 0 -2px 0 var(--rgx-warn);
 }

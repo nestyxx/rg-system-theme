@@ -269,8 +269,8 @@ export function buildIconsCss() {
   }
   // Assist (sprite « lumiere », fenêtre d'agent) : casque du thème
   for (const [id, name] of Object.entries(SPRITES)) {
-    out.push(`html[data-rgx] svg:not(.icon-menu):has(> ${USE('$=','#sprite-icon-'+id)}) use{visibility:hidden}`);
-    out.push(`html[data-rgx] svg:not(.icon-menu):has(> ${USE('$=','#sprite-icon-'+id)}){background-color:currentColor;${mask(name)}}`);
+    out.push(`html[data-rgx] svg:not(#menu-details .icon-menu):has(> ${USE('$=','#sprite-icon-'+id)}) use{visibility:hidden}`);
+    out.push(`html[data-rgx] svg:not(#menu-details .icon-menu):has(> ${USE('$=','#sprite-icon-'+id)}){background-color:currentColor;${mask(name)}}`);
   }
 
   // Glyphicons

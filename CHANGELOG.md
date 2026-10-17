@@ -1,5 +1,16 @@
 # Journal des modifications
 
+## 1.8.2 — 2026-10-17
+
+Harmonisation des tableaux (inventaire de toutes les familles de tableaux sur le site réel).
+
+- **Tableaux** : les listes Bootstrap (Services, Inventaire logiciel) prennent la présentation des grilles React : carte à bord arrondi, en-tête discret en capitales, filets fins, espacement homogène. Même traitement pour le tableau MUI de Gestion › Quotas / profil, dont le texte restait **noir sur fond sombre**, et pour l'en-tête des listes en lignes-cartes (Journal d'événements, Gestion › Utilisateurs).
+- **Colonne Criticité** (Vues › Statistiques, tickets) : la cellule passait en `inline-flex` et sortait de la mise en page du tableau (colonne écrasée, filets coupés).
+- **Recherche** : les termes trouvés ne sont plus en jaune vif avec texte clair illisible.
+- **Actions › Système** : la ligne de commande n'est plus un bloc gris `#333`.
+- **Gestion › Utilisateurs** : pictogramme du titre à la taille et à la teinte des autres titres.
+- **Icônes** : les sprites `backup` / `security` du sélecteur de colonnes du pedigree sont remplacés comme ceux du menu.
+
 ## 1.8.1 — 2026-10-17
 
 Tests en direct des interactions (compte à rebours, palette, Brain, menu replié, infobulles).
