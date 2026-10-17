@@ -1,5 +1,17 @@
 # Journal des modifications
 
+## 1.7.0 — 2026-10-17
+
+Revue complète de la plateforme et finalisation du dépôt.
+
+- **Toutes les pages du menu analysées** : 69 écrans capturés sur le site réel (dont recherche, vCenter, journal d'événements, inventaire logiciel, processus, Exchange, Replica, matériel, Messages, résumé quotidien, quatre assistants de restauration, profil, bibliothèque avec données), vérifiés en clair et en sombre par balayage automatique (contrastes, polices, débordements) et à l'œil.
+- **Panneau de réglages** dans l'icône de l'extension : interrupteur général, thème (clair / sombre / auto), densité, actualisation auto des tickets, largeur d'origine de l'arborescence. Les réglages s'appliquent en direct. Le service worker disparaît (plus besoin).
+- **Recherche rapide `Ctrl+K`** : nœuds de l'arborescence déjà chargés et pages du menu, navigation au clavier.
+- **Texte complet au survol** des libellés tronqués par « … » (noms d'hôtes, e-mails, colonnes) : un `title` est posé s'il n'y en a pas déjà un.
+- **Squelettes de chargement** (MUI Skeleton) avec reflet discret, désactivé si le système demande moins d'animations.
+- **Corrections** : journal d'événements illisible en sombre (texte gris foncé imposé par un sélecteur à identifiant), libellés Information / Warning / Danger de la page Messages, légendes du profil, aperçu de notification, polices Roboto / Arial résiduelles.
+- **Dépôt** : licence MIT, README refait (captures avant / après, direction visuelle), guide développeur déplacé dans `docs/DEVELOPPEMENT.md`, `CONTRIBUTING.md`, `SECURITY.md`, modèles de ticket et de pull request, intégration continue (tests + zip) et publication automatique du zip à chaque étiquette `vX.Y.Z`, `scripts/screenshots.mjs` pour régénérer les captures.
+
 ## 1.6.0 — 2026-10-17
 
 - **Actualisation auto des tickets : plus de rechargement de la plateforme.** La liste est rafraîchie en cliquant par script sur l'entrée « Tickets » du menu (vérifié sur le site réel : les éléments de la page sont remplacés, arborescence et menu restent en place). Pas de rafraîchissement si un champ est en cours de saisie, si une fenêtre ou le détail d'un ticket est ouvert.
@@ -17,7 +29,7 @@ Surfaces relevées sur le site réel (balisage lu en direct, sans rien modifier)
 - **Fenêtre d'agent** (survol d'un nom d'hôte) : carte du thème ; pastille d'icône compacte ; **logo Windows aux couleurs de marque** ; **actions** (terminal, redémarrer, Assist, maintenance, fiche) en boutons carrés homogènes, trait gris, marque au survol ; le pictogramme Assist (sprite multicolore) devient le casque du thème.
 - **Statut Windows Update** (boucliers du tableau de synthèse) : boucliers du thème, un par état (à jour, optionnel, critique, redémarrage, suspendu, désactivé, inconnu), couleur = état.
 - **Menu latéral** : « Rechercher » aligné comme les autres entrées (le paragraphe interne avait sa propre marge) ; logo sans l'étiquette « suite ».
-- **Profil** : avatar en **initiales** sur disque de marque (tirées de l'adresse du Gravatar, ex. a.nest → AN) à la place de l'identicône ; menu du profil refait (carte arrondie, avatar de 56 px, bouton « Gérer mon profil » en pilule, icônes grises → marque au survol, « Se déconnecter » en rouge) ; page « Mon profil » : avatar rond, titre, libellés.
+- **Profil** : avatar en **initiales** sur disque de marque (tirées de l'adresse du Gravatar, ex. prenom.nom → PN) à la place de l'identicône ; menu du profil refait (carte arrondie, avatar de 56 px, bouton « Gérer mon profil » en pilule, icônes grises → marque au survol, « Se déconnecter » en rouge) ; page « Mon profil » : avatar rond, titre, libellés.
 - **Bibliothèque de scripts** : cartes (titre, pastilles de langage et de durée, date, actions en boutons carrés, bloc de commande clair en thème clair au lieu du noir codé en dur, défilement au-delà de 150 px), barre de filtres homogène.
 - **Courbes** : en-tête de section sans bandeau gris (icône, titre, repli), cartes un peu plus aérées.
 - **Panneau Brain** : tiroir avec filet et ombre (son contenu est une application distincte, non stylable).

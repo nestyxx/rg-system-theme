@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Problème de sécurité
+    url: https://github.com/nestyxx/rg-system-theme/blob/main/SECURITY.md
+    about: Ne pas ouvrir de ticket public : voir la procédure.

@@ -1,0 +1,29 @@
+name: Release
+
+# Publie le zip de l'extension quand une étiquette vX.Y.Z est poussée.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run pack
+      - name: Créer la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/rg-system-theme-*.zip \
+            --title "$GITHUB_REF_NAME" \
+            --notes "Extension Edge / Chrome à charger en mode développeur (voir le README). Détail des changements : CHANGELOG.md."

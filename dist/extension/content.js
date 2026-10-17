@@ -88,7 +88,7 @@
       if (!host || host.querySelector('.rgx-logo')) return;
       host.innerHTML = '<span class="rgx-logo" role="img" aria-label="RG system suite"><b>RG</b><span class="rgx-logo-name">RG system</span></span>';
     }
-    // Avatar du profil : initiales (tirées de l'attribut alt du Gravatar, « Gravatar for a.nest@domaine » -> « AN ») sur un disque de marque,
+    // Avatar du profil : initiales (tirées de l'attribut alt du Gravatar, « Gravatar for prenom.nom@domaine » -> « PN ») sur un disque de marque,
     // au lieu de l'identicône générée. Posé sur le bouton du profil et sur l'en-tête de son menu ; l'image reste dans le DOM.
     function initialsOf(alt) {
       const m = /for\s+([^@\s]+)/i.exec(alt || '');
@@ -279,6 +279,100 @@
     }
     setInterval(arTick, 4000);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) arTick(); });
+
+    // ------------------------------------------------------------------------------------------------
+    // Réglages en direct depuis le panneau de l'extension (événement DOM « rgx-set » émis par popup.js).
+    // ------------------------------------------------------------------------------------------------
+    document.addEventListener('rgx-set', (e) => {
+      const { key, value } = (e && e.detail) || {};
+      if (key === K.theme) { mode = value; apply(); }
+      else if (key === K.density) { density = value; apply(); }
+      else if (key === 'rgx.treeWidth' && !value) { applyTreeWidth(0); window.dispatchEvent(new Event('resize')); }
+      // rgx.autoReload est relu à chaque passage de la minuterie (arEnabled)
+    });
+
+    // ------------------------------------------------------------------------------------------------
+    // Texte complet au survol : un libellé tronqué par « … » (nom d'hôte, e-mail, intitulé de colonne…) reçoit un
+    // title avec son texte entier. Les éléments qui ont déjà une infobulle (title, Bootstrap) ne sont pas touchés.
+    // ------------------------------------------------------------------------------------------------
+    document.addEventListener('mouseover', (e) => {
+      let el = e.target;
+      for (let i = 0; el && el !== document.body && el.nodeType === 1 && i < 4; i++, el = el.parentElement) {
+        if (el.hasAttribute('title') || el.hasAttribute('data-original-title') || el.hasAttribute('data-rgx-t')) return;
+        if (el.scrollWidth > el.clientWidth + 1 && getComputedStyle(el).textOverflow === 'ellipsis') {
+          el.setAttribute('data-rgx-t', '');
+          const t = (el.innerText || el.textContent || '').trim();
+          if (t) el.setAttribute('title', t);
+          return;
+        }
+      }
+    }, { passive: true });
+
+    // ------------------------------------------------------------------------------------------------
+    // Recherche rapide (Ctrl+K) : nœuds de l'arborescence déjà chargés + pages du menu. Entrée = y aller.
+    // ------------------------------------------------------------------------------------------------
+    const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    function paletteItems() {
+      const items = [];
+      document.querySelectorAll('#menu-details li.menu-lvl-1 > a[href], #menu-details li.menu-lvl-2 > a[href], #menu-details li.menu-lvl-0 > a[href^="#"]').forEach((a) => {
+        const label = (a.textContent || '').replace(/\s+/g, ' ').trim();
+        if (!label || /^New$/i.test(label)) return;
+        const parent = a.closest('li.menu-lvl-0');
+        const group = parent && parent.querySelector(':scope > a .name-menu');
+        items.push({ kind: 'Page', label, hint: group && group !== a ? group.textContent.trim() : '', run: () => a.click() });
+      });
+      document.querySelectorAll('#tree a').forEach((a) => {
+        const label = (a.textContent || '').replace(/\s+/g, ' ').trim();
+        if (!label || label === '_Poubelle') return;
+        const path = [];
+        for (let li = a.closest('li') && a.closest('li').parentElement.closest('li'); li; li = li.parentElement.closest('li')) {
+          const pa = li.querySelector(':scope > a'); if (pa) path.unshift(pa.textContent.replace(/\s+/g, ' ').trim());
+        }
+        items.push({ kind: 'Nœud', label, hint: path.slice(-2).join(' › '), run: () => a.click() });
+      });
+      return items;
+    }
+    let pal = null;
+    function closePalette() { if (pal) { pal.remove(); pal = null; } }
+    function openPalette() {
+      if (pal) { closePalette(); return; }
+      const items = paletteItems();
+      pal = document.createElement('div');
+      pal.id = 'rgx-pal';
+      pal.innerHTML = '<div class="rgx-pal-box" role="dialog" aria-label="Recherche rapide"><input type="text" placeholder="Aller à… (nœud, agent, page)" aria-label="Recherche rapide" autocomplete="off"><ul role="listbox"></ul><p class="rgx-pal-help">↑↓ naviguer · Entrée ouvrir · Échap fermer</p></div>';
+      document.body.appendChild(pal);
+      const input = pal.querySelector('input'); const list = pal.querySelector('ul');
+      let shown = []; let sel = 0;
+      const paint = () => {
+        const q = norm(input.value).split(/\s+/).filter(Boolean);
+        shown = items.map((it) => ({ it, s: (() => { const l = norm(it.label); const h = norm(it.hint); if (!q.every((t) => l.includes(t) || h.includes(t))) return -1; return (l.startsWith(q[0] || '') ? 0 : 1) + (q.every((t) => l.includes(t)) ? 0 : 2); })() }))
+          .filter((x) => x.s >= 0).sort((a, b) => a.s - b.s).slice(0, 14).map((x) => x.it);
+        sel = Math.min(sel, Math.max(0, shown.length - 1));
+        list.textContent = '';
+        if (!shown.length) { const li = document.createElement('li'); li.className = 'rgx-pal-empty'; li.textContent = 'Aucun résultat dans les nœuds chargés (ouvrez la branche de l\'arborescence pour l\'inclure).'; list.appendChild(li); return; }
+        shown.forEach((it, i) => {
+          const li = document.createElement('li'); li.setAttribute('role', 'option'); if (i === sel) li.className = 'on';
+          const k = document.createElement('em'); k.textContent = it.kind; const t = document.createElement('span'); t.textContent = it.label;
+          li.append(k, t);
+          if (it.hint) { const h = document.createElement('small'); h.textContent = it.hint; li.append(h); }
+          li.addEventListener('mousedown', (ev) => { ev.preventDefault(); closePalette(); it.run(); });
+          list.appendChild(li);
+        });
+        const on = list.querySelector('.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest' });
+      };
+      input.addEventListener('input', () => { sel = 0; paint(); });
+      input.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Escape') { ev.preventDefault(); closePalette(); }
+        else if (ev.key === 'ArrowDown') { ev.preventDefault(); sel = Math.min(shown.length - 1, sel + 1); paint(); }
+        else if (ev.key === 'ArrowUp') { ev.preventDefault(); sel = Math.max(0, sel - 1); paint(); }
+        else if (ev.key === 'Enter' && shown[sel]) { ev.preventDefault(); const it = shown[sel]; closePalette(); it.run(); }
+      });
+      pal.addEventListener('mousedown', (ev) => { if (ev.target === pal) closePalette(); });
+      paint(); input.focus();
+    }
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'k') { e.preventDefault(); openPalette(); }
+    }, true);
 
     window.addEventListener('load', () => {
       const side = document.querySelector(SEL.sidebar);

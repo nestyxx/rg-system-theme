@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Thème Arobase</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <span class="mark">RG</span>
+    <div>
+      <h1>Thème Arobase</h1>
+      <p id="sub">Réglages pour RG System Suite</p>
+    </div>
+  </header>
+
+  <main id="panel" hidden>
+    <label class="row switch">
+      <span><strong>Thème activé</strong><small>Désactive tout l'habillage (la page est rechargée)</small></span>
+      <input type="checkbox" id="enabled">
+    </label>
+
+    <section>
+      <h2>Apparence</h2>
+      <div class="seg" role="radiogroup" aria-label="Thème" id="theme">
+        <button type="button" role="radio" data-v="light">Clair</button>
+        <button type="button" role="radio" data-v="dark">Sombre</button>
+        <button type="button" role="radio" data-v="auto">Auto</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Densité</h2>
+      <div class="seg" role="radiogroup" aria-label="Densité" id="density">
+        <button type="button" role="radio" data-v="comfortable">Confortable</button>
+        <button type="button" role="radio" data-v="compact">Compacte</button>
+      </div>
+    </section>
+
+    <label class="row switch">
+      <span><strong>Actualisation auto des tickets</strong><small>Rafraîchit la liste sans recharger la plateforme</small></span>
+      <input type="checkbox" id="autoReload">
+    </label>
+
+    <button type="button" class="ghost" id="treeReset">Largeur d'origine de l'arborescence</button>
+  </main>
+
+  <p id="off" class="notice" hidden>Ouvrez <strong>RG System</strong> dans l'onglet actif pour régler le thème.</p>
+
+  <footer>
+    <span id="ver"></span>
+    <span>Alt+Maj+T thème · Alt+Maj+D densité · Ctrl+K recherche</span>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>

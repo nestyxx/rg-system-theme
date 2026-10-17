@@ -280,3 +280,35 @@ html[data-rgx] #block-info-pedigree .input-group {
   flex: 1 1 220px;
   max-width: 100%;
 }
+
+/* ===================================================================
+   Corrections relevées sur les pages capturées en v1.7
+   =================================================================== */
+/* Journal d'événements (Données › Événements) : lignes d'accordéon en couleur de texte du thème (le gris foncé d'origine devenait illisible en sombre) */
+html[data-rgx] a.accordion-toggle,
+html[data-rgx] a.accordion-toggle:hover,
+html[data-rgx] a.accordion-toggle:focus {
+  color: var(--rgx-ink);
+  text-decoration: none;
+}
+/* Libellés d'état colorés (Messages : Information / Warning / Danger) */
+html[data-rgx] [class*="color-rg-information"] { color: var(--rgx-info) !important; }
+html[data-rgx] [class*="color-rg-warning"] { color: var(--rgx-warn) !important; }
+html[data-rgx] [class*="color-rg-danger"] { color: var(--rgx-crit) !important; }
+/* Mon profil : légendes et titres de section */
+html[data-rgx] .deploy-caption { color: var(--rgx-muted); }
+html[data-rgx] .section .header .title { font-family: var(--font-display) !important; }
+/* Aperçu de la notification (Actions › Messages) : carte arrondie, police du thème */
+html[data-rgx] .container-notify {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] .container-notify,
+html[data-rgx] .container-notify * {
+  font-family: var(--font-sans);
+}
+html[data-rgx] #accordion-events .panel-heading > a,
+html[data-rgx] #accordion-usertickets .panel-heading > a {
+  color: var(--rgx-ink);
+}

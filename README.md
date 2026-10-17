@@ -1,137 +1,87 @@
 # RG System – thème Arobase
 
-Extension Edge / Chrome qui habille RG System Suite (`dashboard.rg-supervision.com`)
-dans l'esprit de Webgest : Inter / Space Grotesk, palette Arobase, thème clair et sombre.
-**Côté navigateur uniquement** : aucun changement de comportement, d'URL ni de données.
+> Un habillage moderne, clair et sombre, pour **RG System Suite** : une extension Edge / Chrome qui ne touche
+> qu'à l'affichage. Même plateforme, mêmes données, même comportement : une interface cohérente, lisible et agréable.
 
-Le navigateur injecte lui-même le CSS avant le premier rendu : aucun gestionnaire de scripts n'est nécessaire et l'ancien style ne clignote pas.
+![RG System avec le thème, clair](docs/img/rg-light.png)
 
-- Version : **1.6.0** (voir [CHANGELOG](CHANGELOG.md))
-- Maquette de référence : [`maquette/direction.html`](maquette/direction.html)
-- Document pour l'équipe RG System : [`docs/PROPOSITION-RG.md`](docs/PROPOSITION-RG.md)
+| Thème sombre | Interface d'origine |
+|---|---|
+| ![Thème sombre](docs/img/rg-dark.png) | ![Interface d'origine](docs/img/rg-original.png) |
 
-## Installation
+*Captures de données fictives (nœuds « CLIENT 01… »). Le projet est un **prototype non officiel** : il n'est ni affilié à l'éditeur de RG System ni approuvé par lui.*
 
-1. Ouvrir `edge://extensions` et activer le **Mode développeur**.
-2. Cliquer sur **Charger l'extension décompressée** et choisir le dossier `dist/extension` de ce projet (ou le dossier obtenu en extrayant `dist/rg-system-theme-<version>.zip`, voir `npm run pack`).
-3. Recharger RG System (Ctrl+F5). La console (F12) affiche `[RG thème Arobase] extension démarrée…` puis `contrôle visuel : … (thème actif)`.
+## Ce que ça change
 
-À savoir :
-- L'extension est chargée **depuis le dossier** : ne pas le déplacer ni le supprimer.
-- Edge peut proposer de désactiver les extensions du mode développeur au démarrage : refuser, ou réactiver l'extension dans `edge://extensions`.
-- Elle ne demande que l'accès à `dashboard.rg-supervision.com` (plus `scripting` / `activeTab` pour l'interrupteur). Elle ne collecte ni n'envoie aucune donnée.
-- Autre poste : copier le dossier `dist/extension` (ou le zip) et refaire les étapes 1 à 3. Un déploiement à plusieurs passe par le Microsoft Edge Add-ons store ou une stratégie d'entreprise.
+- **Un seul langage visuel** : typographie (Inter, Space Grotesk, JetBrains Mono), couleurs, rayons, ombres, survols, icônes (jeu Lucide), pastilles d'état et formulaires identiques sur tous les écrans, en clair et en sombre.
+- **Les écrans de RG repris un à un** : barre latérale, arborescence, tableaux de synthèse, fiche agent, tickets, courbes, configuration, sauvegardes, vulnérabilités, gestion, profil, page de connexion… plus un socle générique (Bootstrap 3 + MUI) pour ce qui n'a pas été vu.
+- **Des gains d'usage**, tous côté navigateur :
+  - arborescence **redimensionnable librement** (la largeur minimale d'origine est supprimée) ;
+  - **actualisation automatique des tickets** qui fonctionne vraiment, sans recharger la plateforme ;
+  - **recherche rapide `Ctrl+K`** (nœuds de l'arborescence et pages du menu) ;
+  - **texte complet au survol** des libellés tronqués, infobulles sur les actions en simple icône ;
+  - panneau de réglages dans l'icône de l'extension : thème, densité, actualisation, largeur de l'arbre ;
+  - avatar en initiales, courbes lisibles en sombre, squelettes de chargement.
+
+| Courbes en sombre | Configuration | Connexion |
+|---|---|---|
+| ![Courbes](docs/img/rg-charts-dark.png) | ![Configuration](docs/img/rg-config-light.png) | ![Connexion](docs/img/rg-login.png) |
+
+La direction visuelle de départ est la maquette [`maquette/direction.html`](maquette/direction.html) (ci-dessous).
+
+![Maquette de référence](docs/img/direction.png)
+
+## Installation (Edge ou Chrome)
+
+1. Télécharger le dernier zip dans les [Releases](../../releases) (ou `npm run build` puis dossier `dist/extension`) et l'**extraire**.
+2. Ouvrir `edge://extensions` (ou `chrome://extensions`), activer le **Mode développeur**.
+3. **Charger l'extension décompressée** et choisir le dossier extrait.
+4. Recharger RG System (Ctrl+F5). La console (F12) affiche `[RG thème Arobase] extension démarrée…`.
+
+À savoir : l'extension est chargée **depuis le dossier** (ne pas le déplacer). Edge peut proposer de désactiver les extensions du mode développeur au démarrage : refuser, ou la réactiver dans `edge://extensions`. Un déploiement à plusieurs passe par le Microsoft Edge Add-ons store ou une stratégie d'entreprise.
 
 ## Utilisation
 
-- **Interrupteur général** (en cas de régression après une mise à jour de RG System) : un clic sur l'icône de l'extension désactive ou réactive le thème et recharge la page.
-- **Clair / sombre** : bouton lune/soleil dans l'en-tête (à droite des icônes) ou `Alt+Maj+T`. Le choix est mémorisé ; par défaut le thème suit `prefers-color-scheme`.
-- **Densité des tableaux** (confortable / compacte) : `Alt+Maj+D`, mémorisée.
-- **Largeur de l'arborescence** : glisser la poignée entre l'arbre et le contenu. La largeur minimale d'origine (≈ 300 px) est supprimée : on peut descendre jusqu'à 120 px. La largeur est mémorisée ; **double-clic sur la poignée** = largeur d'origine.
-- **Tickets › Actualisation auto** : le widget d'origine ne rafraîchit pas la liste (il faut un F5). Tant que le bouton est activé, la liste est rafraîchie à sa fréquence (60 s par défaut) quand vous êtes inactif depuis 8 s, **sans recharger la plateforme** : le script clique sur l'entrée « Tickets » du menu, ce qui refait le rendu de la page (arborescence, menu et onglets restent en place). Aucun rafraîchissement si un champ est en cours de saisie, si une fenêtre modale ou le détail d'un ticket est ouvert. Désactivable : `localStorage.setItem('rgx.autoReload', '0')` sur le site.
+Cliquer sur l'icône de l'extension ouvre le panneau de réglages. Raccourcis :
 
-Les réglages sont stockés dans le `localStorage` du site (`rgx.enabled`, `rgx.theme`, `rgx.density`, `rgx.treeWidth`, `rgx.autoReload`).
-
-## Mise à jour du thème
-
-```bash
-npm install        # une seule fois
-npm run build      # produit dist/extension/
-npm test           # contrôles automatiques (voir plus bas)
-npm run pack       # facultatif : dist/rg-system-theme-<version>.zip
-```
-
-Incrémenter `version` dans `package.json` avant de recompiler, puis cliquer sur le bouton « recharger » de la carte de l'extension dans `edge://extensions`.
-
-Le build :
-1. génère les icônes CSS (`src/icons.mjs` → `src/icons.generated.css`) ;
-2. compile `src/theme.css` avec le **Tailwind CLI** (v4) → CSS minifié ;
-3. convertit les polices locales (`@fontsource`, sous-ensemble latin) en `@font-face` data-URI ;
-4. assemble l'extension : `manifest.json`, `content.js`, `background.js`, `theme.css`, `fonts.css`, `icons/`.
-
-Aucune ressource externe n'est chargée à l'exécution (ni CDN Tailwind, ni Google Fonts) : compatible avec la CSP de RG System, qui ne contraint que `script-src`.
-
-## Structure
-
-| Fichier | Rôle |
+| Raccourci | Action |
 |---|---|
-| `src/theme.css` | Point d'entrée Tailwind 4 : imports + jetons `@theme` ; le CSS est dans `src/css/` |
-| `src/css/00-tokens.css` | Variables clair / sombre (`--rgx-*`) |
-| `src/css/10-base.css` | Typographie, fond, sélection, focus clavier, mouvement réduit |
-| `src/css/20-shell.css` | Barre latérale, en-tête, arborescence |
-| `src/css/30-components.css` | Boutons, étiquettes, alertes, formulaires, tableaux, panneaux, modales, onglets, menus, pagination |
-| `src/css/40-react.css` | Écrans React : grilles, onglets MUI, `BaseButton`, pastilles de statut, écrans « vitrine » |
-| `src/css/50-modules.css` | Modules : Jobs, Configuration, calendrier, vulnérabilités, menu clic droit, Pace, sélecteur de date, tickets, fiche agent, courbes… |
-| `src/css/60-layout.css` | Mise en page de la maquette : en-tête 56 px et icônes, logo, pagination des listes, boutons, tableaux |
-| `src/css/95-pages.css` | Gabarits de page : en-tête d'identité, onglets, en-têtes de tableaux, icônes de plateforme |
-| `src/css/80-polish.css`, `90-extra.css` | Reprise typographique, tickets, configuration, courbes ; socle étendu (Bootstrap 3 + MUI) pour les écrans non capturés |
-| `src/css/70-menu-sum.css` | Retouches issues des essais sur le site réel : menu (entrée courante, sous-menus, Rechercher), survol de l'arbre, icônes des agents, tableaux de synthèse |
-| `src/icons.mjs` | **Source unique des icônes** (style Lucide, trait 2 px). Le build en génère `src/icons.generated.css` (variables `--rgx-ic-*` + masques CSS, couleur = `currentColor`). Pour ajouter une icône : l'ajouter dans `ICONS`, puis dans `MENU` ou `GLYPHS`, ou l'utiliser via `var(--rgx-ic-nom)` dans le CSS. |
-| `src/extension/content.js` | JS minimal : attributs de thème sur `<html>`, bouton clair/sombre, logo, raccourcis, MutationObserver. **Les sélecteurs de la barre latérale, de l'en-tête et du logo sont regroupés dans l'objet `SEL` en tête de fichier.** |
-| `src/extension/background.js` | Interrupteur général (clic sur l'icône) |
-| `src/extension/manifest.template.json` | Manifest V3 (version injectée par le build) |
-| `src/extension/icons/` | Icônes de l'extension (générées par `npm run icons`) |
-| `build.mjs`, `scripts/` | Assemblage, génération des icônes, empaquetage |
-| `dev/serve.mjs`, `test/` | Banc de test local (voir plus bas) |
+| `Alt+Maj+T` | Clair ↔ sombre (par défaut : suit le réglage du système) |
+| `Alt+Maj+D` | Densité des tableaux : confortable ↔ compacte |
+| `Ctrl+K` | Recherche rapide : nœuds chargés dans l'arborescence et pages du menu |
+| Double-clic sur la poignée de l'arbre | Retour à la largeur d'origine |
 
-## Ajouter ou corriger un écran
+Les réglages sont mémorisés dans le `localStorage` du site (`rgx.*`). Interrupteur général (en cas de régression après une mise à jour de RG) : désactiver le thème dans le panneau de l'extension.
 
-1. Repérer dans l'inspecteur (F12) des sélecteurs **stables** : ids (`#content`, `#tree-block`), classes Bootstrap 3 (`.table`, `.btn`), classes MUI `Mui*-root`. **Éviter** les classes styled-components (`Header__StyledBox-sc-1heih6i-4 dBYHcP`) : leur hash change à chaque version de RG. On peut cibler le **nom** du composant : `[class*="Card__Layout-sc"]`.
-2. Ajouter une règle dans le module `src/css/` adapté, sous `html[data-rgx] …`, en utilisant les variables (`var(--rgx-surface)`, `var(--rgx-border)`…) : le thème sombre suit automatiquement.
-3. N'utiliser `!important` que si le CSS d'origine en met déjà (`branding-v3.css` : `.btn-primary`, `.background-color-primary`, `.color-rg`, `.jstree-clicked`, `table th`), si le JS de RG pose des styles inline (fonds des `<li>` du menu) ou si une règle d'origine porte un `#id`.
-4. Ne pas modifier les dimensions structurantes (largeur du menu, largeur de l'arbre) : le JS de RG s'en sert pour positionner les éléments. (La hauteur de l'en-tête est portée à 56 px et la barre de redimensionnement `#dragbar` suit ; c'est le seul réglage de ce type.)
-5. `npm run build`, recharger l'extension, vérifier en clair **et** en sombre.
+## Vie privée et sécurité
 
-## Banc de test hors ligne
+- L'extension ne s'exécute **que** sur `https://dashboard.rg-supervision.com/*`.
+- **Aucune donnée n'est lue pour être envoyée ailleurs, aucun appel réseau n'est ajouté**, aucune télémétrie. Polices, icônes et CSS sont embarqués : pas de CDN.
+- Elle ne modifie ni les URL, ni les requêtes, ni les données : uniquement du CSS et un peu de JavaScript d'affichage.
+- Permissions : accès au domaine ci-dessus, plus `scripting` / `activeTab` pour le panneau de réglages.
+- Détail et procédure de signalement : [SECURITY.md](SECURITY.md).
 
-Les écrans de RG System ne sont pas accessibles sans compte : le projet fournit donc un banc de test qui rejoue **des copies de pages** avec le thème, sans réseau.
+## Limites connues
+
+- **Courbes** (canvas dygraphs) : les couleurs des séries sont choisies pour un fond blanc ; en sombre elles sont inversées avec rotation de teinte (reconnaissables, pas identiques).
+- **Contenus externes** : le widget « Nouveautés » et l'application Brain sont des applications distinctes, seul leur tiroir est habillé.
+- **Fenêtres modales** et quelques états rares (erreurs, confirmations) sont stylés d'après les composants Bootstrap/MUI mais n'ont pas tous été vus en conditions réelles.
+- Après une mise à jour de RG System, un écran peut perdre son habillage : voir [Ajouter ou corriger un écran](docs/DEVELOPPEMENT.md#ajouter-ou-corriger-un-écran). Les sélecteurs fragiles sont regroupés en tête de `content.js` (objet `SEL`).
+
+## Pour les développeurs
 
 ```bash
-npm run serve    # http://localhost:4173/  -> liste des pages ; ?theme=dark pour le sombre
+npm install
+npm run build   # dist/extension/
+npm test        # contrôles automatiques (manifest, CSS sans ressource externe, règles sous html[data-rgx], contrastes AA)
+npm run serve   # banc de test local : http://localhost:4173/
 ```
 
-- `test/harness.html` : mini-DOM de RG (`?off=1` pour tester l'interrupteur).
-- `test/fixtures/` : pages RG capturées (50 écrans : Vues, Pedigree, Données, Actions, Backup, Configuration, Gestion, Réseau, Cybersecurity, Téléchargements…). **Non versionné** (`.gitignore`) : même anonymisées, ces pages reproduisent l'interface d'un compte réel.
-- Pour (re)générer des pages : coller `test/capture.js` dans la console de RG System (connecté), appeler `await rgxCapture('#/node/root/page/…')`, enregistrer le JSON obtenu, puis `node test/fixtures-build.mjs <fichier>` (ou `node test/fixtures-all.mjs <dossier>` pour un lot). Les noms de clients de l'arborescence sont remplacés par « CLIENT 01… » ; des règles supplémentaires (noms de personnes) se déclarent dans `localStorage.__rgxAnon`.
-- `test/surfaces.html` : balisage fictif (relevé sur le site réel) de la fenêtre d'agent, du menu du profil, de la bibliothèque de scripts, des boucliers Windows Update ; `?view=login` pour la page de connexion, `?theme=dark` pour le sombre.
-- `test/scan.js` : balayage automatique d'une ou plusieurs pages (texte à contraste < 3:1, grandes surfaces claires en sombre) — voir l'en-tête du fichier.
+Architecture, ajout d'un écran, banc de test et tests : [docs/DEVELOPPEMENT.md](docs/DEVELOPPEMENT.md).
+Contribuer : [CONTRIBUTING.md](CONTRIBUTING.md). Historique : [CHANGELOG.md](CHANGELOG.md).
+Pour l'équipe de RG System : [docs/PROPOSITION-RG.md](docs/PROPOSITION-RG.md) (ce que l'éditeur pourrait intégrer nativement).
 
-## Tests automatiques
+## Licence et crédits
 
-```bash
-npm test
-```
-
-Vérifie : le build, la validité du manifest (version, fichiers référencés, accès limité à `dashboard.rg-supervision.com`), l'absence de ressource externe dans le CSS livré, que **toutes** les règles sont sous `html[data-rgx]` (le thème ne peut pas déborder), et le **contraste WCAG AA (4,5:1)** de toutes les paires de couleurs du thème clair et du thème sombre. Un fichier facultatif `test/forbidden.txt` (non versionné : un terme par ligne, p. ex. des noms de clients) fait échouer le test si l'un de ces termes apparaît dans un fichier versionné.
-
-## État de vérification
-
-Les 50 écrans capturés ont été revus en clair et en sombre (revue visuelle + balayage automatique des contrastes). Chaque correction est contrôlée sur le banc de test. L'extension a été installée et testée dans Edge (mode développeur) sur le site réel ; les écrans ci-dessous l'ont été sur le banc de test.
-
-| Zone | Écrans |
-|---|---|
-| Gabarit | barre latérale (réduite ou non), en-tête, arborescence, menu clic droit |
-| Vues | Synthèse (tout, serveurs, postes, stats), opérations asynchrones |
-| Tickets, Pedigree | liste, fiche agent |
-| Données | CPU, mémoire, disque, E/S disque, réseau, communication, antivirus, matériel, services |
-| Actions | Système, Services, App Manager, Scripts personnalisés, Windows Update |
-| Backup | Gérer, Jobs, Activité, Statistiques, Restauration, Microsoft 365 |
-| Configuration | Plugins, Alertes, Communication, Automatisation (calendrier), Bibliothèque, Templates (événements, devices, tickets utilisateurs), Pools, Hyperviseur, Rapports |
-| Gestion | Utilisateurs, IA, Quotas |
-| Autres | Réseau › Voisinage, Cybersecurity, Téléchargements › Kit de déploiement |
-
-Limites connues :
-- **Courbes** (dygraphs, `<canvas>`) : les séries sont choisies pour un fond blanc. En thème sombre, le thème inverse le dessin (inversion + rotation de teinte + luminosité) sur une carte sombre : les couleurs restent reconnaissables sans toucher aux données, mais ne sont pas identiques à celles du thème clair. Un jeu de couleurs par thème côté RG serait plus fidèle.
-- **Cybersecurity › Gérer** : page promotionnelle de l'éditeur (fond blanc codé en dur), laissée telle quelle.
-- **Fenêtres modales** et panneaux (Créer un ticket, Filtres) : stylés d'après les composants Bootstrap, contrôlés en direct lors de la première version ; non capturés sur le banc de test.
-- Les écrans ajoutés par RG après la livraison ne sont pas stylés individuellement : le socle (boutons, tableaux, formulaires, onglets) s'applique, le reste se corrige selon « Ajouter ou corriger un écran ».
-
-## Points d'attention connus
-
-- **Arborescence** : le statut d'un nœud est lu dans son attribut `rel` (N1 ok, N2 critique, N3 avertissement, N4 info, N5 inactif) et affiché en pastille. La corbeille et les agents gardent leur icône d'origine. Les barres de survol/sélection de jsTree sont positionnées en JavaScript d'après la hauteur des lignes : le CSS doit donc être appliqué **avant** l'initialisation de l'arbre, ce que fait l'extension (injection au démarrage).
-- Les classes `.shrink-menu-transform` de RG animent les fonds (≈ 0,5 s) : le changement clair/sombre est donc légèrement progressif sur la barre latérale.
-- Les icônes du menu, de l'en-tête et des boutons sont redessinées (Lucide) ; celles de l'arbre et des statuts sont les sprites SVG d'origine (le statut est porté par leur couleur : ne pas les recolorer).
-
-## Crédits et licences
-
-Polices Inter, Space Grotesk et JetBrains Mono (OFL), tracés d'icônes Lucide (ISC), Tailwind CSS (MIT) : voir [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). « RG System » appartient à son éditeur ; ce projet est un habillage non officiel.
+[MIT](LICENSE) © 2026 Arobase. Polices Inter, Space Grotesk et JetBrains Mono (OFL), tracés d'icônes Lucide (ISC), Tailwind CSS (MIT) : voir [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+« RG System » et « RG System Suite » appartiennent à leur éditeur ; ce projet est un habillage non officiel.

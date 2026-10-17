@@ -1,0 +1,43 @@
+name: Écran mal habillé
+description: Un écran, un composant ou un état de RG System n'est pas (ou mal) habillé
+labels: [affichage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Ne joignez aucune donnée réelle** (noms de clients ou d'utilisateurs, adresses, numéros de série). Floutez ou recadrez la capture.
+  - type: input
+    id: page
+    attributes:
+      label: Page concernée
+      description: Entrée du menu ou fragment d'URL (ex. « Configuration › Alertes », `#/node/…/page/pedigree`)
+    validations:
+      required: true
+  - type: dropdown
+    id: theme
+    attributes:
+      label: Thème
+      options: [Clair, Sombre, Les deux]
+    validations:
+      required: true
+  - type: textarea
+    id: probleme
+    attributes:
+      label: Ce qui ne va pas
+      description: Texte illisible, élément mal aligné, icône d'origine, police différente, survol manquant…
+    validations:
+      required: true
+  - type: textarea
+    id: capture
+    attributes:
+      label: Capture (sans donnée sensible)
+  - type: input
+    id: selecteur
+    attributes:
+      label: Sélecteur du composant (facultatif)
+      description: F12 → clic droit sur l'élément → copier le sélecteur
+  - type: input
+    id: version
+    attributes:
+      label: Version de l'extension
+      description: Affichée dans le panneau de l'extension et dans edge://extensions

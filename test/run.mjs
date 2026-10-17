@@ -26,7 +26,7 @@ try {
 }
 
 // 1b. Syntaxe des scripts de l'extension
-for (const f of ['content.js', 'background.js']) {
+for (const f of ['content.js', 'popup.js']) {
   try { execFileSync(process.execPath, ['--check', path.join(root, 'src', 'extension', f)], { stdio: 'pipe' }); ok('syntaxe ' + f); } catch (e) { ko('syntaxe ' + f + ' : ' + String(e.stderr).slice(0, 200)); }
 }
 
@@ -41,7 +41,7 @@ check(manifest.version === pkg.version, `version ${manifest.version} = package.j
 const refs = [
   ...Object.values(manifest.icons || {}),
   ...Object.values((manifest.action || {}).default_icon || {}),
-  (manifest.background || {}).service_worker,
+  (manifest.action || {}).default_popup,
   ...(manifest.content_scripts || []).flatMap((c) => [...(c.css || []), ...(c.js || [])]),
 ].filter(Boolean);
 for (const f of new Set(refs)) check(existsSync(path.join(ext, f)), `fichier présent : ${f}`);
@@ -54,6 +54,7 @@ const css = read('dist', 'extension', 'theme.css') + read('dist', 'extension', '
 const ext_urls = [...css.matchAll(/url\(\s*["']?(https?:)?\/\/[^)]+/g)].map((m) => m[0].slice(0, 60));
 check(ext_urls.length === 0, 'aucune ressource externe (url(http…))' + (ext_urls.length ? ' : ' + ext_urls[0] : ''));
 check(!/@import\s+(url\()?["']?https?:/.test(css), 'aucun @import distant');
+for (const f of ['popup.html', 'popup.css', 'popup.js']) check(existsSync(path.join(ext, f)), `fichier présent : ${f}`);
 check(css.length < 400 * 1024, `taille raisonnable (${(css.length / 1024).toFixed(0)} Ko)`);
 const unscoped = [...read('dist', 'theme.dev.css').matchAll(/^(?!\s)([^@\s}/*][^{]*)\{/gm)].map((m) => m[1].trim()).filter((s) => !/html\[data-rgx\]|^\.rgx-|^#rgx-|^:root|^\*|^@|^from|^to|^\d+%/.test(s));
 check(unscoped.length === 0, 'toutes les règles sont sous html[data-rgx]' + (unscoped.length ? ' : ' + unscoped.slice(0, 3).join(' ; ') : ''));
@@ -85,8 +86,19 @@ for (const [name, t] of [['clair', light], ['sombre', dark]]) {
 }
 check(ratio('#ffffff', dark['side-active']) >= 4.5, `sombre : blanc sur side-active = ${ratio('#ffffff', dark['side-active']).toFixed(2)}`);
 
-// 5. Données sensibles (liste locale facultative)
+// 5. Données sensibles : contrôle générique (adresses e-mail réelles) + liste locale facultative
 console.log('Données sensibles');
+{
+  const files = execFileSync('git', ['ls-files'], { cwd: root, encoding: 'utf8' }).split('\n').filter((f) => f && !f.startsWith('node_modules') && !/\.(png|woff2?|ico)$/.test(f) && f !== 'package-lock.json');
+  const mails = [];
+  for (const f of files) {
+    if (!existsSync(path.join(root, f)) || statSync(path.join(root, f)).size > 3_000_000) continue;
+    for (const m of readFileSync(path.join(root, f), 'utf8').matchAll(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g)) {
+      if (!/(example|exemple|noreply|\.test$|domaine|rgsystem\.com$)/i.test(m[0]) && !/@(media|font-face|import|keyframes|layer|property|supports|container)/.test(m[0])) mails.push(f + ' : ' + m[0]);
+    }
+  }
+  check(mails.length === 0, 'aucune adresse e-mail réelle dans les fichiers suivis' + (mails.length ? ' → ' + [...new Set(mails)].slice(0, 3).join(' ; ') : ''));
+}
 const forbiddenFile = path.join(root, 'test', 'forbidden.txt');
 if (existsSync(forbiddenFile)) {
   const words = read('test', 'forbidden.txt').split('\n').map((s) => s.trim()).filter(Boolean);

@@ -1,0 +1,120 @@
+/* ===================================================================
+   23. Recherche rapide (Ctrl+K), squelettes de chargement (v1.7)
+   =================================================================== */
+
+/* --- Recherche rapide : palette centrée au-dessus de la page --- */
+html[data-rgx] #rgx-pal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  padding-top: 14vh;
+  background: rgba(15, 23, 42, 0.38);
+  backdrop-filter: blur(2px);
+}
+html[data-rgx] #rgx-pal .rgx-pal-box {
+  width: min(560px, calc(100vw - 32px));
+  overflow: hidden;
+  border: 1px solid var(--rgx-border);
+  border-radius: 16px;
+  background: var(--rgx-surface);
+  box-shadow: var(--rgx-shadow-pop);
+  color: var(--rgx-ink);
+  font-family: var(--font-sans);
+}
+html[data-rgx] #rgx-pal input {
+  display: block;
+  width: 100%;
+  height: 52px;
+  padding: 0 18px;
+  border: 0;
+  border-bottom: 1px solid var(--rgx-border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--rgx-ink);
+  font-size: 15px;
+  box-shadow: none;
+}
+html[data-rgx] #rgx-pal input:focus {
+  box-shadow: none;
+  outline: 0;
+}
+html[data-rgx] #rgx-pal ul {
+  max-height: 340px;
+  margin: 0;
+  padding: 6px;
+  overflow: auto;
+  list-style: none;
+}
+html[data-rgx] #rgx-pal li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+html[data-rgx] #rgx-pal li.on,
+html[data-rgx] #rgx-pal li:hover {
+  background: var(--rgx-brand-soft);
+  color: var(--rgx-brand);
+}
+html[data-rgx] #rgx-pal li em {
+  flex: none;
+  min-width: 44px;
+  font-style: normal;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rgx-muted);
+}
+html[data-rgx] #rgx-pal li small {
+  margin-left: auto;
+  color: var(--rgx-muted);
+  font-size: 12px;
+}
+html[data-rgx] #rgx-pal li.rgx-pal-empty {
+  display: block;
+  color: var(--rgx-muted);
+  cursor: default;
+}
+html[data-rgx] #rgx-pal li.rgx-pal-empty:hover {
+  background: transparent;
+  color: var(--rgx-muted);
+}
+html[data-rgx] #rgx-pal .rgx-pal-help {
+  margin: 0;
+  padding: 8px 18px 10px;
+  border-top: 1px solid var(--rgx-border);
+  color: var(--rgx-muted);
+  font-size: 11.5px;
+}
+
+/* --- Squelettes de chargement (MUI Skeleton) : même reflet que partout, sans clignotement --- */
+@keyframes rgx-shimmer {
+  0% { background-position: 120% 0; }
+  100% { background-position: -20% 0; }
+}
+html[data-rgx] .MuiSkeleton-root {
+  background-color: var(--rgx-surface-2);
+  background-image: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--rgx-border) 70%, transparent) 50%, transparent 100%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  border-radius: 6px;
+  animation: rgx-shimmer 1.4s ease-in-out infinite;
+}
+html[data-rgx] .MuiSkeleton-pulse {
+  opacity: 1;
+}
+html[data-rgx] .MuiSkeleton-circle {
+  border-radius: 50%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-rgx] .MuiSkeleton-root {
+    animation: none;
+  }
+}
