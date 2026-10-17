@@ -63,7 +63,7 @@ Les réglages sont mémorisés dans le `localStorage` du site (`rgx.*`). Interru
 
 ## Limites connues
 
-- **Rechargements périodiques de la plateforme** : RG System recharge entièrement la page toutes les 2 à 3 minutes (renouvellement de la session par redirection vers Microsoft). Ce comportement existe **sans l'extension** (mesuré onglet inactif) ; l'extension ne peut pas l'empêcher. Voir [docs/PROPOSITION-RG.md](docs/PROPOSITION-RG.md).
+- **Rechargements périodiques de la plateforme** : avec le SSO Microsoft 365, RG System recharge entièrement la page toutes les 2 à 3 minutes (renouvellement de la session par redirection vers Microsoft). Ce comportement existe **sans l'extension** (mesuré onglet inactif) et disparaît avec une connexion par mot de passe RG : il vient du renouvellement de session, pas du thème. Voir [docs/PROPOSITION-RG.md](docs/PROPOSITION-RG.md).
 - **Courbes** (canvas dygraphs) : les couleurs des séries sont choisies pour un fond blanc ; en sombre elles sont inversées avec rotation de teinte (reconnaissables, pas identiques).
 - **Contenus externes** : le widget « Nouveautés » et l'application Brain sont des applications distinctes, seul leur tiroir est habillé.
 - **Fenêtres modales** et quelques états rares (erreurs, confirmations) sont stylés d'après les composants Bootstrap/MUI mais n'ont pas tous été vus en conditions réelles.
