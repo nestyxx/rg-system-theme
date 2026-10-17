@@ -1,5 +1,9 @@
 # Journal des modifications
 
+## 1.4.1 — 2026-10-17
+
+- **Courbes en thème sombre** : cartes sombres (plus de carte blanche au milieu d'une page sombre). Le dessin des séries (canvas) est inversé avec rotation de teinte et surcroît de luminosité ; légendes, valeurs min / moyenne / max, titres et axes reprennent les couleurs du thème.
+
 ## 1.4.0 — 2026-10-17
 
 Passe de revue complète : les 51 pages capturées ont été reprises une à une, en clair puis en sombre (1440 px). Défauts relevés et corrigés :

@@ -6,7 +6,7 @@ dans l'esprit de Webgest : Inter / Space Grotesk, palette Arobase, thème clair 
 
 Le navigateur injecte lui-même le CSS avant le premier rendu : aucun gestionnaire de scripts n'est nécessaire et l'ancien style ne clignote pas.
 
-- Version : **1.4.0** (voir [CHANGELOG](CHANGELOG.md))
+- Version : **1.4.1** (voir [CHANGELOG](CHANGELOG.md))
 - Maquette de référence : [`maquette/direction.html`](maquette/direction.html)
 - Document pour l'équipe RG System : [`docs/PROPOSITION-RG.md`](docs/PROPOSITION-RG.md)
 
@@ -120,7 +120,7 @@ Les 50 écrans capturés ont été revus en clair et en sombre (revue visuelle +
 | Autres | Réseau › Voisinage, Cybersecurity, Téléchargements › Kit de déploiement |
 
 Limites connues :
-- **Courbes** (dygraphs, `<canvas>`) : les séries sont choisies pour un fond blanc. Plutôt que d'altérer les couleurs des données, le thème garde la carte du graphique claire (arrondie, ombrée) dans un écran sombre.
+- **Courbes** (dygraphs, `<canvas>`) : les séries sont choisies pour un fond blanc. En thème sombre, le thème inverse le dessin (inversion + rotation de teinte + luminosité) sur une carte sombre : les couleurs restent reconnaissables sans toucher aux données, mais ne sont pas identiques à celles du thème clair. Un jeu de couleurs par thème côté RG serait plus fidèle.
 - **Cybersecurity › Gérer** : page promotionnelle de l'éditeur (fond blanc codé en dur), laissée telle quelle.
 - **Fenêtres modales** et panneaux (Créer un ticket, Filtres) : stylés d'après les composants Bootstrap, contrôlés en direct lors de la première version ; non capturés sur le banc de test.
 - Les écrans ajoutés par RG après la livraison ne sont pas stylés individuellement : le socle (boutons, tableaux, formulaires, onglets) s'applique, le reste se corrige selon « Ajouter ou corriger un écran ».

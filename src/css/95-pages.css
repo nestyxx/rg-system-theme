@@ -320,3 +320,44 @@ html[data-rgx] .media-card img[class*="Media-sc-"] {
   max-width: 100%;
   height: auto;
 }
+
+/* --- Courbes en thème sombre : cartes sombres. Les séries sont dessinées en canvas pour un fond clair ;
+   on les inverse (inversion + rotation de teinte de 180° : le noir devient blanc, les couleurs gardent leur teinte)
+   au lieu de laisser une carte blanche au milieu d'une page sombre. Texte HTML recoloré avec les jetons du thème. --- */
+html[data-rgx][data-rgx-theme="dark"] .chart-container {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+}
+html[data-rgx][data-rgx-theme="dark"] .chart-container canvas,
+html[data-rgx][data-rgx-theme="dark"] .chart-container .graph-instance img,
+html[data-rgx][data-rgx-theme="dark"] .chart-container .graph-legend,
+html[data-rgx][data-rgx-theme="dark"] .chart-container .graph-stats tr[style] {
+  filter: invert(1) hue-rotate(180deg) brightness(1.45);
+}
+html[data-rgx][data-rgx-theme="dark"] .dygraph-title,
+html[data-rgx][data-rgx-theme="dark"] .dygraph-label.dygraph-title,
+html[data-rgx][data-rgx-theme="dark"] .graph-title {
+  color: var(--rgx-ink);
+}
+html[data-rgx][data-rgx-theme="dark"] .dygraph-axis-label,
+html[data-rgx][data-rgx-theme="dark"] .dygraph-legend {
+  color: var(--rgx-muted) !important;
+}
+html[data-rgx][data-rgx-theme="dark"] .chart-container table th {
+  color: var(--rgx-muted) !important;
+}
+html[data-rgx][data-rgx-theme="dark"] .chart-container table tr:not([style]) td,
+html[data-rgx][data-rgx-theme="dark"] .chart-container .color-rg {
+  color: var(--rgx-ink) !important;
+}
+/* lignes de légende : la couleur de la série est portée par la ligne (style en ligne), inversée avec elle */
+html[data-rgx][data-rgx-theme="dark"] .chart-container table tr[style] td {
+  color: inherit !important;
+}
+html[data-rgx][data-rgx-theme="dark"] .chart-container small,
+html[data-rgx][data-rgx-theme="dark"] .chart-container .text-muted {
+  color: var(--rgx-muted);
+}
+html[data-rgx][data-rgx-theme="dark"] .chart-container a {
+  color: var(--rgx-brand);
+}

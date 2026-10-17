@@ -54,8 +54,9 @@ Téléchargements) ont été revus en clair et en sombre sur un banc de test hor
 modales et quelques écrans non capturés (Assist, Messages, recherche globale).
 
 Point de conception à discuter : les courbes (dygraphs, `<canvas>`) utilisent des couleurs de séries pensées pour un fond
-blanc. Le prototype garde donc la carte du graphique claire en thème sombre. Un jeu de couleurs de séries par thème côté RG
-permettrait des graphiques entièrement sombres.
+blanc. Le prototype affiche donc le graphique sur une carte sombre en inversant son dessin (inversion, rotation de teinte,
+luminosité) : les couleurs restent reconnaissables mais approximatives. Un jeu de couleurs de séries par thème côté RG
+serait plus fidèle.
 
 ## Licence et polices
 
