@@ -365,3 +365,57 @@ html[data-rgx] #mimibrain {
   border-left: 1px solid var(--rgx-border);
   box-shadow: var(--rgx-shadow-pop);
 }
+
+/* --- Fenêtres flottantes d'information (survol d'un agent, listes déroulantes MUI, popovers) ---
+   Le contenu est rendu par React hors de #root (Popper / Popover) : cartes du thème, texte et icônes homogènes. */
+html[data-rgx] .MuiPaper-root:not(.MuiAppBar-root),
+html[data-rgx] [role="tooltip"] > div,
+html[data-rgx] .MuiPopper-root > div {
+  background-color: var(--rgx-surface);
+  color: var(--rgx-ink);
+}
+html[data-rgx] .MuiPopper-root .MuiPaper-root,
+html[data-rgx] .MuiPopover-paper,
+html[data-rgx] [role="tooltip"] > .MuiPaper-root {
+  border: 1px solid var(--rgx-border);
+  border-radius: 12px;
+  box-shadow: var(--rgx-shadow-pop);
+}
+html[data-rgx] .MuiPopper-root hr,
+html[data-rgx] .MuiPopover-paper hr,
+html[data-rgx] .MuiPaper-root hr {
+  border-color: var(--rgx-border);
+  background-color: var(--rgx-border);
+}
+html[data-rgx] .MuiPopper-root svg,
+html[data-rgx] .MuiPopover-paper svg {
+  color: var(--rgx-muted);
+}
+html[data-rgx] .MuiPopper-root svg:hover,
+html[data-rgx] .MuiPopover-paper svg:hover {
+  color: var(--rgx-brand);
+}
+html[data-rgx] .MuiPopper-root [class*="Typo-sc"],
+html[data-rgx] .MuiPopover-paper [class*="Typo-sc"] {
+  font-family: var(--font-sans);
+  color: var(--rgx-ink);
+}
+/* Composants « Typo » de RG : la famille et la taille sont portées par des attributs HTML (font-family="title"…) */
+html[data-rgx] [class*="Typo-sc"][font-family="title"],
+html[data-rgx] [class*="Typo-sc"][font-family="title-bold"],
+html[data-rgx] [class*="Typo-sc"][font-family="page-caption"],
+html[data-rgx] [class*="Typo-sc"][font-family="subtitle"] {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+html[data-rgx] [class*="Typo-sc"][font-family="code"] {
+  font-family: var(--font-mono);
+}
+html[data-rgx] [class*="Typo-sc"][color="text"] {
+  color: var(--rgx-ink);
+}
+html[data-rgx] [class*="Typo-sc"][color="secondary"],
+html[data-rgx] [class*="Typo-sc"][color="description"] {
+  color: var(--rgx-muted);
+}

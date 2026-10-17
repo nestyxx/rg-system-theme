@@ -1,5 +1,9 @@
 # Journal des modifications
 
+## 1.2.1 — 2026-10-17
+
+- **Fenêtres flottantes** (survol d'un agent, popovers MUI) : carte du thème (bordure, rayon, ombre), séparateurs, icônes grises avec survol de marque ; composants « Typo » de RG (famille portée par des attributs HTML) ramenés sur Inter / Space Grotesk / JetBrains Mono. Réglage fait sans accès au DOM exact de la fenêtre d'agent : à affiner avec son balisage.
+
 ## 1.2.0 — 2026-10-17
 
 Reprise de l'en-tête, de la typographie et du socle de composants.
