@@ -1,5 +1,15 @@
 # Journal des modifications
 
+## 1.1.0 — 2026-10-17
+
+Premières évolutions de comportement (au-delà du style).
+
+- **Arborescence redimensionnable sans minimum** (120 – 640 px), largeur mémorisée, double-clic = largeur d'origine.
+- **Tickets › Actualisation auto** réellement automatique : rechargement de la page à la fréquence du widget, quand l'utilisateur est inactif ; état conservé après rechargement ; désactivable (`rgx.autoReload`).
+- Synthèse d'un agent : la colonne du nœud ne passe plus à la ligne ; poignée de redimensionnement affinée.
+- Test de syntaxe des scripts de l'extension dans `npm test`.
+- Outil : `rgxOverflow` (débordements, chevauchements, libellés rognés) dans test/scan.js.
+
 ## 1.0.4 — 2026-10-17
 
 - **Sous-sous-menus** (Données › Courbes › Disque…) : libellé et chevron centrés, chevron pivoté à l'ouverture, filet de liaison, plus de fond propre ; libellés alignés sur ceux du niveau 1.

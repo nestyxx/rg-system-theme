@@ -6,7 +6,7 @@ dans l'esprit de Webgest : Inter / Space Grotesk, palette Arobase, thème clair 
 
 Le navigateur injecte lui-même le CSS avant le premier rendu : aucun gestionnaire de scripts n'est nécessaire et l'ancien style ne clignote pas.
 
-- Version : **1.0.4** (voir [CHANGELOG](CHANGELOG.md))
+- Version : **1.1.0** (voir [CHANGELOG](CHANGELOG.md))
 - Maquette de référence : [`maquette/direction.html`](maquette/direction.html)
 - Document pour l'équipe RG System : [`docs/PROPOSITION-RG.md`](docs/PROPOSITION-RG.md)
 
@@ -27,8 +27,10 @@ Le navigateur injecte lui-même le CSS avant le premier rendu : aucun gestionnai
 - **Interrupteur général** (en cas de régression après une mise à jour de RG System) : un clic sur l'icône de l'extension désactive ou réactive le thème et recharge la page.
 - **Clair / sombre** : bouton lune/soleil dans l'en-tête (à droite des icônes) ou `Alt+Maj+T`. Le choix est mémorisé ; par défaut le thème suit `prefers-color-scheme`.
 - **Densité des tableaux** (confortable / compacte) : `Alt+Maj+D`, mémorisée.
+- **Largeur de l'arborescence** : glisser la poignée entre l'arbre et le contenu. La largeur minimale d'origine (≈ 300 px) est supprimée : on peut descendre jusqu'à 120 px. La largeur est mémorisée ; **double-clic sur la poignée** = largeur d'origine.
+- **Tickets › Actualisation auto** : le widget d'origine ne recharge pas la liste (il faut un F5). Tant que le bouton est activé, la page est rechargée à sa fréquence (60 s par défaut) quand vous êtes inactif depuis 8 s, sans champ en cours de saisie ni fenêtre modale ouverte ; l'état survit au rechargement. Désactivable : `localStorage.setItem('rgx.autoReload', '0')` sur le site.
 
-Les réglages sont stockés dans le `localStorage` du site (`rgx.enabled`, `rgx.theme`, `rgx.density`).
+Les réglages sont stockés dans le `localStorage` du site (`rgx.enabled`, `rgx.theme`, `rgx.density`, `rgx.treeWidth`, `rgx.autoReload`).
 
 ## Mise à jour du thème
 

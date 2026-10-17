@@ -256,7 +256,7 @@ html[data-rgx] .rgx-logo > small {
   border-radius: 999px;
   font: 500 10px/1.2 var(--font-sans);
   letter-spacing: 0.02em;
-  opacity: 0.65;
+  opacity: 0.85;
 }
 /* Bouton de réduction du menu : posé à droite de la ligne du logo (expansé), la navigation remonte comme dans la maquette */
 html[data-rgx] #block-dashboard:not(.left-menu-shrink) #head-menu {

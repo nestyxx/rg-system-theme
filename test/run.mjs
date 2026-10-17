@@ -25,6 +25,11 @@ try {
   ko('npm run build : ' + String(e.stderr || e.message).split('\n').slice(0, 3).join(' | '));
 }
 
+// 1b. Syntaxe des scripts de l'extension
+for (const f of ['content.js', 'background.js']) {
+  try { execFileSync(process.execPath, ['--check', path.join(root, 'src', 'extension', f)], { stdio: 'pipe' }); ok('syntaxe ' + f); } catch (e) { ko('syntaxe ' + f + ' : ' + String(e.stderr).slice(0, 200)); }
+}
+
 // 2. Manifest
 console.log('Manifest');
 const ext = path.join(root, 'dist', 'extension');

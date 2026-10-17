@@ -691,3 +691,35 @@ html[data-rgx] .steps.background-color-primary.step-active {
   background-color: var(--rgx-brand) !important;
   color: var(--rgx-brand-ink);
 }
+
+/* ===================================================================
+   15. Largeur de l'arborescence réglable (content.js pose --rgx-tree-w et data-rgx-tree après un glissement de la poignée)
+   =================================================================== */
+html[data-rgx][data-rgx-tree] #tree-block:not(.shrunk-tree) {
+  width: var(--rgx-tree-w) !important;
+}
+html[data-rgx][data-rgx-tree] #block-dashboard:not(.left-menu-shrink) #dragbar:not(.shrunk-tree) {
+  left: calc(200px + var(--rgx-tree-w) - 10px) !important;
+}
+html[data-rgx][data-rgx-tree] .left-menu-shrink #dragbar:not(.shrunk-tree) {
+  left: calc(40px + var(--rgx-tree-w) - 10px) !important;
+}
+html[data-rgx] #tree-search-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* Poignée : fine, plus visible au survol */
+html[data-rgx] #dragbar {
+  width: 8px;
+  margin-left: 2px;
+  transition: background-color 0.15s;
+}
+
+/* Synthèse d'un agent seul : la première colonne (nœud) ne passe plus à la ligne sous l'icône de dossier */
+html[data-rgx] table.sum > tbody > tr > td:first-child .ellipsis-content {
+  white-space: nowrap;
+}
+html[data-rgx] table.sum > tbody > tr > td:first-child {
+  min-width: 190px;
+}

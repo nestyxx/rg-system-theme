@@ -155,3 +155,56 @@
     return res;
   };
 })();
+
+// Balayage de débordements : (1) texte qui dépasse de la carte / du panneau qui le contient,
+// (2) textes qui se chevauchent, (3) boutons dont le libellé est rogné.
+//   await rgxOverflow(['ticket'], 'light')
+(function () {
+  const path = (e) => { const o = []; for (let x = e; x && x.tagName && o.length < 3; x = x.parentElement) o.push(x.tagName.toLowerCase() + (x.id ? '#' + x.id : '') + (typeof x.className === 'string' && x.className ? '.' + x.className.trim().split(/\s+/)[0].slice(0, 26) : '')); return o.join(' < '); };
+  function scanOverflow(doc) {
+    const win = doc.defaultView; const out = []; const seen = new Set();
+    const root = doc.querySelector('#root') || doc.body;
+    const rects = [];
+    const w = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n;
+    while ((n = w.nextNode())) {
+      const t = n.nodeValue.trim(); if (!t) continue; const el = n.parentElement;
+      if (!el || /^(SCRIPT|STYLE|OPTION|TEXTAREA)$/.test(el.tagName)) continue;
+      const cs = win.getComputedStyle(el); if (cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity === 0) continue;
+      const rg = doc.createRange(); rg.selectNodeContents(n); const r = rg.getBoundingClientRect(); if (r.width < 3 || r.height < 3) continue;
+      // (1) débord d'un conteneur « carte » (bordure + rayon) sans défilement
+      for (let c = el.parentElement; c && c !== doc.body; c = c.parentElement) {
+        const cc = win.getComputedStyle(c);
+        if (/(auto|scroll|hidden|clip)/.test(cc.overflowX)) break;
+        const cr = c.getBoundingClientRect();
+        if (cr.width > 120 && parseFloat(cc.borderLeftWidth) > 0 && cc.borderLeftStyle !== 'none' && parseFloat(cc.borderTopLeftRadius) > 0) {
+          if (r.right > cr.right + 2 && r.left < cr.right) { const key = 'ov ' + path(c); if (!seen.has(key)) { seen.add(key); out.push({ k: 'texte qui déborde de sa carte (' + Math.round(r.right - cr.right) + 'px)', txt: t.slice(0, 24), at: path(c) }); } }
+          break;
+        }
+      }
+      rects.push({ r, t, el });
+    }
+    // (2) chevauchements entre textes d'éléments différents
+    for (let i = 0; i < rects.length && out.length < 14; i++) {
+      for (let j = i + 1; j < Math.min(rects.length, i + 12); j++) {
+        const a = rects[i], b = rects[j]; if (a.el === b.el || a.el.contains(b.el) || b.el.contains(a.el)) continue;
+        const ix = Math.min(a.r.right, b.r.right) - Math.max(a.r.left, b.r.left), iy = Math.min(a.r.bottom, b.r.bottom) - Math.max(a.r.top, b.r.top);
+        if (ix > 4 && iy > 5) { const key = 'ol ' + path(a.el) + path(b.el); if (!seen.has(key)) { seen.add(key); out.push({ k: 'textes qui se chevauchent (' + Math.round(ix) + 'x' + Math.round(iy) + ')', txt: a.t.slice(0, 14) + ' / ' + b.t.slice(0, 14), at: path(a.el) }); } }
+      }
+    }
+    // (3) libellés rognés dans les boutons
+    doc.querySelectorAll('button, .btn').forEach((b) => { if (b.scrollWidth > b.clientWidth + 2 && b.clientWidth > 0 && (b.textContent || '').trim()) { const key = 'bt ' + path(b); if (!seen.has(key)) { seen.add(key); out.push({ k: 'bouton rogné', txt: b.textContent.trim().slice(0, 20), at: path(b) }); } } });
+    return out.slice(0, 14);
+  }
+  window.rgxOverflow = async function (names, theme) {
+    const res = {};
+    for (const name of names) {
+      const f = document.createElement('iframe');
+      f.style.cssText = 'position:fixed;left:0;top:0;width:1440px;height:900px;border:0;visibility:hidden';
+      f.src = '/fixtures/' + name + '.html?theme=' + theme; document.body.appendChild(f);
+      await new Promise((ok) => { f.onload = ok; setTimeout(ok, 8000); }); await new Promise((ok) => setTimeout(ok, 900));
+      try { res[name] = scanOverflow(f.contentDocument); } catch (e) { res[name] = [{ k: 'erreur', txt: String(e), at: '' }]; }
+      f.remove();
+    }
+    return res;
+  };
+})();

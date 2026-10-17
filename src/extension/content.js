@@ -3,9 +3,12 @@
 // manifest.json ("content_scripts.css") : aucun flash de l'ancien style. Ce script ne fait que :
 //  - poser les attributs sur <html> (thème clair/sombre, densité) — le CSS est scopé sous html[data-rgx] ;
 //  - ajouter le bouton de bascule clair/sombre dans l'en-tête (à droite des icônes) ;
-//  - gérer les raccourcis Alt+Maj+T (thème) et Alt+Maj+D (densité).
+//  - gérer les raccourcis Alt+Maj+T (thème) et Alt+Maj+D (densité) ;
+//  - rendre la largeur de l'arborescence réglable (poignée #dragbar, sans minimum) ;
+//  - recharger la liste des tickets quand « Actualisation auto » est activé (le widget d'origine ne le fait pas).
 // Réglages dans le localStorage du site (lecture synchrone, donc pas de clignotement) :
-//   rgx.enabled ('0' = thème désactivé), rgx.theme ('auto'|'light'|'dark'), rgx.density ('comfortable'|'compact').
+//   rgx.enabled ('0' = thème désactivé), rgx.theme ('auto'|'light'|'dark'), rgx.density ('comfortable'|'compact'),
+//   rgx.treeWidth (px), rgx.autoReload ('0' = pas de rechargement automatique des tickets).
 (function () {
   'use strict';
   try { main(); } catch (e) { console.error('[RG thème Arobase] erreur au démarrage :', e); }
@@ -87,6 +90,96 @@
     };
     new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
     document.addEventListener('DOMContentLoaded', schedule);
+
+    // ------------------------------------------------------------------------------------------------
+    // Largeur de l'arborescence : poignée #dragbar. Le script de RG impose une largeur minimale ; on
+    // prend le relais (phase de capture) pour permettre une arborescence beaucoup plus étroite.
+    // La largeur choisie est mémorisée (rgx.treeWidth) ; double-clic sur la poignée = largeur d'origine.
+    // Le CSS (60-layout / 70-menu-sum) lit la variable --rgx-tree-w UNIQUEMENT si html[data-rgx-tree] est posé.
+    // ------------------------------------------------------------------------------------------------
+    const TREE = { min: 120, max: 640, key: 'rgx.treeWidth' };
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    function applyTreeWidth(w) {
+      if (w) { root.style.setProperty('--rgx-tree-w', w + 'px'); root.setAttribute('data-rgx-tree', ''); }
+      else { root.style.removeProperty('--rgx-tree-w'); root.removeAttribute('data-rgx-tree'); }
+    }
+    const saved = parseInt(get(TREE.key, ''), 10);
+    if (saved) applyTreeWidth(clamp(saved, TREE.min, TREE.max));
+    document.addEventListener('mousedown', (e) => {
+      const bar = e.target && e.target.closest ? e.target.closest('#dragbar') : null;
+      if (!bar || e.button !== 0) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();   // le gestionnaire d'origine de RG ne démarre pas
+      const menu = document.querySelector(SEL.sidebar);
+      const menuW = menu ? menu.getBoundingClientRect().width : 200;
+      const shield = document.createElement('div');   // capte la souris au-dessus des cadres / graphiques pendant le glissement
+      shield.style.cssText = 'position:fixed;inset:0;z-index:2147483646;cursor:col-resize';
+      document.body.appendChild(shield);
+      let last = 0, raf = 0;
+      const move = (ev) => {
+        last = clamp(Math.round(ev.clientX - menuW + 5), TREE.min, Math.min(TREE.max, window.innerWidth - menuW - 200));
+        if (!raf) raf = requestAnimationFrame(() => { raf = 0; applyTreeWidth(last); });
+      };
+      const up = () => {
+        document.removeEventListener('mousemove', move, true);
+        document.removeEventListener('mouseup', up, true);
+        shield.remove();
+        if (last) { set(TREE.key, String(last)); applyTreeWidth(last); }
+        window.dispatchEvent(new Event('resize'));   // graphiques et arbre se recalent
+      };
+      document.addEventListener('mousemove', move, true);
+      document.addEventListener('mouseup', up, true);
+    }, true);
+    document.addEventListener('dblclick', (e) => {
+      if (!(e.target && e.target.closest && e.target.closest('#dragbar'))) return;
+      try { localStorage.removeItem(TREE.key); } catch (err) { /* stockage indisponible */ }
+      applyTreeWidth(0);
+      window.dispatchEvent(new Event('resize'));
+    }, true);
+
+    // ------------------------------------------------------------------------------------------------
+    // Liste des tickets : « Actualisation auto ». Le widget d'origine ne recharge pas la liste (il faut
+    // un vrai F5). Tant que le bouton est activé, la page est rechargée à la fréquence du widget
+    // (data-frequency, 60 s par défaut) quand l'utilisateur est inactif ; l'état survit au rechargement
+    // (sessionStorage). Désactivable : localStorage rgx.autoReload = '0'.
+    // ------------------------------------------------------------------------------------------------
+    const AR = { sel: 'button.refresh-widget', key: 'rgx.autoTickets', idleMs: 8000 };
+    const ss = {
+      get: () => { try { return sessionStorage.getItem(AR.key) === '1'; } catch (e) { return false; } },
+      set: (v) => { try { sessionStorage.setItem(AR.key, v ? '1' : '0'); } catch (e) { /* stockage indisponible */ } },
+    };
+    const onTicketRoute = () => /\/page\/ticket(\/|$|\?)/.test(location.hash);
+    const arEnabled = () => get('rgx.autoReload', '1') !== '0';
+    let lastInput = Date.now();
+    ['mousemove', 'keydown', 'mousedown', 'wheel', 'touchstart'].forEach((t) => document.addEventListener(t, () => { lastInput = Date.now(); }, { passive: true, capture: true }));
+    document.addEventListener('click', (e) => {
+      const b = e.target && e.target.closest ? e.target.closest(AR.sel) : null;
+      if (b && e.isTrusted) ss.set(!ss.get());   // le clic de l'utilisateur bascule l'état voulu
+    }, true);
+    const armedAt = Date.now();
+    let restored = false;
+    function arTick() {
+      if (!arEnabled() || !onTicketRoute()) return;
+      const btn = document.querySelector(AR.sel);
+      if (!btn) return;
+      if (ss.get() && !restored) {   // après un rechargement : réactive le bouton par le gestionnaire d'origine de RG
+        restored = true;
+        if (!btn.classList.contains('active')) btn.click();
+        return;
+      }
+      restored = true;
+      if (!ss.get()) return;
+      const freq = Math.max(15, parseInt(btn.getAttribute('data-frequency'), 10) || 60) * 1000;
+      if (Date.now() - armedAt < freq || document.hidden) return;
+      if (Date.now() - lastInput < AR.idleMs) return;   // l'utilisateur est en train d'agir : on repousse
+      const a = document.activeElement;
+      if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;
+      if (document.querySelector('.modal.in, .modal.show, .bootstrap-datetimepicker-widget')) return;
+      console.info('[RG thème Arobase] actualisation automatique des tickets');
+      location.reload();
+    }
+    setInterval(arTick, 4000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) arTick(); });
 
     window.addEventListener('load', () => {
       const side = document.querySelector(SEL.sidebar);

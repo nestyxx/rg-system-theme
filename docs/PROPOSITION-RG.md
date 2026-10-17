@@ -38,6 +38,9 @@ codés en dur, fonds blancs, gris `#ADADAD`).
 7. **Ne pas recharger la page entière** lors de certaines navigations (observé en cours de test) : l'écran flashe et le thème doit
    se réappliquer.
 
+8. **Deux défauts d'ergonomie relevés à l'usage** : (a) l'arborescence ne peut pas être réduite sous une largeur minimale (le prototype la rend librement redimensionnable) ; (b) le bouton « Actualisation auto » de la liste des tickets ne recharge pas la liste, il faut un rechargement complet de la page (le prototype recharge la page à la fréquence du widget).
+9. **Survol de l'arborescence** : les barres du plugin jsTree « wholerow » sont positionnées en JavaScript d'après une mesure faite à l'initialisation et se décalent dès que la hauteur des lignes change ; un lien occupant toute la largeur de sa ligne (CSS seul) supprime le besoin de ces barres.
+
 ## Ce que l'on n'a pas touché
 
 Aucune action de la plateforme n'a été déclenchée pendant les tests (pas de redémarrage, de suppression, de clôture ni
