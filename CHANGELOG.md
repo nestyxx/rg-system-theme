@@ -1,5 +1,20 @@
 # Journal des modifications
 
+## 1.4.0 — 2026-10-17
+
+Passe de revue complète : les 51 pages capturées ont été reprises une à une, en clair puis en sombre (1440 px). Défauts relevés et corrigés :
+
+- **Menu latéral** : la hauteur de l'en-tête du logo est posée par le CSS seul. Avant l'injection du logo par le script, le logo d'origine (100 px) décalait toute la navigation de ~45 px.
+- **Étiquettes d'état sans variante** (« Pas installé », « Désactivé ») : pastille neutre au lieu d'un aplat gris foncé de 300 px.
+- **Pastilles de statut des tickets** (retour à la normale / en alerte) : disques pleins rouge / vert (elles étaient quasi invisibles), carrés de criticité sans ombre.
+- **Listes déroulantes étroites** (version d'un paquet, fréquence et relances des règles d'escalade) : le texte n'est plus rogné.
+- **Sélecteur de période** (Backup › Activité) : champs date et heure redimensionnés (la date était coupée), icône calendrier visible.
+- **Tableaux sans ligne d'en-tête dédiée** (Données › Services) : même en-tête que les autres (petites capitales grises).
+- **Légendes de courbes** (min / moyenne / max) : valeur et unité sur une ligne.
+- **Règle d'escalade des tickets** : boutons Samedi / Dimanche lisibles (sur deux lignes si la colonne est étroite).
+- **Icônes sombres en mode sombre** : Devices SNMP, Assist et Backup Microsoft 365 (tableau des types de plateforme) passent aux traits du thème.
+- **Rapports › Personnalisation** : la grille de cartes d'origine (1130 px fixes) suit désormais la largeur disponible au lieu de déborder.
+
 ## 1.3.0 — 2026-10-17
 
 Gabarits de page (`95-pages.css`).

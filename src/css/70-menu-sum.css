@@ -571,6 +571,9 @@ html[data-rgx] .img-sum-device + a {
 html[data-rgx] .img-sum-server,
 html[data-rgx] .img-sum-workstation,
 html[data-rgx] .img-sum-device,
+html[data-rgx] .img-sum-device-v2,
+html[data-rgx] .img-sum-light,
+html[data-rgx] .img-sum-vbo,
 html[data-rgx] .rg-image-windows,
 html[data-rgx] .rg-image-mac,
 html[data-rgx] .rg-image-linux,
@@ -589,6 +592,18 @@ html[data-rgx] .img-sum-workstation {
 html[data-rgx] .img-sum-device {
   -webkit-mask-image: var(--rgx-ic-network);
   mask-image: var(--rgx-ic-network);
+}
+html[data-rgx] .img-sum-device-v2 {
+  -webkit-mask-image: var(--rgx-ic-wifi);
+  mask-image: var(--rgx-ic-wifi);
+}
+html[data-rgx] .img-sum-light {
+  -webkit-mask-image: var(--rgx-ic-headset);
+  mask-image: var(--rgx-ic-headset);
+}
+html[data-rgx] .img-sum-vbo {
+  -webkit-mask-image: var(--rgx-ic-cloud);
+  mask-image: var(--rgx-ic-cloud);
 }
 html[data-rgx] .rg-image-windows {
   -webkit-mask: var(--rgx-ic-windows) center/70% 70% no-repeat;

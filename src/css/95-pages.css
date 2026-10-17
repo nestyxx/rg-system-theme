@@ -156,3 +156,167 @@ html[data-rgx] #root table[class*="Table__Layout-sc"] thead th {
   vertical-align: middle;
   white-space: nowrap;
 }
+
+/* ===================================================================
+   20. Passe de revue v1.4 — défauts relevés page par page
+   =================================================================== */
+
+/* Logo : la hauteur de l'en-tête est posée par le CSS seul (le logo image d'origine fait 100 px, ce qui décalait
+   le menu tant que content.js n'avait pas injecté le logo de remplacement) */
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #head-menu #brand-logo-menu,
+html[data-rgx] .left-menu-shrink #brand-logo-menu {
+  height: 56px !important;
+}
+
+/* --- Étiquettes d'état sans variante (« Pas installé », « Désactivé ») : pastille neutre au lieu d'un aplat gris foncé --- */
+html[data-rgx] .label-rg:not(.label-success):not(.label-important):not(.label-danger):not(.label-warning):not(.label-info):not(.label-primary):not(.label-unknown) {
+  background: var(--rgx-surface-2);
+  color: var(--rgx-muted) !important;
+  box-shadow: inset 0 0 0 1px var(--rgx-border);
+  font-weight: 500;
+  font-size: 12px;
+}
+html[data-rgx] .label-rg {
+  font-size: 12px;
+  font-weight: 500;
+}
+html[data-rgx] .label-rg.label-block {
+  border-radius: 999px;
+}
+
+/* --- Pastilles d'état des tickets (retour à la normale / en alerte) : disque plein, lisible --- */
+html[data-rgx] .icon-recovered,
+html[data-rgx] .icon-recovered-mini {
+  border-radius: 50%;
+  box-shadow: none;
+}
+html[data-rgx] .icon-recovered {
+  width: 16px;
+  height: 16px;
+  margin: 7px;
+}
+html[data-rgx] .icon-recovered-mini {
+  width: 10px;
+  height: 10px;
+}
+html[data-rgx] .icon-recovered.label-important,
+html[data-rgx] .icon-recovered-mini.label-important,
+html[data-rgx] .icon-recovered.label-danger { background: var(--rgx-crit); }
+html[data-rgx] .icon-recovered.label-success,
+html[data-rgx] .icon-recovered-mini.label-success { background: var(--rgx-ok); }
+html[data-rgx] .icon-recovered.label-warning,
+html[data-rgx] .icon-recovered-mini.label-warning { background: var(--rgx-warn); }
+html[data-rgx] .icon-criticality {
+  border-radius: 5px;
+  box-shadow: none;
+}
+
+/* --- Listes déroulantes étroites (version d'un paquet, fréquence, relances) : le texte n'est plus rogné --- */
+html[data-rgx] select.form-control {
+  padding-left: 8px;
+  padding-right: 2px;
+}
+
+/* --- Groupes de champs (période, horaires) : Bootstrap veut des cellules de tableau, le socle les passait en bloc --- */
+html[data-rgx] .input-group .form-control {
+  display: table-cell;
+}
+html[data-rgx] .input-group .form-control:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+html[data-rgx] .input-group .form-control:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+html[data-rgx] .input-group-addon:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+html[data-rgx] .input-group-addon:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* --- Tableaux dont la ligne d'en-tête est dans le tbody (Services…) : même en-tête que les autres --- */
+html[data-rgx] .table:not(.sum) > tbody > tr:first-child:not(:has(> td)) > th {
+  color: var(--rgx-muted) !important;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--rgx-bg);
+  border-bottom: 1px solid var(--rgx-border);
+}
+
+/* --- Légende des courbes (min / moyenne / max) : valeurs et unités sur une ligne --- */
+html[data-rgx] .graph-stats table {
+  margin: 0;
+  font-size: 11.5px;
+}
+html[data-rgx] .graph-stats th,
+html[data-rgx] .graph-stats td {
+  padding: 4px 3px;
+  white-space: nowrap;
+}
+html[data-rgx] .chart-container .row > .col-md-3:has(> .graph-stats) {
+  padding-left: 4px;
+  padding-right: 0;
+}
+
+/* --- Règle d'escalade des tickets (Configuration › Communication) : week-end sur deux lignes si la colonne est étroite --- */
+html[data-rgx] .btn-group:has(> .raiserule-weekend) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+}
+html[data-rgx] .btn-group > .raiserule-weekend {
+  float: none;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: var(--radius-md) !important;
+}
+
+/* --- Sélecteur de période (date + heure + date + heure) : les champs date reçoivent plus de place que les champs heure --- */
+html[data-rgx] .input-group:has(> .glyphicon-calendar) > input.form-control {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+html[data-rgx] .input-group:has(> .glyphicon-calendar) > input.form-control:nth-of-type(odd) {
+  width: 92px;
+}
+html[data-rgx] .input-group:has(> .glyphicon-calendar) > input.form-control:nth-of-type(even) {
+  width: 44px;
+}
+
+/* Glyphicon posée directement sur un addon (icône calendrier) : l'addon garde sa taille, l'icône est centrée dedans */
+html[data-rgx] .glyphicon.input-group-addon {
+  width: auto;
+  height: auto;
+  top: 0;
+  vertical-align: middle;
+}
+html[data-rgx] .glyphicon.input-group-addon::before {
+  width: 16px;
+  height: 16px;
+}
+
+/* --- Rapports › Personnalisation (page d'accueil du module) : la grille de cartes d'origine mesure ~1130 px quel que soit l'écran
+   et débordait de la zone de contenu ; elle suit désormais la largeur disponible --- */
+html[data-rgx] .body:has(> [class*="Content-sc-"] > .media-card) {
+  grid-template-columns: minmax(0, 1fr);
+  padding-left: 32px;
+  padding-right: 32px;
+}
+html[data-rgx] [class*="Content-sc-"]:has(> .media-card) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+}
+html[data-rgx] .media-card {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 220px);
+}
+html[data-rgx] .media-card img[class*="Media-sc-"] {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
