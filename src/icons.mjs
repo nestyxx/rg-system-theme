@@ -44,6 +44,24 @@ export const ICONS = {
   circleCheck: '<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
   triangleAlert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/>',
   circleAlert: '<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',
+  heartPulse: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>',
+  hardDrive: '<path d="M22 12H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><path d="M6 16h.01M10 16h.01"/>',
+  arrowDownUp: '<path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="m21 8-4-4-4 4"/><path d="M17 4v16"/>',
+  memoryStick: '<path d="M6 19v-3M10 19v-3M14 19v-3M18 19v-3M8 11V9M16 11V9M12 11V9M2 15h20"/><path d="M2 7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1.1a2 2 0 0 0 0 3.837V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-5.1a2 2 0 0 0 0-3.837Z"/>',
+  cpu: '<rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>',
+  bug: '<path d="m8 2 1.88 1.88M14.12 3.88 16 2"/><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/><path d="M12 20v-9M6.53 9C4.6 8.8 3 7.1 3 5M6 13H2M3 21c0-2.1 1.7-3.9 3.8-4M20.97 5c0 2.1-1.6 3.8-3.5 4M22 13h-4M17.2 17c2.1.1 3.8 1.9 3.8 4"/>',
+  wifi: '<path d="M12 20h.01M2 8.82a15 15 0 0 1 20 0M5 12.859a10 10 0 0 1 14 0M8.5 16.429a5 5 0 0 1 7 0"/>',
+  bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+  archive: '<rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8M10 12h4"/>',
+  activity: '<path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/>',
+  ticket: '<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 17v2M13 11v2"/>',
+  mail: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+  copy: '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+  server: '<rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><path d="M6 6h.01M6 18h.01"/>',
+  terminal: '<path d="m4 17 6-6-6-6"/><path d="M12 19h8"/>',
+  clipboardList: '<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"/>',
+  folder: '<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',
+  monitor: '<rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/>',
   moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
 };
@@ -62,6 +80,14 @@ export const MENU = {
   'menu-security': 'shield',
   'menu-management': 'users',
   'menu-downloads': 'download',
+};
+
+// Icônes des plugins (sprites « sprite-plugin-* » de RG) -> icônes du thème.
+export const PLUGINS = {
+  heartbeat: 'heartPulse', disk: 'hardDrive', 'disk-io': 'arrowDownUp', memory: 'memoryStick', processor: 'cpu',
+  antivirus: 'bug', network: 'wifi', event: 'bell', service: 'settings', backup: 'archive', process: 'activity',
+  userticket: 'ticket', 'net-action': 'network', exchange: 'mail', replica: 'copy', hardware: 'server',
+  script: 'terminal', inventory: 'clipboardList',
 };
 
 // Glyphicons Bootstrap 3 (police d'icônes d'origine) -> icônes du thème.
@@ -119,10 +145,17 @@ export function buildIconsCss() {
 
   // Menu latéral : on garde l'encombrement du sprite RG (svg.icon-menu 22×22) mais on masque son
   // dessin (<use>) et on peint l'icône du thème avec background + mask sur le <svg> lui-même.
-  out.push('html[data-rgx] #menu-details li.menu-lvl-0 > a svg.icon-menu use{visibility:hidden}');
-  out.push('html[data-rgx] #menu-details li.menu-lvl-0 > a svg.icon-menu{background-color:currentColor;opacity:.9}');
+  out.push('html[data-rgx] #menu-details li.menu-lvl-0 svg.icon-menu use{visibility:hidden}');
+  out.push('html[data-rgx] #menu-details li.menu-lvl-0 svg.icon-menu{background-color:currentColor;opacity:.9}');
   for (const [id, name] of Object.entries(MENU)) {
-    out.push(`html[data-rgx] #menu-details li#${id} > a svg.icon-menu{${mask(name).replaceAll('center/contain', 'center/18px 18px')}}`);
+    out.push(`html[data-rgx] #menu-details li#${id} svg.icon-menu{${mask(name).replaceAll('center/contain', 'center/18px 18px')}}`);
+  }
+
+  // Plugins (en-têtes des tableaux de synthèse, listes de plugins…) : le dessin d'origine est masqué, l'icône du thème peinte à la place
+  out.push('html[data-rgx] svg:has(> use[href*="#sprite-plugin-"]){background-color:currentColor}');
+  out.push('html[data-rgx] svg:has(> use[href*="#sprite-plugin-"]) use{visibility:hidden}');
+  for (const [id, name] of Object.entries(PLUGINS)) {
+    out.push(`html[data-rgx] svg:has(> use[href$="#sprite-plugin-${id}"]){${mask(name)}}`);
   }
 
   // Glyphicons

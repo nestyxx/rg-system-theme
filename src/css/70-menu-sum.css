@@ -1,0 +1,125 @@
+/* ===================================================================
+   12. Retouches après essai sur le site réel : menu, arborescence, tableaux de synthèse
+   =================================================================== */
+
+/* --- Menu : RG marque l'entrée courante (li.current) d'un liseré blanc de 2 px et d'un fond translucide en !important.
+   On les retire : l'entrée courante est portée par la pastille de marque (premier niveau) ou le fond doux (sous-menu). --- */
+html[data-rgx] #menu-details li.current,
+html[data-rgx] #menu-details a.current,
+html[data-rgx] #menu-details a.current:hover {
+  border-left: 0 !important;
+}
+html[data-rgx] #menu-details li.current {
+  background: transparent !important;
+}
+/* Entrée « Rechercher » : rendue par React, sans lien <a> ; elle reçoit la même pastille que les autres */
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li#search-menu {
+  width: auto;
+  margin: 1px 10px;
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li#search-menu svg.icon-menu {
+  margin-left: 0;
+}
+html[data-rgx] #menu-details li#search-menu {
+  color: var(--rgx-side-text);
+  font-weight: 500;
+  font-size: 13.5px;
+}
+html[data-rgx] #menu-details li#search-menu:hover {
+  background-color: var(--rgx-side-hover) !important;
+  color: #fff;
+}
+/* Sous-menus (menu étendu) : plus de cadre, libellés alignés sur ceux du premier niveau */
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details ul.ul-lvl-1 {
+  background-color: transparent !important;
+  border: 0;
+  margin: 0 10px 6px;
+  padding: 0;
+}
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-1 > a {
+  padding: 0 10px 0 38px;
+  margin: 1px 0;
+  line-height: 30px;
+}
+html[data-rgx] #menu-details li.menu-lvl-1.current > a {
+  font-weight: 500;
+}
+
+/* --- Arborescence : survol --- Les barres de survol / sélection du plugin jsTree « wholerow » sont positionnées en
+   JavaScript d'après la géométrie mesurée à l'initialisation ; dès que les lignes changent de hauteur (polices, thème)
+   elles se décalent. On les rend invisibles (elles gardent leur rôle de zone cliquable) : le survol et la sélection
+   sont portés par le lien lui-même, toujours aligné. */
+html[data-rgx] #tree .jstree-wholerow-span,
+html[data-rgx] #tree .jstree-wholerow-hovered,
+html[data-rgx] #tree .jstree-wholerow-clicked {
+  background: transparent !important;
+  box-shadow: none;
+}
+
+/* --- Tableaux de synthèse (Vues) --- */
+/* Dossier du nœud : contour du thème, coloré par statut (N1 ok … N5 inactif) à la place du dossier plein d'origine */
+html[data-rgx] .img-sum[class*="img-sum-node-type-"] {
+  background: var(--rgx-dot, var(--rgx-muted));
+  -webkit-mask: var(--rgx-ic-folder) center/16px 16px no-repeat;
+  mask: var(--rgx-ic-folder) center/16px 16px no-repeat;
+}
+html[data-rgx] .img-sum-node-type-N1 { --rgx-dot: var(--rgx-ok); }
+html[data-rgx] .img-sum-node-type-N2 { --rgx-dot: var(--rgx-crit); }
+html[data-rgx] .img-sum-node-type-N3 { --rgx-dot: #e08a1e; }
+html[data-rgx] .img-sum-node-type-N4 { --rgx-dot: var(--rgx-info); }
+html[data-rgx] .img-sum-node-type-N5 { --rgx-dot: var(--rgx-muted); }
+/* Pastille connecté / hors ligne : disque plein de 8 px (le style « étiquette » d'origine donnait un rond délavé) */
+html[data-rgx] .icon-agent-onoffline {
+  width: 8px;
+  height: 8px;
+  margin: 12px 8px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--rgx-muted);
+}
+html[data-rgx] .icon-agent-onoffline.label-success { background: var(--rgx-ok); }
+html[data-rgx] .icon-agent-onoffline.label-danger { background: var(--rgx-crit); }
+html[data-rgx] .icon-agent-onoffline.label-warning { background: var(--rgx-warn); }
+/* En-têtes de colonnes (plugins) : icônes du thème, centrées au-dessus des pastilles */
+html[data-rgx] svg.icon-color-grey-light,
+html[data-rgx] .sum-icons-plugins svg {
+  color: var(--rgx-muted);
+}
+html[data-rgx] .sum-icons-plugins svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: 8px auto;
+}
+
+/* --- Arborescence : agents (W poste, S serveur, D device, E hyperviseur) et corbeille (N6) en icônes du thème ---
+   Le CSS d'origine impose les sprites en !important ; couleur = texte secondaire, blanche sur le nœud sélectionné. */
+html[data-rgx] #tree li:is([rel="W"], [rel="S"], [rel="D"], [rel="E"], [rel="N6"]) > a > ins.jstree-icon {
+  background: currentColor !important;
+  filter: none !important;
+  color: var(--rgx-muted);
+  -webkit-mask: var(--rgx-ic-monitor) center/14px 14px no-repeat;
+  mask: var(--rgx-ic-monitor) center/14px 14px no-repeat;
+}
+html[data-rgx] #tree li[rel="S"] > a > ins.jstree-icon,
+html[data-rgx] #tree li[rel="E"] > a > ins.jstree-icon {
+  -webkit-mask-image: var(--rgx-ic-server);
+  mask-image: var(--rgx-ic-server);
+}
+html[data-rgx] #tree li[rel="D"] > a > ins.jstree-icon {
+  -webkit-mask-image: var(--rgx-ic-network);
+  mask-image: var(--rgx-ic-network);
+}
+html[data-rgx] #tree li[rel="N6"] > a > ins.jstree-icon {
+  -webkit-mask-image: var(--rgx-ic-trash);
+  mask-image: var(--rgx-ic-trash);
+}
+html[data-rgx] #tree li[rel] > a.jstree-clicked > ins.jstree-icon {
+  color: var(--rgx-brand-ink);
+}
+html[data-rgx] #tree li:is([rel="W"], [rel="S"], [rel="D"], [rel="E"]) > a {
+  font-weight: 500;
+}

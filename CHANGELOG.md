@@ -1,5 +1,13 @@
 # Journal des modifications
 
+## 1.0.1 — 2026-10-17
+
+Retouches après essai sur le site réel (Vues › Serveurs).
+
+- **Menu** : le liseré blanc et le fond translucide posés par RG sur l'entrée courante sont retirés ; sous-menus sans cadre, libellés alignés ; l'entrée « Rechercher » (rendue sans lien par React) reçoit la même icône et la même pastille que les autres.
+- **Tableaux de synthèse** : icônes des plugins (en-têtes de colonnes, listes Plugins / Alertes) redessinées en trait fin ; dossier du nœud en contour coloré par statut ; pastille connecté / hors ligne pleine.
+- **Arborescence** : icônes des agents (poste, serveur, device) et de la corbeille redessinées ; survol et sélection portés par le lien (les barres positionnées en JavaScript par jsTree, décalées dès que la hauteur des lignes change, sont rendues invisibles).
+
 ## 1.0.0 — 2026-10-17
 
 Première version stable.
