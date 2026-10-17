@@ -118,3 +118,34 @@ html[data-rgx] .MuiSkeleton-circle {
     animation: none;
   }
 }
+
+/* --- Actualisation auto des tickets : état actif visible (bouton teinté, icône qui tourne, compte à rebours) --- */
+@keyframes rgx-spin {
+  to { transform: rotate(360deg); }
+}
+html[data-rgx] .refresh-widget[data-rgx-ar] {
+  border-color: var(--rgx-brand);
+  background: var(--rgx-brand-soft);
+  color: var(--rgx-brand);
+}
+html[data-rgx] .refresh-widget[data-rgx-ar]::after {
+  content: attr(data-rgx-ar);
+  display: inline-block;
+  min-width: 34px;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--rgx-brand);
+  color: var(--rgx-brand-ink);
+  font: 600 11px/1.6 var(--font-sans);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+html[data-rgx] .refresh-widget[data-rgx-ar] .glyphicon-refresh::before {
+  animation: rgx-spin 2.4s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-rgx] .refresh-widget[data-rgx-ar] .glyphicon-refresh::before {
+    animation: none;
+  }
+}

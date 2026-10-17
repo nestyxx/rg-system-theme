@@ -250,7 +250,7 @@
     ['mousemove', 'keydown', 'mousedown', 'wheel', 'touchstart'].forEach((t) => document.addEventListener(t, () => { lastInput = Date.now(); }, { passive: true, capture: true }));
     document.addEventListener('click', (e) => {
       const b = e.target && e.target.closest ? e.target.closest(AR.sel) : null;
-      if (b && e.isTrusted) ss.set(!ss.get());   // le clic de l'utilisateur bascule l'état voulu
+      if (b && e.isTrusted) { ss.set(!ss.get()); lastRun = Date.now(); }   // le clic de l'utilisateur bascule l'état voulu (et relance le décompte)
     }, true);
     let lastRun = Date.now();
     // Actualisation « douce » : un clic sur l'entrée « Tickets » du menu refait le rendu de la page des tickets
@@ -279,6 +279,21 @@
     }
     setInterval(arTick, 4000);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) arTick(); });
+
+    // Retour visuel : tant que l'actualisation auto est active, le bouton est teinté, son icône tourne et un compte
+    // à rebours (« 42 s ») indique la prochaine actualisation (« … » si elle attend que vous ayez fini d'agir).
+    function arPaint() {
+      const btn = document.querySelector(AR.sel);
+      if (!btn) return;
+      const on = arEnabled() && onTicketRoute() && ss.get() && btn.classList.contains('active');
+      if (!on) { if (btn.hasAttribute('data-rgx-ar')) { btn.removeAttribute('data-rgx-ar'); btn.removeAttribute('data-rgx-ar-title'); } return; }
+      const freq = Math.max(15, parseInt(btn.getAttribute('data-frequency'), 10) || 60) * 1000;
+      const left = Math.ceil((lastRun + freq - Date.now()) / 1000);
+      btn.setAttribute('data-rgx-ar', left > 0 ? left + ' s' : '…');
+      if (!btn.hasAttribute('data-rgx-ar-title')) btn.setAttribute('data-rgx-ar-title', '');
+      btn.setAttribute('title', 'Actualisation automatique active : ' + (left > 0 ? 'prochaine dans ' + left + ' s' : 'en attente de votre prochaine pause') + '. Cliquer pour la désactiver.');
+    }
+    setInterval(arPaint, 1000);
 
     // ------------------------------------------------------------------------------------------------
     // Réglages en direct depuis le panneau de l'extension (événement DOM « rgx-set » émis par popup.js).

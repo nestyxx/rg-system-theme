@@ -1,5 +1,10 @@
 # Journal des modifications
 
+## 1.7.1 — 2026-10-17
+
+- **Actualisation auto des tickets : état visible.** Tant qu'elle est active, le bouton est teinté, son icône tourne et un compte à rebours (« 42 s ») indique la prochaine actualisation (« … » si elle attend que vous ayez fini d'agir) ; l'infobulle le précise. Le décompte repart de zéro à chaque activation.
+- **Documenté** : le rechargement complet de la page toutes les 2 à 3 minutes n'est pas dû à l'extension (mesuré sans elle : redirection vers `login.microsoftonline.com`) ; il est décrit dans `docs/PROPOSITION-RG.md` et dans les limites connues du README.
+
 ## 1.7.0 — 2026-10-17
 
 Revue complète de la plateforme et finalisation du dépôt.
