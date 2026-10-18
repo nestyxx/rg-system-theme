@@ -488,56 +488,19 @@ html[data-rgx] #tree .jstree-wholerow a.jstree-clicked:hover {
   box-shadow: none !important;
 }
 
-/* --- Page de connexion, comme celle de Webgest : visuel de RG en fond (flouté, voile sombre), carte translucide, bouton « image nette » --- */
-html[data-rgx] .form-public-page { isolation: isolate; background: transparent; }
-html[data-rgx] .form-public-page .block-img {
-  display: block !important;
-  position: fixed;
-  inset: -24px;
-  z-index: -2;
-  width: auto;
-  padding: 0;
-  overflow: hidden;
-  float: none;
-  background: #0f172a;
+/* --- Page de connexion (style Arobase) : fond abstrait aux couleurs du thème (plus de visuel promotionnel de RG), carte plate au centre --- */
+html[data-rgx] .form-public-page {
+  background:
+    radial-gradient(58% 52% at 14% 18%, color-mix(in srgb, var(--rgx-brand) 20%, transparent), transparent 70%),
+    radial-gradient(48% 46% at 88% 82%, color-mix(in srgb, #7c3aed 14%, transparent), transparent 70%),
+    radial-gradient(40% 40% at 84% 14%, color-mix(in srgb, #059669 11%, transparent), transparent 70%),
+    var(--rgx-wash);
 }
-html[data-rgx] .form-public-page .block-img > div { height: 100%; }
-html[data-rgx] .form-public-page .block-img img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(20px);
-  transition: filter 0.3s;
+html[data-rgx][data-rgx-theme="dark"] .form-public-page {
+  background:
+    radial-gradient(58% 52% at 14% 18%, color-mix(in srgb, var(--rgx-brand) 24%, transparent), transparent 70%),
+    radial-gradient(48% 46% at 88% 82%, color-mix(in srgb, #7c3aed 22%, transparent), transparent 70%),
+    radial-gradient(40% 40% at 84% 14%, color-mix(in srgb, #059669 16%, transparent), transparent 70%),
+    var(--rgx-bg);
 }
-html[data-rgx][data-rgx-sharp] .form-public-page .block-img img { filter: none; }
-html[data-rgx] .form-public-page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: rgb(0 0 0 / 0.35);
-}
-html[data-rgx][data-rgx-theme="dark"] .form-public-page::before { background: rgb(0 0 0 / 0.55); }
-html[data-rgx] .form-public-page .block-form {
-  background: color-mix(in srgb, var(--rgx-surface) 95%, transparent);
-  backdrop-filter: blur(4px);
-}
-html[data-rgx] #rgx-login-blur {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 5;
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 0;
-  border-radius: var(--radius-md);
-  background: rgb(255 255 255 / 0.9);
-  color: #16233f;
-  cursor: pointer;
-}
-html[data-rgx] #rgx-login-blur:hover { background: #fff; }
-html[data-rgx] #rgx-login-blur .rgx-i { width: 18px; height: 18px; }
+html[data-rgx] .form-public-page .block-form { box-shadow: none; }

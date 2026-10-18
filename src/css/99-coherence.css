@@ -166,3 +166,7 @@ html[data-rgx] #tree li > a.jstree-clicked:hover {
 
 /* Page de connexion : min-height 100vh + marges intérieures provoquaient un défilement de 48 px */
 html[data-rgx] .form-public-page { box-sizing: border-box; }
+/* Le conteneur est une grille centrée : les pseudo-éléments « clearfix » de Bootstrap (::before / ::after, display: table) en sont des
+   éléments fantômes ; il n'en restait qu'un quand le voile de fond remplaçait l'autre, ce qui décalait la carte vers le haut. */
+html[data-rgx] .form-public-page::before,
+html[data-rgx] .form-public-page::after { content: none; display: none; }

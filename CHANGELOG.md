@@ -1,5 +1,10 @@
 # Journal des modifications
 
+## 3.3.1 — 2026-10-18
+
+- **Page de connexion : le visuel promotionnel de RG n'est plus utilisé en fond.** Il est remplacé (style Arobase) par un fond abstrait discret aux couleurs du thème (halos turquoise, violet et vert sur gris très clair, ou sur le fond sombre). Le bouton « image nette » de la 3.3.0 disparaît avec lui.
+- **Page de connexion : carte enfin centrée dans la fenêtre.** La carte était trop haute d'environ 133 px : le conteneur est une grille centrée dont les pseudo-éléments « clearfix » de Bootstrap (`::before` / `::after`) sont des éléments fantômes ; la 3.3.0 en avait fait un élément de fond, ce qui déséquilibrait la grille. Ils sont désormais retirés. Écart mesuré : 0 px en horizontal et en vertical, sans défilement, en clair et en sombre, dans les deux styles, de 390 à 1920 px de large.
+
 ## 3.3.0 — 2026-10-18
 
 - **Arborescence — ligne suivante surlignée** : en style Arobase, la copie de l'arborescence que jsTree garde pour les barres pleine largeur (`.jstree-wholerow`) devenait visible avec le voile de sélection, et sa sélection est décalée d'une ligne quand des nœuds s'ouvrent. Elle reste maintenant toujours transparente.

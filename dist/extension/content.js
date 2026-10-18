@@ -40,7 +40,6 @@
       root.setAttribute('data-rgx-theme', effective());
       root.setAttribute('data-rgx-density', density);
       root.setAttribute('data-rgx-style', style);
-      if (get('rgx.loginSharp', '0') === '1') root.setAttribute('data-rgx-sharp', ''); else root.removeAttribute('data-rgx-sharp');
       updateToggle();
       updateStyleToggle();
     }
@@ -102,22 +101,6 @@
       b.addEventListener('click', () => setStyle(style === 'arobase' ? 'rg' : 'arobase'));
       menu.appendChild(b);
       updateStyleToggle();
-    }
-    // Page de connexion (style Arobase) : bouton « image nette / floue » du visuel de fond, comme sur Webgest. Réglage mémorisé (rgx.loginSharp).
-    function ensureLoginBlur() {
-      if (document.getElementById('rgx-login-blur') || !document.querySelector('.form-public-page .block-img img')) return;
-      const b = document.createElement('button');
-      b.id = 'rgx-login-blur';
-      b.type = 'button';
-      const paint = () => {
-        const sharp = root.hasAttribute('data-rgx-sharp');
-        b.innerHTML = '<i class="rgx-i rgx-i-' + (sharp ? 'eyeOff' : 'eye') + '"></i>';
-        b.title = sharp ? "Flouter l'image" : "Voir l'image nette";
-        b.setAttribute('aria-label', b.title);
-      };
-      b.addEventListener('click', () => { const sharp = !root.hasAttribute('data-rgx-sharp'); set('rgx.loginSharp', sharp ? '1' : '0'); if (sharp) root.setAttribute('data-rgx-sharp', ''); else root.removeAttribute('data-rgx-sharp'); paint(); });
-      document.body.appendChild(b);
-      paint();
     }
     // Logo du thème (pastille « RG » + nom) dans le bloc du logo d'origine.
     // Tant que ce balisage est absent, le CSS laisse le logo image de RG System.
@@ -255,7 +238,7 @@
     const schedule = () => {
       if (scheduled) return;
       scheduled = true;
-      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureStyleToggle(); ensureLoginBlur(); ensureBurger(); ensureLogo(); ensureLoginLogo(); ensureAvatars(); ensureLabels(); });
+      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureStyleToggle(); ensureBurger(); ensureLogo(); ensureLoginLogo(); ensureAvatars(); ensureLabels(); });
     };
     new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
     document.addEventListener('DOMContentLoaded', schedule);
