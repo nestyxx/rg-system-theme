@@ -1,5 +1,19 @@
 # Journal des modifications
 
+## 3.4.0 — 2026-10-18
+
+Passe d'uniformisation sur le site réel (retours détaillés, page par page).
+
+- **Infobulles** (nom du nœud au survol d'une synthèse, « Actualiser », « Trier »…) : elles étaient blanches avec une flèche noire (une règle des fenêtres flottantes les écrasait) ; elles sont maintenant en encre inversée, flèche assortie, partout, comme dans le Pedigree.
+- **Fenêtre d'agent** (survol d'un nom d'hôte) : trois couches imbriquées (conteneur carré avec ombre, couche de 4 px, carte de 14 px) laissaient voir un coin carré derrière le coin arrondi. Une seule enveloppe porte bord, rayon et ombre.
+- **En-têtes de tableaux** : les synthèses (Vues) n'avaient pas d'en-tête teinté et leur première ligne portait un filet haut en plus du bord du tableau (double trait). Teinte de la couleur du module, filet supprimé. Même correction pour le panneau « Informations » de Windows Update et le bandeau de statistiques de Consommation IA (cartes imbriquées, chacune avec son bord).
+- **En-têtes qui se décalent au survol** (Windows Update, Pedigree…) : l'icône « masquer la colonne » n'était affichée qu'au survol et élargissait l'en-tête. Sa place est réservée en permanence ; plus aucun décalage (mesuré).
+- **Interrupteurs On / Off** (plugins, règles, App Manager…) : vrais interrupteurs à pastille ronde, aux couleurs du thème, clair et sombre. Les interrupteurs React (Consommation IA) passent aussi à la couleur du bouton primaire.
+- **Boutons d'icônes des listes** (actualiser, densité, exporter, colonnes) : boutons carrés séparés, comme ceux des cartes.
+- **Onglets « Courant / Tous »** (Custom scripts) : la piste était grise opaque ; elle reprend le rail clair des autres onglets (le sélecteur « Switch » de RG contenait le commutateur de vues et lui donnait son fond).
+- **Tableaux et listes qui n'étaient pas stylés** : Actions › Services (carte, en-tête teinté, filets, boutons d'action alignés et lisibles), Données › Services (tableau dont l'en-tête est la première ligne), Gestion › Utilisateurs, Journal d'événements, Alertes › Communication et Configuration › Plugins (bandeau d'en-tête teinté, intitulés alignés sur les colonnes), listes zébrées (plus de bandes grises).
+- Technique : jetons `--rgx-th-bg`, `--rgx-th-ink` et `--rgx-th-line` (teinte d'en-tête dérivée de la couleur du module) lus par `99-coherence.css` avec repli sur les gris du style « RG System revisité ».
+
 ## 3.3.1 — 2026-10-18
 
 - **Page de connexion : le visuel promotionnel de RG n'est plus utilisé en fond.** Il est remplacé (style Arobase) par un fond abstrait discret aux couleurs du thème (halos turquoise, violet et vert sur gris très clair, ou sur le fond sombre). Le bouton « image nette » de la 3.3.0 disparaît avec lui.

@@ -16,6 +16,13 @@ html[data-rgx][data-rgx-theme="dark"]:has(#menu-backup-parent.current, #menu-bac
 html[data-rgx][data-rgx-theme="dark"]:has(#menu-security.current, #menu-security:has(li.current)) { --rgx-accent: #fb7185; }
 html[data-rgx][data-rgx-theme="dark"]:has(#menu-management.current, #menu-management:has(li.current), #menu-configuration.current, #menu-configuration:has(li.current)) { --rgx-accent: #c4b5fd; }
 
+/* Teinte des en-têtes (tableaux, listes en lignes, Services…) : dérivée de la couleur du module, lue par 99-coherence.css */
+html[data-rgx] {
+  --rgx-th-bg: color-mix(in srgb, var(--rgx-accent) 9%, var(--rgx-surface));
+  --rgx-th-ink: color-mix(in srgb, var(--rgx-accent) 65%, var(--rgx-ink));
+  --rgx-th-line: color-mix(in srgb, var(--rgx-accent) 28%, var(--rgx-surface));
+}
+
 /* ===================================================================
    Menu latéral : file-tree plat (h 36, texte encre à 70 %, survol / courant en voile, icône colorée par module)
    =================================================================== */
@@ -206,6 +213,7 @@ html[data-rgx] table.MuiTable-root {
   box-shadow: none;
 }
 html[data-rgx] table[class*="Table__Layout-sc"] thead th,
+html[data-rgx] table.sum > tbody > tr:first-child > th,
 html[data-rgx] table.ticket-table > tbody > tr:first-child > th,
 html[data-rgx] table.table:not(.sum, .table-stat, .table-bordered, .table-condensed) > thead > tr > th,
 html[data-rgx] table#services-states-all > thead > tr > th,
@@ -220,6 +228,12 @@ html[data-rgx] table.MuiTable-root th {
   letter-spacing: 0;
   text-transform: none;
   white-space: nowrap;
+}
+/* Synthèses (Vues) : la première ligne porte le titre du tableau ; pas de filet haut en plus du bord du tableau (double trait) */
+html[data-rgx] table.sum > tbody > tr:first-child > th {
+  border-top: 0;
+  font-size: 13px;
+  font-weight: 600 !important;
 }
 html[data-rgx] table[class*="Table__Layout-sc"] thead th *,
 html[data-rgx] table.MuiTable-root th [class*="SortedColumn__Column"] {

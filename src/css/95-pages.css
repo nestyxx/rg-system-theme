@@ -125,10 +125,9 @@ html[data-rgx] [class*="Th__Layout-sc"] > svg:hover {
   color: var(--rgx-brand);
   opacity: 1;
 }
+/* Icône « masquer la colonne » : sa place est toujours réservée (la visibilité reste gérée par RG au survol),
+   sinon l'en-tête survolé s'élargit et décale tous les suivants. */
 html[data-rgx] [class*="Th__Layout-sc"] > svg.hideColumn {
-  display: none;
-}
-html[data-rgx] th:hover [class*="Th__Layout-sc"] > svg.hideColumn {
   display: block;
 }
 

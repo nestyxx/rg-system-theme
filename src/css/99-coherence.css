@@ -53,12 +53,13 @@ html[data-rgx] [class*="CheckBox__Layout-sc"] {
 }
 
 /* --- Interrupteur RG (Switch__Layout) : piste grise #ccc d'origine --- */
-html[data-rgx] [class*="Switch__Layout-sc"]:not(.is-active, .success, .switch) {
+/* « ViewSwitch__Layout » contient aussi « Switch__Layout » : le commutateur de vues garde son propre style */
+html[data-rgx] [class*="Switch__Layout-sc"]:not(:has([class*="ViewSwitch__"]), [class*="ViewSwitch__"], .is-active, .success, .switch) {
   background-color: color-mix(in srgb, var(--rgx-muted) 45%, transparent);
 }
-html[data-rgx] [class*="Switch__Layout-sc"].is-active,
-html[data-rgx] [class*="Switch__Layout-sc"].switch,
-html[data-rgx] [class*="Switch__Layout-sc"].success { background-color: var(--rgx-ok); }
+html[data-rgx] [class*="Switch__Layout-sc"]:not(:has([class*="ViewSwitch__"])).is-active,
+html[data-rgx] [class*="Switch__Layout-sc"]:not(:has([class*="ViewSwitch__"])).switch,
+html[data-rgx] [class*="Switch__Layout-sc"]:not(:has([class*="ViewSwitch__"])).success { background-color: var(--rgx-btn, var(--rgx-brand)); }
 
 /* --- Champ MUI (Input-sc) : contour gris + halo bleu Bootstrap d'origine --- */
 html[data-rgx] .MuiInputBase-root.MuiInput-root[class*="Input-sc"] {
@@ -170,3 +171,255 @@ html[data-rgx] .form-public-page { box-sizing: border-box; }
    éléments fantômes ; il n'en restait qu'un quand le voile de fond remplaçait l'autre, ce qui décalait la carte vers le haut. */
 html[data-rgx] .form-public-page::before,
 html[data-rgx] .form-public-page::after { content: none; display: none; }
+
+/* ===================================================================
+   Finitions (retours sur le site réel) : infobulles, fenêtre d'agent, interrupteurs, barres d'icônes,
+   listes en lignes (Services, Utilisateurs, Journal). Les teintes d'en-tête viennent de --rgx-th-* (style Arobase) ;
+   à défaut, le style « RG System revisité » garde ses gris.
+   =================================================================== */
+
+/* --- Infobulles Bootstrap (nœud au survol d'une synthèse, « Actualiser », « Trier »…) : la règle des « fenêtres flottantes » les
+   passait en blanc alors que la flèche restait noire ; encre inversée partout, flèche assortie --- */
+html[data-rgx] .tooltip[role="tooltip"] > .tooltip-inner {
+  background-color: var(--rgx-ink);
+  color: var(--rgx-surface);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+html[data-rgx] .tooltip.top .tooltip-arrow,
+html[data-rgx] .tooltip.top-left .tooltip-arrow,
+html[data-rgx] .tooltip.top-right .tooltip-arrow { border-top-color: var(--rgx-ink); }
+html[data-rgx] .tooltip.bottom .tooltip-arrow,
+html[data-rgx] .tooltip.bottom-left .tooltip-arrow,
+html[data-rgx] .tooltip.bottom-right .tooltip-arrow { border-bottom-color: var(--rgx-ink); }
+html[data-rgx] .tooltip.left .tooltip-arrow { border-left-color: var(--rgx-ink); }
+html[data-rgx] .tooltip.right .tooltip-arrow { border-right-color: var(--rgx-ink); }
+
+/* --- Fenêtre d'agent : trois couches imbriquées (Popover__Layout carré + ombre, Content 4 px, carte 14 px) laissaient voir un coin
+   carré derrière le coin arrondi. Une seule enveloppe porte bord, rayon et ombre ; les couches internes n'ont plus rien. --- */
+html[data-rgx] [class*="Popover__Layout-sc"] {
+  border: 1px solid var(--rgx-border);
+  border-radius: 14px;
+  background: var(--rgx-surface);
+  box-shadow: var(--rgx-shadow-pop);
+  overflow: hidden;
+}
+html[data-rgx] [class*="Popover__Layout-sc"] > [class*="Content-sc"] {
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+html[data-rgx] [class*="Popover__Layout-sc"] .MuiCard-root {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* --- Interrupteurs On / Off (bootstrap-toggle : plugins, règles, notifications) : vrais interrupteurs, pastille ronde.
+   Le plugin ne fait que poser / retirer la classe « off » ; le texte et le curseur d'origine sont masqués. --- */
+html[data-rgx] .toggle.btn {
+  position: relative;
+  box-sizing: border-box;
+  width: 40px !important;
+  min-width: 0;
+  height: 22px !important;
+  min-height: 0;
+  padding: 0;
+  border: 0 !important;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--rgx-ink) 26%, var(--rgx-surface)) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+  vertical-align: middle;
+  transition: background-color 0.15s;
+}
+html[data-rgx] .toggle.btn:not(.off) { background: var(--rgx-btn, var(--rgx-brand)) !important; }
+html[data-rgx] .toggle.btn > .toggle-group { display: none; }
+html[data-rgx] .toggle.btn::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--rgx-surface);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.28);
+  transition: transform 0.15s;
+}
+html[data-rgx] .toggle.btn:not(.off)::after { transform: translateX(18px); }
+html[data-rgx] .toggle.btn[disabled],
+html[data-rgx] .toggle.btn.disabled { opacity: 0.5; cursor: not-allowed; }
+html[data-rgx] .toggle.btn.btn-xs { width: 32px !important; height: 18px !important; }
+html[data-rgx] .toggle.btn.btn-xs::after { top: 3px; left: 3px; width: 12px; height: 12px; }
+html[data-rgx] .toggle.btn.btn-xs:not(.off)::after { transform: translateX(14px); }
+html[data-rgx] .toggle.btn:focus-visible { outline: 2px solid var(--rgx-brand); outline-offset: 2px; }
+
+/* --- Barres d'icônes des listes (actualiser, densité, exporter, colonnes) : boutons carrés séparés, comme ceux des cartes --- */
+/* (les boutons à séparateur, comme « Exécuter un script » + flèche, restent d'un seul tenant) */
+html[data-rgx] [class*="ButtonGroup__Layout-sc"]:not(:has(> [class*="ButtonGroup__Divider"])) { display: inline-flex; align-items: center; gap: 6px; }
+html[data-rgx] [class*="ButtonGroup__Layout-sc"]:not(:has(> [class*="ButtonGroup__Divider"])) > button[class*="BaseButton-sc"]:not(.primary, .info, .success, .warning, .danger, .error) {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-md);
+  background: var(--rgx-surface);
+  color: var(--rgx-muted);
+  box-shadow: none;
+}
+html[data-rgx] [class*="ButtonGroup__Layout-sc"]:not(:has(> [class*="ButtonGroup__Divider"])) > button[class*="BaseButton-sc"]:not(.primary, .info, .success, .warning, .danger, .error):hover {
+  border-color: color-mix(in srgb, var(--rgx-ink) 35%, var(--rgx-border));
+  background: var(--rgx-wash);
+  color: var(--rgx-ink);
+}
+html[data-rgx] [class*="ButtonGroup__Layout-sc"]:not(:has(> [class*="ButtonGroup__Divider"])) > button[class*="BaseButton-sc"] > img,
+html[data-rgx] [class*="ButtonGroup__Layout-sc"]:not(:has(> [class*="ButtonGroup__Divider"])) > button[class*="BaseButton-sc"] > svg {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* --- Actions › Services : liste Bootstrap en « tableau » (carte, en-tête teinté, filets fins, plus de zébrures) --- */
+html[data-rgx] #action-services {
+  overflow: hidden;
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  background: var(--rgx-surface);
+}
+html[data-rgx] #action-services > .row {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--rgx-border);
+  background: transparent;
+}
+html[data-rgx] #action-services > .row::before,
+html[data-rgx] #action-services > .row::after { display: none; }
+html[data-rgx] #action-services > .row > [class*="col-md-"] { float: none; }
+html[data-rgx] #action-services > .row:last-child { border-bottom: 0; }
+html[data-rgx] #action-services > .row.margin-bottom-min {
+  padding: 9px 0;
+  border-bottom-color: var(--rgx-th-line, var(--rgx-border));
+  background: var(--rgx-th-bg, var(--rgx-surface-2));
+}
+html[data-rgx] #action-services > .row.margin-bottom-min .text-center { text-align: left; }
+html[data-rgx] #action-services > .row.margin-bottom-min strong {
+  color: var(--rgx-th-ink, var(--rgx-muted));
+  font-size: 12px;
+  font-weight: 500;
+}
+html[data-rgx] #action-services > .row:not(.margin-bottom-min):hover { background: var(--rgx-wash); }
+html[data-rgx] #action-services [id^="action-service-"] > .col-md-12 { display: flex; flex-direction: row-reverse; gap: 6px; float: none; width: 100%; padding: 0; }
+html[data-rgx] #action-services .service-action-btn { float: none; width: auto; padding: 0; }
+html[data-rgx] #action-services .service-action-btn:not(:has(button)) { display: none; }
+html[data-rgx] #action-services .btn-xs { padding: 3px 10px; font-size: 12px; line-height: 1.5; white-space: nowrap; }
+
+/* --- Listes en lignes-cartes (Gestion › Utilisateurs, Journal d'événements) : l'en-tête de colonnes est un bandeau teinté,
+   comme l'en-tête d'un tableau. Le bandeau est un pseudo-élément calé sur la largeur des cartes (le conteneur déborde de 15 px de
+   chaque côté) : les colonnes restent alignées sur celles des lignes. --- */
+html[data-rgx] .col-md-12.header-list,
+html[data-rgx] .col-md-12:has(> b.color-rg[class*="col-md-"]),
+html[data-rgx] .col-md-12:has(> .text-bold.color-rg[class*="col-md-"] + .text-bold.color-rg[class*="col-md-"]) {
+  position: relative;
+  isolation: isolate;
+  display: flow-root;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+html[data-rgx] .col-md-12.header-list::before,
+html[data-rgx] .col-md-12:has(> b.color-rg[class*="col-md-"])::before,
+html[data-rgx] .col-md-12:has(> .text-bold.color-rg[class*="col-md-"] + .text-bold.color-rg[class*="col-md-"])::before {
+  content: "";
+  position: absolute;
+  inset: 0 15px;
+  z-index: -1;
+  border-radius: var(--radius-md);
+  background: var(--rgx-th-bg, var(--rgx-surface-2));
+  box-shadow: inset 0 0 0 1px var(--rgx-th-line, var(--rgx-border));
+}
+
+/* --- Panneaux dépliables (Windows Update › Informations) : la carte de statistiques intérieure avait son propre bord en plus de celui
+   du panneau (double trait) ; elle devient la zone de contenu, séparée du titre par un simple filet --- */
+html[data-rgx] [class*="Expandable__Layout-sc"] [class*="Stats__Layout-sc"] {
+  border: 0;
+  border-top: 1px solid var(--rgx-border);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Configuration › Plugins : les intitulés (Hérité, Activé, Plugins) se placent au-dessus des interrupteurs (40 px) et de l'icône du plugin */
+html[data-rgx] .col-md-12.header-list > :first-child { width: 66px; padding-left: 12px; }
+html[data-rgx] .col-md-12.header-list > :nth-child(2) { width: 55px; }
+html[data-rgx] .col-md-12.header-list strong.color-rg { color: var(--rgx-th-ink, var(--rgx-muted)); font-size: 12px; font-weight: 500; }
+html[data-rgx] .row.table-object:has(> .header-list) { margin-bottom: 8px; }
+
+/* --- Données › Services : tableau Bootstrap « table-condensed table-hover » dont l'en-tête est la première ligne du tbody
+   (les règles de tableaux visaient un <thead>) : même carte et même en-tête teinté que les autres tableaux --- */
+html[data-rgx] table.table.table-condensed.table-hover {
+  overflow: hidden;
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--rgx-surface);
+}
+html[data-rgx] table.table.table-condensed.table-hover > tbody > tr:first-child > th {
+  padding: 10px 12px;
+  border-top: 0;
+  border-bottom: 1px solid var(--rgx-th-line, var(--rgx-border));
+  background: var(--rgx-th-bg, var(--rgx-surface-2));
+  color: var(--rgx-th-ink, var(--rgx-muted));
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+html[data-rgx] table.table.table-condensed.table-hover > tbody > tr > td { padding-left: 12px; padding-right: 12px; }
+
+/* --- En-têtes de listes en lignes (Alertes › Communication, etc.) : une rangée de cellules « strong.color-rg » sans champ ni bouton.
+   Même bandeau teinté que les tableaux. La rangée perd ses marges négatives de Bootstrap pour avoir la largeur des cartes
+   qui suivent ; le bandeau est son ::before. --- */
+html[data-rgx] .row:has(> [class*="col-"] > strong.color-rg:only-child):not(:has(button, input, select, textarea, .row)) {
+  position: relative;
+  isolation: isolate;
+  margin: 0 0 8px;
+  padding: 9px 0;
+}
+html[data-rgx] .row:has(> [class*="col-"] > strong.color-rg:only-child):not(:has(button, input, select, textarea, .row))::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: var(--radius-md);
+  background: var(--rgx-th-bg, var(--rgx-surface-2));
+  box-shadow: inset 0 0 0 1px var(--rgx-th-line, var(--rgx-border));
+}
+html[data-rgx] .row:has(> [class*="col-"] > strong.color-rg:only-child):not(:has(button, input, select, textarea, .row)) > [class*="col-"] > strong.color-rg {
+  color: var(--rgx-th-ink, var(--rgx-muted));
+  font-size: 12px;
+  font-weight: 500;
+}
+/* L'en-tête de Services a son propre bandeau (#action-services) : pas de second bandeau */
+html[data-rgx] #action-services > .row.margin-bottom-min::before { display: none; }
+
+/* --- Listes zébrées : plus de bandes grises (les lignes sont séparées par des filets, comme les tableaux) --- */
+html[data-rgx] .list-striped-even,
+html[data-rgx] .list-striped-odd { background-color: transparent; }
+
+/* --- Consommation IA : le conteneur de statistiques avait un bord autour de la carte déjà bordée (double trait) --- */
+html[data-rgx] [class*="Stats__Layout-sc"]:has(> [class*="Card__Layout-sc"]) {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
