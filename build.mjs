@@ -15,6 +15,11 @@ mkdirSync(path.join(here, 'dist'), { recursive: true });
 import { buildIconsCss } from './src/icons.mjs';
 writeFileSync(path.join(here, 'src', 'icons.generated.css'), buildIconsCss());
 
+// 0 bis. Style « Arobase » (v3, aligné sur Webgest) : src/css/99-webgest.css est écrit avec le préfixe html[data-rgx] ; on le
+//        restreint ici au style actif (html[data-rgx-style="arobase"]) pour que le style « RG System revisité » (v2) reste intact.
+writeFileSync(path.join(here, 'src', 'css', '99-webgest.generated.css'),
+  readFileSync(path.join(here, 'src', 'css', '99-webgest.css'), 'utf8').replaceAll('html[data-rgx]', 'html[data-rgx][data-rgx-style="arobase"]'));
+
 // 1. Tailwind -> dist/theme.css (minifié) et dist/theme.dev.css (lisible, pour le dev)
 const tw = path.join(here, 'node_modules', '@tailwindcss', 'cli', 'dist', 'index.mjs');
 const run = (out, extra = []) =>

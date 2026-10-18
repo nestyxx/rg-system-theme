@@ -9,6 +9,10 @@
 |---|---|
 | ![Thème sombre](docs/img/rg-dark.png) | ![Interface d'origine](docs/img/rg-original.png) |
 
+**Deux styles au choix**, chacun en clair et en sombre : **Arobase** (par défaut, aligné sur Webgest, ci-dessus) et **RG System revisité** (le style des versions 2.x : barre latérale marine, ombres douces, bouton primaire turquoise). Le bouton en bas du menu de gauche (ou le panneau de l'extension) permet de basculer ; le choix est mémorisé.
+
+![Style RG System revisité](docs/img/rg-style-rg.png)
+
 *Captures de données fictives (nœuds « CLIENT 01… »). Le projet est un **prototype non officiel** : il n'est ni affilié à l'éditeur de RG System ni approuvé par lui.*
 
 ## Ce que ça change

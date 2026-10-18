@@ -461,3 +461,17 @@ html[data-rgx] [class*="ViewSwitch__Layout-sc"] [class*="Item__Layout-sc"].selec
   box-shadow: 0 1px 2px rgba(22, 35, 63, 0.08);
 }
 html[data-rgx][data-rgx-theme="dark"] [class*="ViewSwitch__Layout-sc"] [class*="Item__Layout-sc"].selected { background: var(--rgx-border); box-shadow: none; }
+
+/* --- En-têtes de listes en lignes-cartes (Utilisateurs, Journal d'événements) : même teinte et même graisse que les tableaux --- */
+html[data-rgx] b.color-rg[class*="col-md-"] > .MuiBox-root,
+html[data-rgx] .col-md-12 > .text-bold.color-rg[class*="col-md-"]:has(+ .text-bold.color-rg[class*="col-md-"]),
+html[data-rgx] .col-md-12 > .text-bold.color-rg[class*="col-md-"] + .text-bold.color-rg[class*="col-md-"] {
+  color: color-mix(in srgb, var(--rgx-accent) 65%, var(--rgx-ink)) !important;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+/* Étiquettes point + texte : plus de filet intérieur (il se voyait comme un soulignement) */
+html[data-rgx] .label:not(.label-block):not([class*="icon-"]):not(.label-rg-mini),
+html[data-rgx] .label-rg { box-shadow: none; }

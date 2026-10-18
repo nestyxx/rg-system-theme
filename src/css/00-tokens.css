@@ -20,6 +20,7 @@ html[data-rgx] {
   --rgx-side-text: #596275;        /* encre à 70 % sur le fond du menu */
   --rgx-side-hover: rgba(0, 0, 0, 0.04);
   --rgx-side-active: #eaeae8;      /* noir à 5 % sur le fond du menu */
+  --rgx-side-strong: #16233f;      /* texte du menu au survol */
   --rgx-ok: #2a7453;
   --rgx-ok-bg: #eaf5ef;
   --rgx-warn: #a65606;
@@ -32,6 +33,9 @@ html[data-rgx] {
   --rgx-shadow: none;
   --rgx-shadow-pop: 0 0 0 1px #e1dfda;   /* « ombre » plate : un filet de 1 px */
   --rgx-accent: var(--rgx-brand);        /* couleur du module courant (menu, en-têtes de tableau, titre) : voir 99-webgest.css */
+  --rgx-btn: var(--rgx-ink);             /* bouton primaire : encre pleine (style Arobase) */
+  --rgx-btn-ink: var(--rgx-surface);
+  --rgx-btn-hover: color-mix(in srgb, var(--rgx-ink) 85%, var(--rgx-surface));
   color-scheme: light;
 
   /* Palette d'origine de RG System (variables de :root) : les teintes utilisées comme COULEUR DE TEXTE ou d'accent
@@ -62,6 +66,7 @@ html[data-rgx][data-rgx-theme="dark"] {
   --rgx-side-text: #a9b0bd;
   --rgx-side-hover: rgba(255, 255, 255, 0.07);
   --rgx-side-active: #282d35;
+  --rgx-side-strong: #e6eaf2;
   --rgx-ok: #6fd3a5;
   --rgx-ok-bg: #12261d;
   --rgx-warn: #fcd34d;
@@ -74,4 +79,76 @@ html[data-rgx][data-rgx-theme="dark"] {
   --rgx-shadow: none;
   --rgx-shadow-pop: 0 0 0 1px #2d3442;
   color-scheme: dark;
+}
+
+/* ===================================================================
+   Style « RG System revisité » (v2.x) : barre latérale marine, page grise, ombres douces, bouton primaire turquoise.
+   Activé par html[data-rgx-style="rg"] (bouton en bas du menu ou panneau de l'extension). Le style par défaut est « Arobase »
+   (v3, aligné sur Webgest), défini plus haut.
+   =================================================================== */
+html[data-rgx][data-rgx-style="rg"] {
+  --rgx-bg: #f6f6f4;
+  --rgx-surface: #ffffff;
+  --rgx-surface-2: #edece8;
+  --rgx-wash: #f3f2ee;
+  --rgx-border: #e1dfda;
+  --rgx-line: #e1dfda;
+  --rgx-ink: #16233f;
+  --rgx-muted: #666d7a;
+  --rgx-brand: #0b6e8f;
+  --rgx-brand-hover: #095a75;
+  --rgx-brand-soft: #c9eef8;
+  --rgx-brand-50: #e4f4f9;
+  --rgx-brand-ink: #ffffff;
+  --rgx-side: #16233f;
+  --rgx-side-text: #c8d0e0;
+  --rgx-side-hover: rgba(255, 255, 255, 0.08);
+  --rgx-side-active: #0b6e8f;
+  --rgx-side-strong: #ffffff;
+  --rgx-ok: #2a7453;
+  --rgx-ok-bg: #eaf5ef;
+  --rgx-warn: #a65606;
+  --rgx-warn-bg: #fdf3e1;
+  --rgx-crit: #c8153f;
+  --rgx-crit-bg: #fdecef;
+  --rgx-info: #0b6e8f;
+  --rgx-info-bg: #e4f4f9;
+  --rgx-row-hover: #f3f2ee;
+  --rgx-shadow: 0 1px 2px rgba(22, 35, 63, 0.06), 0 1px 1px rgba(22, 35, 63, 0.04);
+  --rgx-shadow-pop: 0 10px 30px rgba(22, 35, 63, 0.18);
+  --rgx-accent: var(--rgx-brand);
+  --rgx-btn: var(--rgx-brand);
+  --rgx-btn-ink: var(--rgx-brand-ink);
+  --rgx-btn-hover: var(--rgx-brand-hover);
+}
+html[data-rgx][data-rgx-style="rg"][data-rgx-theme="dark"] {
+  --rgx-bg: #0e1524;
+  --rgx-surface: #151e33;
+  --rgx-surface-2: #1c2742;
+  --rgx-wash: #1a2540;
+  --rgx-border: #26324f;
+  --rgx-line: #26324f;
+  --rgx-ink: #e8ecf5;
+  --rgx-muted: #8e9ab3;
+  --rgx-brand: #38b6d8;
+  --rgx-brand-hover: #5cc6e3;
+  --rgx-brand-soft: #123b4b;
+  --rgx-brand-50: #0f2f3b;
+  --rgx-brand-ink: #06222c;
+  --rgx-side: #0a101d;
+  --rgx-side-text: #9fabc4;
+  --rgx-side-hover: rgba(255, 255, 255, 0.07);
+  --rgx-side-active: #0b6e8f;
+  --rgx-side-strong: #ffffff;
+  --rgx-ok: #5bc79a;
+  --rgx-ok-bg: #12302a;
+  --rgx-warn: #f2a640;
+  --rgx-warn-bg: #3a2b12;
+  --rgx-crit: #fb7185;
+  --rgx-crit-bg: #3b1620;
+  --rgx-info: #38b6d8;
+  --rgx-info-bg: #0f2f3b;
+  --rgx-row-hover: #1a2540;
+  --rgx-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --rgx-shadow-pop: 0 10px 30px rgba(0, 0, 0, 0.55);
 }

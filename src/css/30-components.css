@@ -26,18 +26,18 @@ html[data-rgx] .btn-default.active {
 }
 /* branding-v3.css : .btn-primary avec !important → on surcharge avec la même force */
 html[data-rgx] .btn-primary {
-  background-color: var(--rgx-ink) !important;   /* primaire = encre pleine (comme .btn-primary de Webgest) */
-  border-color: var(--rgx-ink) !important;
-  color: var(--rgx-surface);
+  background-color: var(--rgx-btn, var(--rgx-brand)) !important;   /* primaire : encre (style Arobase) ou turquoise (style RG) */
+  border-color: var(--rgx-btn, var(--rgx-brand)) !important;
+  color: var(--rgx-btn-ink, var(--rgx-brand-ink));
 }
 html[data-rgx] .btn-primary:hover,
 html[data-rgx] .btn-primary:active,
 html[data-rgx] .btn-primary.active,
 html[data-rgx] .btn-primary:focus,
 html[data-rgx] .btn-primary:active:focus {
-  background-color: color-mix(in srgb, var(--rgx-ink) 85%, var(--rgx-surface)) !important;
-  border-color: transparent !important;
-  color: var(--rgx-surface);
+  background-color: var(--rgx-btn-hover, var(--rgx-brand-hover)) !important;
+  border-color: var(--rgx-btn-hover, var(--rgx-brand-hover)) !important;
+  color: var(--rgx-btn-ink, var(--rgx-brand-ink));
 }
 /* Barre d'actions de page : boutons secondaires sobres, seule l'action « Créer » reste pleine (encre) */
 html[data-rgx] .page-menu .btn-primary:not([id*="create"]) {

@@ -28,6 +28,10 @@
 
     let mode = get(K.theme, 'auto');
     let density = get(K.density, 'comfortable');
+    // Deux styles : « arobase » (v3, aligné sur Webgest, par défaut) et « rg » (« RG System revisité », v2.x). Le clair / sombre est indépendant.
+    const STYLES = { arobase: 'Arobase', rg: 'RG System revisité' };
+    const readStyle = () => { const v = get('rgx.style', 'arobase'); return STYLES[v] ? v : 'arobase'; };
+    let style = readStyle();
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const effective = () => (mode === 'auto' ? (mq.matches ? 'dark' : 'light') : mode);
 
@@ -35,9 +39,12 @@
       root.setAttribute('data-rgx', '');
       root.setAttribute('data-rgx-theme', effective());
       root.setAttribute('data-rgx-density', density);
+      root.setAttribute('data-rgx-style', style);
       updateToggle();
+      updateStyleToggle();
     }
     function setMode(m) { mode = m; set(K.theme, m); apply(); }
+    function setStyle(v) { style = STYLES[v] ? v : 'arobase'; set('rgx.style', style); apply(); }
     function toggleDensity() { density = density === 'compact' ? 'comfortable' : 'compact'; set(K.density, density); apply(); }
 
     mq.addEventListener('change', () => { if (mode === 'auto') apply(); });
@@ -46,8 +53,8 @@
 
     // Filet de sécurité : si la page retire nos attributs, on les remet.
     new MutationObserver(() => {
-      if (!root.hasAttribute('data-rgx') || root.getAttribute('data-rgx-theme') !== effective()) apply();
-    }).observe(root, { attributes: true, attributeFilter: ['data-rgx', 'data-rgx-theme', 'data-rgx-density'] });
+      if (!root.hasAttribute('data-rgx') || root.getAttribute('data-rgx-theme') !== effective() || root.getAttribute('data-rgx-style') !== style) apply();
+    }).observe(root, { attributes: true, attributeFilter: ['data-rgx', 'data-rgx-theme', 'data-rgx-density', 'data-rgx-style'] });
 
     document.addEventListener('keydown', (e) => {
       if (!e.altKey || !e.shiftKey || e.ctrlKey || e.metaKey) return;
@@ -74,6 +81,26 @@
       b.addEventListener('click', () => setMode(effective() === 'dark' ? 'light' : 'dark'));
       host.insertBefore(b, host.lastElementChild);   // avant l'avatar du profil
       updateToggle();
+    }
+    // Bouton « Style » en bas du menu de gauche : bascule entre « Arobase » (v3) et « RG System revisité » (v2.x).
+    function updateStyleToggle() {
+      const b = document.getElementById('rgx-style-toggle');
+      if (!b) return;
+      const other = style === 'arobase' ? 'rg' : 'arobase';
+      b.innerHTML = '<i class="rgx-i rgx-i-palette"></i><span class="rgx-style-label">' + STYLES[style] + '</span>';
+      b.title = 'Style ' + STYLES[style] + ' : passer au style ' + STYLES[other];
+      b.setAttribute('aria-label', b.title);
+    }
+    function ensureStyleToggle() {
+      if (document.getElementById('rgx-style-toggle')) return;
+      const menu = document.getElementById('block-menu-left');
+      if (!menu) return;
+      const b = document.createElement('button');
+      b.id = 'rgx-style-toggle';
+      b.type = 'button';
+      b.addEventListener('click', () => setStyle(style === 'arobase' ? 'rg' : 'arobase'));
+      menu.appendChild(b);
+      updateStyleToggle();
     }
     // Logo du thème (pastille « RG » + nom) dans le bloc du logo d'origine.
     // Tant que ce balisage est absent, le CSS laisse le logo image de RG System.
@@ -211,7 +238,7 @@
     const schedule = () => {
       if (scheduled) return;
       scheduled = true;
-      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureBurger(); ensureLogo(); ensureLoginLogo(); ensureAvatars(); ensureLabels(); });
+      requestAnimationFrame(() => { scheduled = false; ensureHeaderButtons(); ensureToggle(); ensureStyleToggle(); ensureBurger(); ensureLogo(); ensureLoginLogo(); ensureAvatars(); ensureLabels(); });
     };
     new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
     document.addEventListener('DOMContentLoaded', schedule);
@@ -499,6 +526,7 @@
       const { key, value } = (e && e.detail) || {};
       if (key === K.theme) { mode = value; apply(); }
       else if (key === K.density) { density = value; apply(); }
+      else if (key === 'rgx.style') { style = STYLES[value] ? value : 'arobase'; apply(); }
       else if (key === 'rgx.notifyTest') ntSend([{ title: 'Notification de test', message: 'Les notifications de tickets fonctionnent : vous serez prévenu des créations, relances et clôtures.', hash: ntRootNode() ? '#/node/' + ntRootNode() + '/page/ticket' : '' }]);
       else if (key === 'rgx.treeWidth' && !value) { applyTreeWidth(0); window.dispatchEvent(new Event('resize')); }
       // rgx.autoReload est relu à chaque passage de la minuterie (arEnabled)

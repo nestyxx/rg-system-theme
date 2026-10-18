@@ -96,3 +96,29 @@ html[data-rgx] [class*="HelpPanel"] * { font-family: var(--font-sans); }
 
 /* --- Valeurs de graphique (couleur de la série en style en ligne, ex. vert clair #76da76) : assombries en clair --- */
 html[data-rgx][data-rgx-theme="light"] .graph-stats tr[style*="color"] { filter: brightness(0.72); }
+
+/* --- Bouton « Style » en bas du menu de gauche (content.js) : Arobase <-> RG System revisité --- */
+html[data-rgx] #block-menu-left { grid-template-rows: 57px minmax(0, 1fr) auto; }
+html[data-rgx] #rgx-style-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: end;
+  height: 36px;
+  margin: 0 10px 12px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--rgx-side-text);
+  font: 500 13px/1 var(--font-sans);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+html[data-rgx] #rgx-style-toggle:hover { background: var(--rgx-side-hover); color: var(--rgx-side-strong); }
+html[data-rgx] #rgx-style-toggle .rgx-i { flex: none; width: 18px; height: 18px; }
+html[data-rgx] .left-menu-shrink #rgx-style-toggle { justify-content: center; width: 32px; margin: 0 4px 12px; padding: 0; }
+html[data-rgx] .left-menu-shrink #rgx-style-toggle .rgx-style-label { display: none; }

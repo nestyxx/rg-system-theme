@@ -3,6 +3,7 @@ dist/*
 !dist/extension
 .claude/
 src/icons.generated.css
+src/css/99-webgest.generated.css
 test/fixtures/
 test/forbidden.txt
 communication/

@@ -21,6 +21,7 @@ const SHOTS = [
   ['direction', '/direction.html', '1440,900', 6000],
   ['rg-light', '/fixtures/views-sum-all.html?theme=light', '1440,900', 12000],
   ['rg-dark', '/fixtures/views-sum-all.html?theme=dark', '1440,900', 12000],
+  ['rg-style-rg', '/fixtures/views-sum-all.html?theme=light&style=rg', '1440,900', 12000],
   ['rg-original', '/fixtures/views-sum-all.html?off=1', '1440,900', 12000],
   ['rg-charts-dark', '/fixtures/data-network--st24-d3-k7.html?theme=dark', '1440,900', 12000],
   ['rg-config-light', '/fixtures/configuration-alerts.html?theme=light', '1440,900', 12000],

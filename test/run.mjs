@@ -65,7 +65,10 @@ console.log('Contrastes (WCAG AA, 4,5:1)');
 const tokens = read('src', 'css', '00-tokens.css');
 const block = (re) => Object.fromEntries([...tokens.match(re)[1].matchAll(/--rgx-([\w-]+):\s*(#[0-9a-f]{6})/gi)].map((m) => [m[1], m[2]]));
 const light = block(/html\[data-rgx\]\s*\{([^}]*)\}/);
-const dark = { ...light, ...block(/data-rgx-theme="dark"\]\s*\{([^}]*)\}/) };
+const dark = { ...light, ...block(/html\[data-rgx\]\[data-rgx-theme="dark"\]\s*\{([^}]*)\}/) };
+// Style « RG System revisité » (v2) : mêmes contrôles
+const rgLight = { ...light, ...block(/html\[data-rgx\]\[data-rgx-style="rg"\]\s*\{([^}]*)\}/) };
+const rgDark = { ...rgLight, ...block(/html\[data-rgx\]\[data-rgx-style="rg"\]\[data-rgx-theme="dark"\]\s*\{([^}]*)\}/) };
 const lum = (hex) => {
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
@@ -79,13 +82,14 @@ const PAIRS = [
   ['ok', 'surface'], ['warn', 'surface'], ['crit', 'surface'],
   ['side-text', 'side'], ['muted', 'wash'], ['ink', 'wash'],
 ];
-for (const [name, t] of [['clair', light], ['sombre', dark]]) {
+for (const [name, t] of [['Arobase clair', light], ['Arobase sombre', dark], ['RG clair', rgLight], ['RG sombre', rgDark]]) {
   for (const [fg, bg] of PAIRS) {
     const r = ratio(t[fg], t[bg]);
     check(r >= 4.5, `${name} : ${fg} sur ${bg} = ${r.toFixed(2)}`);
   }
 }
-for (const [name, tk] of [['clair', light], ['sombre', dark]]) check(ratio(tk.ink, tk['side-active']) >= 4.5, `${name} : encre sur side-active = ${ratio(tk.ink, tk['side-active']).toFixed(2)}`);
+for (const [name, tk] of [['Arobase clair', light], ['Arobase sombre', dark]]) check(ratio(tk.ink, tk['side-active']) >= 4.5, `${name} : encre sur side-active = ${ratio(tk.ink, tk['side-active']).toFixed(2)}`);
+for (const [name, tk] of [['RG clair', rgLight], ['RG sombre', rgDark]]) check(ratio('#ffffff', tk['side-active']) >= 4.5, `${name} : blanc sur side-active = ${ratio('#ffffff', tk['side-active']).toFixed(2)}`);
 
 // 5. Données sensibles : contrôle générique (adresses e-mail réelles) + liste locale facultative
 console.log('Données sensibles');

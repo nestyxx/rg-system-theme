@@ -1,5 +1,12 @@
 # Journal des modifications
 
+## 3.1.0 — 2026-10-18
+
+- **Deux styles au choix** : **Arobase** (v3, aligné sur Webgest, par défaut) et **RG System revisité** (le style des versions 2.x). Un bouton « palette » en bas du menu de gauche (libellé du style courant, icône seule quand le menu est réduit) et un sélecteur « Style » dans le panneau de l'extension. Le clair / sombre reste indépendant (4 combinaisons). Le choix est mémorisé (`rgx.style`).
+  - Technique : attribut `html[data-rgx-style]` ; les jetons des deux styles sont dans `00-tokens.css` ; le module `99-webgest.css` est restreint au style Arobase au build (`99-webgest.generated.css`) ; le bouton primaire passe par les jetons `--rgx-btn*`. Les contrastes AA des quatre jeux de jetons sont testés.
+- **Alignement des tableaux React** : les libellés d'en-tête étaient décalés d'environ 12 px vers la droite par rapport au contenu des lignes (le remplissage de la cellule et celui de son conteneur interne se cumulaient). En-têtes et lignes partagent désormais la même marge, première et dernière colonnes comprises. Mesuré sur toutes les grilles du site (Pedigree, Windows Update, voisinage réseau, Assist, IA…).
+- **Étiquettes** (« Ignoré », « Désactivé »…) : plus de filet intérieur qui se voyait comme un soulignement.
+
 ## 3.0.1 — 2026-10-18
 
 Revue des écrans non encore vus avec le style Webgest, en clair et en sombre : volet du menu réduit, Jobs, Configuration (plugins, automatisation et calendrier), Messages, modales de création et de filtre des tickets.

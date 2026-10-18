@@ -15,7 +15,7 @@ async function inPage(tab, func, args = []) {
 }
 function readSettings() {
   const g = (k, d) => { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } };
-  return { enabled: g('rgx.enabled', '1') !== '0', theme: g('rgx.theme', 'auto'), density: g('rgx.density', 'comfortable'), autoReload: g('rgx.autoReload', '1') !== '0', notify: g('rgx.notify', '0') === '1', nNew: g('rgx.notify.new', '1') !== '0', nRaise: g('rgx.notify.raise', '1') !== '0', nClose: g('rgx.notify.close', '1') !== '0' };
+  return { style: g('rgx.style', 'arobase') === 'rg' ? 'rg' : 'arobase', enabled: g('rgx.enabled', '1') !== '0', theme: g('rgx.theme', 'auto'), density: g('rgx.density', 'comfortable'), autoReload: g('rgx.autoReload', '1') !== '0', notify: g('rgx.notify', '0') === '1', nNew: g('rgx.notify.new', '1') !== '0', nRaise: g('rgx.notify.raise', '1') !== '0', nClose: g('rgx.notify.close', '1') !== '0' };
 }
 function writeSetting(key, value, reload) {
   try { localStorage.setItem(key, value); } catch (e) { /* stockage indisponible */ }
@@ -42,12 +42,13 @@ function paintSeg(id, value) {
   $('autoReload').checked = s.autoReload;
   $('notify').checked = s.notify; $('notifyKinds').hidden = !s.notify;
   $('nNew').checked = s.nNew; $('nRaise').checked = s.nRaise; $('nClose').checked = s.nClose;
+  paintSeg('style', s.style);
   paintSeg('theme', s.theme);
   paintSeg('density', s.density);
 
   $('enabled').addEventListener('change', async (e) => { await inPage(tab, writeSetting, ['rgx.enabled', e.target.checked ? '1' : '0', true]); window.close(); });
   $('autoReload').addEventListener('change', (e) => inPage(tab, writeSetting, ['rgx.autoReload', e.target.checked ? '1' : '0', false]));
-  for (const [id, key] of [['theme', 'rgx.theme'], ['density', 'rgx.density']]) {
+  for (const [id, key] of [['style', 'rgx.style'], ['theme', 'rgx.theme'], ['density', 'rgx.density']]) {
     $(id).addEventListener('click', async (e) => {
       const b = e.target.closest('button'); if (!b) return;
       paintSeg(id, b.dataset.v);

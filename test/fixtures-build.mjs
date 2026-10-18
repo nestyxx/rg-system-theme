@@ -69,11 +69,12 @@ const html = `<!doctype html>
 <title>${(cap.title || 'RG System').replace(/</g, '&lt;')} — fixture ${name} (${cap.route})</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
-// Réglages de test : ?theme=dark|light|auto  ?density=compact  ?off=1 (thème désactivé)
+// Réglages de test : ?theme=dark|light|auto  ?style=arobase|rg  ?density=compact  ?off=1 (thème désactivé)
 (function () {
   var q = new URLSearchParams(location.search);
   localStorage.setItem('rgx.theme', q.get('theme') || 'light');
   localStorage.setItem('rgx.density', q.get('density') || 'comfortable');
+  localStorage.setItem('rgx.style', q.get('style') || 'arobase');
   if (q.get('off') === '1') localStorage.setItem('rgx.enabled', '0'); else localStorage.removeItem('rgx.enabled');
 })();
 </script>
