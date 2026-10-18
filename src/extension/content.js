@@ -520,6 +520,48 @@
     }
 
     // ------------------------------------------------------------------------------------------------
+    // Invitation à activer les notifications (une carte en bas à droite) : sans elle, personne ne penserait à ouvrir le panneau
+    // de l'extension. Affichée une fois la session RG chargée, tant que les notifications sont désactivées et que la question
+    // n'a pas reçu de réponse : « Activer » (envoie une notification de test), « Plus tard » (redemande dans 7 jours),
+    // « Ne plus demander ». Mémorisé dans le localStorage du site (rgx.notifyAsk = 'never' | horodatage de report).
+    // ------------------------------------------------------------------------------------------------
+    function notifyPromptDue() {
+      if (!ntHasBg || get('rgx.notify', '0') === '1' || get('rgx.notifyAsk', '') === 'never') return false;
+      const later = parseInt(get('rgx.notifyAsk', '0'), 10);
+      return !(later && Date.now() < later);
+    }
+    function showNotifyPrompt() {
+      if (document.getElementById('rgx-notify-ask')) return;
+      const box = document.createElement('div');
+      box.id = 'rgx-notify-ask';
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-label', 'Notifications de tickets');
+      box.innerHTML = '<strong>Être prévenu des tickets ?</strong>'
+        + "<p>Une notification Edge à chaque nouveau ticket, relance ou clôture, depuis n'importe quelle page de RG (gardez un onglet RG ouvert, il peut être réduit).</p>"
+        + '<div class="rgx-ask-actions"><button type="button" data-a="yes">Activer</button><button type="button" data-a="later">Plus tard</button><button type="button" data-a="never">Ne plus demander</button></div>';
+      box.addEventListener('click', (e) => {
+        const a = e.target && e.target.getAttribute ? e.target.getAttribute('data-a') : null;
+        if (!a) return;
+        if (a === 'yes') {
+          set('rgx.notify', '1'); set('rgx.notifyAsk', 'never');
+          box.innerHTML = "<strong>Notifications activées</strong><p>Une notification de test vient d'être envoyée. Les réglages (types d'événements) sont dans le panneau de l'extension, sur son icône dans la barre d'Edge.</p>";
+          document.dispatchEvent(new CustomEvent('rgx-set', { detail: { key: 'rgx.notifyTest', value: String(Date.now()) } }));
+          setTimeout(() => box.remove(), 9000);
+          return;
+        }
+        set('rgx.notifyAsk', a === 'never' ? 'never' : String(Date.now() + 7 * 24 * 3600 * 1000));
+        box.remove();
+      });
+      document.body.appendChild(box);
+    }
+    { let tries = 0; const t = setInterval(() => {
+      if (++tries > 40) { clearInterval(t); return; }
+      if (!document.body || !ntRootNode()) return;   // page de connexion ou arborescence pas encore chargée
+      clearInterval(t);
+      if (notifyPromptDue()) setTimeout(() => { if (notifyPromptDue()) showNotifyPrompt(); }, 4000);
+    }, 1500); }
+
+    // ------------------------------------------------------------------------------------------------
     // Réglages en direct depuis le panneau de l'extension (événement DOM « rgx-set » émis par popup.js).
     // ------------------------------------------------------------------------------------------------
     document.addEventListener('rgx-set', (e) => {

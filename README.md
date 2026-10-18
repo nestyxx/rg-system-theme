@@ -22,7 +22,7 @@
 - **Des gains d'usage**, tous côté navigateur :
   - arborescence **redimensionnable librement** (la largeur minimale d'origine est supprimée) ;
   - **actualisation automatique des tickets** qui fonctionne vraiment, sans recharger la plateforme ;
-  - **notifications Edge** à la création, la relance et la clôture d'un ticket, depuis n'importe quelle page de RG (option, un onglet RG doit rester ouvert) ;
+  - **notifications Edge** à la création, la relance et la clôture d'un ticket, depuis n'importe quelle page de RG (option : une carte vous le propose à la première visite, un onglet RG doit rester ouvert) ;
   - **recherche rapide `Ctrl+K`** (nœuds de l'arborescence et pages du menu) ;
   - **texte complet au survol** des libellés tronqués, infobulles sur les actions en simple icône ;
   - panneau de réglages dans l'icône de l'extension : thème, densité, actualisation, largeur de l'arbre ;

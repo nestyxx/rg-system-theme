@@ -1,5 +1,9 @@
 # Journal des modifications
 
+## 3.2.0 — 2026-10-18
+
+- **Invitation à activer les notifications de tickets** : une carte en bas à droite de RG, affichée quelques secondes après le chargement de la session (jamais sur la page de connexion) tant que les notifications sont désactivées. « Activer » les active et envoie tout de suite une notification de test ; « Plus tard » redemande dans 7 jours ; « Ne plus demander » arrête. Sans elle, personne ne pensait à ouvrir le panneau de l'extension. Le choix est mémorisé (`rgx.notifyAsk`).
+
 ## 3.1.1 — 2026-10-18
 
 - **Menu réduit : la recherche recouvrait le bouton de retour au menu complet** (impossible de cliquer dessus). Dans la 3.1.0, la grille du menu avait une première ligne de 57 px fixe pour y loger le bouton « Style » en bas ; en menu réduit l'en-tête (logo + bouton) est plus haut (88 px), donc la recherche passait par-dessus. La première ligne s'adapte maintenant à son contenu. Vérifié avec de vrais clics : le bouton bascule bien rail ↔ menu complet.
