@@ -518,3 +518,17 @@ html[data-rgx][data-rgx-theme="dark"] .form-public-page {
     var(--rgx-bg);
 }
 html[data-rgx] .form-public-page .block-form { box-shadow: none; }
+
+/* --- Menu réduit : les blocs de l'en-tête du menu (logo, bouton, recherche) font 40 px dans un menu de 39 px utiles et recouvraient
+   le filet vertical sur le haut. Le filet est redessiné par-dessus (pseudo-élément) pour rester continu sur toute la hauteur. --- */
+html[data-rgx] #block-menu-left::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--rgx-line);
+  z-index: 6;
+  pointer-events: none;
+}
