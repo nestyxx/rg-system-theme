@@ -423,3 +423,26 @@ html[data-rgx] [class*="Stats__Layout-sc"]:has(> [class*="Card__Layout-sc"]) {
   background: transparent;
   box-shadow: none;
 }
+
+/* --- Fiche agent : le premier bloc (date d'installation, type, version, IP, proxy) était une pile de lignes grises sans cadre, alors que
+   « Informations » juste dessous est une carte. Même carte (bord, rayon, fond), mêmes lignes zébrées discrètes et même retrait. --- */
+html[data-rgx] .margin-right.margin-left:has(> .row.line-height-min) {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--rgx-border);
+  border-radius: var(--radius-lg);
+  background: var(--rgx-surface);
+}
+html[data-rgx] .margin-right.margin-left > .row.line-height-min {
+  display: flex;
+  align-items: center;
+  min-height: 34px;
+  margin: 0;
+  background-color: transparent !important;
+}
+html[data-rgx] .margin-right.margin-left > .row.line-height-min:nth-child(odd) {
+  background-color: color-mix(in srgb, var(--rgx-ink) 3%, transparent) !important;
+}
+html[data-rgx] .margin-right.margin-left > .row.line-height-min::before,
+html[data-rgx] .margin-right.margin-left > .row.line-height-min::after { display: none; }
+html[data-rgx] .margin-right.margin-left > .row.line-height-min > [class*="col-"] { float: none; flex: 1 1 0; }

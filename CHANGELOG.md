@@ -1,5 +1,9 @@
 # Journal des modifications
 
+## 3.4.2 — 2026-10-18
+
+- **Fiche agent : le premier bloc** (date d'installation, type d'agent, version, IP, proxy) était une pile de lignes grises sans cadre, alors que « Informations » juste dessous est une carte. Il devient une carte identique (bord, rayon, fond) avec les mêmes lignes zébrées discrètes.
+
 ## 3.4.1 — 2026-10-18
 
 - **Menu réduit : filet vertical interrompu sur le haut.** Les blocs de l'en-tête du menu (logo, bouton, recherche) font 40 px dans un menu de 39 px utiles et recouvraient le filet de droite jusqu'à environ 90 px du haut. Le filet est redessiné par-dessus (style Arobase), continu sur toute la hauteur, en clair et en sombre.
