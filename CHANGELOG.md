@@ -1,5 +1,12 @@
 # Journal des modifications
 
+## 3.0.1 — 2026-10-18
+
+Revue des écrans non encore vus avec le style Webgest, en clair et en sombre : volet du menu réduit, Jobs, Configuration (plugins, automatisation et calendrier), Messages, modales de création et de filtre des tickets.
+
+- Le commutateur « Par politique / Par chronologie » (Jobs) reprend le rail gris et la pastille blanche des onglets (il restait plein encre en clair).
+- Rien d'autre à corriger sur ces écrans.
+
 ## 3.0.0 — 2026-10-18
 
 **Refonte du style d'après Webgest** (outil interne d'Arobase, `input.css`), pour qu'RG System et Webgest se ressemblent.

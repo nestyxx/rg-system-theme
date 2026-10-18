@@ -446,3 +446,18 @@ html[data-rgx] .form-public-page .form-control { border-radius: var(--radius-md)
 html[data-rgx] .form-public-page .form-group [class*="col-"] { float: none; width: 100%; padding: 0; }
 html[data-rgx] .form-public-page .form-group { margin-left: 0; margin-right: 0; }
 html[data-rgx] .form-public-page .btn-primary { border-radius: var(--radius-md); }
+
+/* --- Commutateur « Par politique / Par chronologie » : même rail et même pastille blanche que les onglets --- */
+html[data-rgx] [class*="ViewSwitch__Layout-sc"] {
+  background: var(--rgx-surface-2);
+  border: 0;
+  border-radius: var(--radius-lg);
+  padding: 4px;
+}
+html[data-rgx] [class*="ViewSwitch__Layout-sc"] [class*="Item__Layout-sc"] { border-radius: var(--radius-md); }
+html[data-rgx] [class*="ViewSwitch__Layout-sc"] [class*="Item__Layout-sc"].selected {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  box-shadow: 0 1px 2px rgba(22, 35, 63, 0.08);
+}
+html[data-rgx][data-rgx-theme="dark"] [class*="ViewSwitch__Layout-sc"] [class*="Item__Layout-sc"].selected { background: var(--rgx-border); box-shadow: none; }
