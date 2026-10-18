@@ -512,11 +512,11 @@ html[data-rgx] #root input:not([type])[class*="Input-sc"]:focus {
 
 /* Gestion › Utilisateurs : liste en lignes-cartes. En-tête de colonnes = même style que les autres tableaux (capitales, discret) */
 html[data-rgx] b.color-rg[class*="col-md-"] > .MuiBox-root {
-  color: var(--rgx-muted);
-  font-size: 11.5px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--rgx-accent) 65%, var(--rgx-ink));
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
 }
 /* Pictogramme du titre (react-icons, 3 em, plein) : taille et teinte des autres titres de page */
 html[data-rgx] [class*="Header__Title-sc"] > svg[class*="StyledIconBase"] {
@@ -528,11 +528,11 @@ html[data-rgx] [class*="Header__Title-sc"] > svg[class*="StyledIconBase"] {
 /* Journal d'événements et autres listes en lignes-cartes : en-tête de colonnes (cellules « text-bold color-rg » côte à côte) */
 html[data-rgx] .col-md-12 > .text-bold.color-rg[class*="col-md-"]:has(+ .text-bold.color-rg[class*="col-md-"]),
 html[data-rgx] .col-md-12 > .text-bold.color-rg[class*="col-md-"] + .text-bold.color-rg[class*="col-md-"] {
-  color: var(--rgx-muted);
-  font-size: 11.5px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--rgx-accent) 65%, var(--rgx-ink)) !important;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 /* Recherche : termes trouvés (jaune vif #ffff8c d'origine, texte clair illisible en sombre) */

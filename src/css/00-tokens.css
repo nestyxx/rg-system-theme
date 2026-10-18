@@ -2,31 +2,36 @@
    1. Variables (thème clair par défaut)
    =================================================================== */
 html[data-rgx] {
-  --rgx-bg: #f6f6f4;
-  --rgx-surface: #ffffff;
-  --rgx-surface-2: #edece8;
-  --rgx-border: #e1dfda;
+  /* Jetons alignés sur Webgest (input.css) : page blanche, aplats, bordures fines, aucune ombre. */
+  --rgx-bg: #ffffff;               /* page */
+  --rgx-surface: #ffffff;          /* cartes, champs (séparés de la page par une bordure, pas par une ombre) */
+  --rgx-surface-2: #edece8;        /* slate-100 : pastilles, rail des onglets */
+  --rgx-wash: #f6f6f4;             /* slate-50 : menu, arborescence, survol des lignes */
+  --rgx-border: #e1dfda;           /* slate-200 : champs, boutons, filet sous l'en-tête de tableau */
+  --rgx-line: #edece8;             /* slate-100 : cartes, séparateurs de lignes */
   --rgx-ink: #16233f;
   --rgx-muted: #666d7a;
   --rgx-brand: #0b6e8f;
   --rgx-brand-hover: #095a75;
-  --rgx-brand-soft: #c9eef8;
+  --rgx-brand-soft: #c9eef8;       /* brand-100 */
+  --rgx-brand-50: #e7f7fc;
   --rgx-brand-ink: #ffffff;
-  --rgx-side: #16233f;
-  --rgx-side-text: #c8d0e0;
-  --rgx-side-hover: rgba(255, 255, 255, 0.08);
-  --rgx-side-active: #0b6e8f;
+  --rgx-side: #f6f6f4;
+  --rgx-side-text: #596275;        /* encre à 70 % sur le fond du menu */
+  --rgx-side-hover: rgba(0, 0, 0, 0.04);
+  --rgx-side-active: #eaeae8;      /* noir à 5 % sur le fond du menu */
   --rgx-ok: #2a7453;
   --rgx-ok-bg: #eaf5ef;
   --rgx-warn: #a65606;
-  --rgx-warn-bg: #fdf3e1;
+  --rgx-warn-bg: #fef3c7;
   --rgx-crit: #c8153f;
-  --rgx-crit-bg: #fdecef;
+  --rgx-crit-bg: #fef2f2;
   --rgx-info: #0b6e8f;
-  --rgx-info-bg: #e4f4f9;
-  --rgx-row-hover: #f3f2ee;
-  --rgx-shadow: 0 1px 2px rgba(22, 35, 63, 0.06), 0 1px 1px rgba(22, 35, 63, 0.04);
-  --rgx-shadow-pop: 0 10px 30px rgba(22, 35, 63, 0.18);
+  --rgx-info-bg: #e7f7fc;
+  --rgx-row-hover: #f6f6f4;
+  --rgx-shadow: none;
+  --rgx-shadow-pop: 0 0 0 1px #e1dfda;   /* « ombre » plate : un filet de 1 px */
+  --rgx-accent: var(--rgx-brand);        /* couleur du module courant (menu, en-têtes de tableau, titre) : voir 99-webgest.css */
   color-scheme: light;
 
   /* Palette d'origine de RG System (variables de :root) : les teintes utilisées comme COULEUR DE TEXTE ou d'accent
@@ -39,30 +44,34 @@ html[data-rgx] {
 }
 
 html[data-rgx][data-rgx-theme="dark"] {
-  --rgx-bg: #0e1524;
-  --rgx-surface: #151e33;
-  --rgx-surface-2: #1c2742;
-  --rgx-border: #26324f;
-  --rgx-ink: #e8ecf5;
-  --rgx-muted: #8e9ab3;
-  --rgx-brand: #38b6d8;
-  --rgx-brand-hover: #5cc6e3;
-  --rgx-brand-soft: #123b4b;
-  --rgx-brand-ink: #06222c;
-  --rgx-side: #0a101d;
-  --rgx-side-text: #9fabc4;
+  /* Thème sombre : mêmes jetons que le thème sombre de Webgest (gris-bleu neutre), « blanc » = surface. */
+  --rgx-bg: #12161d;
+  --rgx-surface: #12161d;
+  --rgx-surface-2: #222834;
+  --rgx-wash: #181d26;
+  --rgx-border: #2d3442;
+  --rgx-line: #222834;
+  --rgx-ink: #e6eaf2;
+  --rgx-muted: #9aa3b2;
+  --rgx-brand: #4db8dd;
+  --rgx-brand-hover: #6cc6e6;
+  --rgx-brand-soft: #14414f;
+  --rgx-brand-50: #0e2a35;
+  --rgx-brand-ink: #0b1d25;
+  --rgx-side: #181d26;
+  --rgx-side-text: #a9b0bd;
   --rgx-side-hover: rgba(255, 255, 255, 0.07);
-  --rgx-side-active: #0b6e8f;
-  --rgx-ok: #5bc79a;
-  --rgx-ok-bg: #12302a;
-  --rgx-warn: #f2a640;
-  --rgx-warn-bg: #3a2b12;
-  --rgx-crit: #fb7185;
-  --rgx-crit-bg: #3b1620;
-  --rgx-info: #38b6d8;
-  --rgx-info-bg: #0f2f3b;
-  --rgx-row-hover: #1a2540;
-  --rgx-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --rgx-shadow-pop: 0 10px 30px rgba(0, 0, 0, 0.55);
+  --rgx-side-active: #282d35;
+  --rgx-ok: #6fd3a5;
+  --rgx-ok-bg: #12261d;
+  --rgx-warn: #fcd34d;
+  --rgx-warn-bg: #3d2e0c;
+  --rgx-crit: #f87171;
+  --rgx-crit-bg: #3a1818;
+  --rgx-info: #4db8dd;
+  --rgx-info-bg: #0e2a35;
+  --rgx-row-hover: #181d26;
+  --rgx-shadow: none;
+  --rgx-shadow-pop: 0 0 0 1px #2d3442;
   color-scheme: dark;
 }

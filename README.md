@@ -13,7 +13,7 @@
 
 ## Ce que ça change
 
-- **Un seul langage visuel** : typographie (Inter, Space Grotesk, JetBrains Mono), couleurs, rayons, ombres, survols, icônes (jeu Lucide), pastilles d'état et formulaires identiques sur tous les écrans, en clair et en sombre.
+- **Le même langage visuel que Webgest**, l'outil interne d'Arobase : typographie (Inter, Space Grotesk, JetBrains Mono), jetons de couleur, aplats sans ombre, icônes (jeu Lucide), pastilles d'état et formulaires identiques sur tous les écrans, en clair et en sombre.
 - **Les écrans de RG repris un à un** : barre latérale, arborescence, tableaux de synthèse, fiche agent, tickets, courbes, configuration, sauvegardes, vulnérabilités, gestion, profil, page de connexion… plus un socle générique (Bootstrap 3 + MUI) pour ce qui n'a pas été vu.
 - **Des gains d'usage**, tous côté navigateur :
   - arborescence **redimensionnable librement** (la largeur minimale d'origine est supprimée) ;
@@ -33,7 +33,7 @@
 
 ![Tablette](docs/img/rg-tablet.png)
 
-La direction visuelle de départ est la maquette [`maquette/direction.html`](maquette/direction.html) (ci-dessous).
+Le style reprend celui de **Webgest**, l'outil interne d'Arobase (style « Obsidian / reading view ») : aplats, aucune ombre ni dégradé, bordures fines, page blanche, menu et arborescence en gris très clair, boutons primaires en encre pleine, onglets en rail, badges point + texte, en-têtes de tableau teintés de la couleur du module (ambre pour les tickets, vert pour les sauvegardes, rose pour la cybersécurité, violet pour la gestion). Le thème sombre reprend les jetons du thème sombre de Webgest. La maquette de départ est conservée dans [`maquette/direction.html`](maquette/direction.html) (ci-dessous, ancienne direction à menu marine).
 
 ![Maquette de référence](docs/img/direction.png)
 

@@ -77,7 +77,7 @@ const PAIRS = [
   ['brand', 'surface'], ['brand', 'bg'], ['brand-ink', 'brand'], ['brand-ink', 'brand-hover'],
   ['ok', 'ok-bg'], ['warn', 'warn-bg'], ['crit', 'crit-bg'], ['info', 'info-bg'],
   ['ok', 'surface'], ['warn', 'surface'], ['crit', 'surface'],
-  ['side-text', 'side'],
+  ['side-text', 'side'], ['muted', 'wash'], ['ink', 'wash'],
 ];
 for (const [name, t] of [['clair', light], ['sombre', dark]]) {
   for (const [fg, bg] of PAIRS) {
@@ -85,7 +85,7 @@ for (const [name, t] of [['clair', light], ['sombre', dark]]) {
     check(r >= 4.5, `${name} : ${fg} sur ${bg} = ${r.toFixed(2)}`);
   }
 }
-check(ratio('#ffffff', dark['side-active']) >= 4.5, `sombre : blanc sur side-active = ${ratio('#ffffff', dark['side-active']).toFixed(2)}`);
+for (const [name, tk] of [['clair', light], ['sombre', dark]]) check(ratio(tk.ink, tk['side-active']) >= 4.5, `${name} : encre sur side-active = ${ratio(tk.ink, tk['side-active']).toFixed(2)}`);
 
 // 5. Données sensibles : contrôle générique (adresses e-mail réelles) + liste locale facultative
 console.log('Données sensibles');

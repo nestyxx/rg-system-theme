@@ -417,7 +417,10 @@ html[data-rgx] .left-menu-shrink #menu-details li#search-menu {
   padding: 0 !important;
   border-radius: var(--radius-md);
 }
+/* « Rechercher » est un <li> sans lien : il porte lui-même la marge de 4 px ET garde la largeur du rail, donc débordait de 4 px
+   à droite (icône centrée à 24 px au lieu de 20). Largeur = rail − marges, comme les autres entrées. */
 html[data-rgx] .left-menu-shrink #menu-details li#search-menu {
+  width: calc(100% - 8px);
   height: 36px;
   min-height: 0;
   line-height: 36px;

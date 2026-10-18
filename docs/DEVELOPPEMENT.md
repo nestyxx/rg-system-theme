@@ -39,6 +39,7 @@ Aucune ressource externe n'est chargée à l'exécution (ni CDN Tailwind, ni Goo
 | `src/css/60-layout.css` | Mise en page de la maquette : en-tête 56 px et icônes, logo, pagination des listes, boutons, tableaux |
 | `src/css/95-pages.css` | Gabarits de page : en-tête d'identité, onglets, en-têtes de tableaux, icônes de plateforme |
 | `src/css/96-surfaces.css`, `97-agent-global.css`, `98-extras.css` | Surfaces relevées sur le site réel (fenêtre d'agent, menu du profil, bibliothèque de scripts, connexion, Brain), fiche agent, criticité, passe globale (curseurs, titres), recherche rapide Ctrl+K, squelettes de chargement, harmonisation des familles de tableaux |
+| `src/css/99-webgest.css` | Langage visuel de Webgest : couleur du module (`--rgx-accent`, posée par `:has()` d'après l'entrée de menu courante), menu / arborescence plats, boutons encre, onglets en rail, badges point + texte, en-têtes de tableau teintés, titres. Les jetons (`--rgx-*`) sont dans `00-tokens.css`, alignés sur `input.css` de Webgest (clair et sombre) |
 | `src/css/99-coherence.css` | Éléments qui gardaient leur style d'origine, relevés par mesure (voir « Chasse aux styles d'origine » plus bas) |
 | `src/css/99-responsive.css` | Adaptation à la largeur : rail < 1200 px, arborescence en superposition < 1000 px, tiroirs < 768 px (la logique de bascule est dans `content.js`, bloc « Adaptation à la largeur d'écran ») |
 

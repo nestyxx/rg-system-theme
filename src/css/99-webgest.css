@@ -1,0 +1,448 @@
+/* ===================================================================
+   99. Langage visuel de Webgest (outil interne d'Arobase)
+   Reprise du style « Obsidian / reading view » de Webgest (input.css) : aplats, aucune ombre, aucun dégradé, bordures
+   fines, menu en arborescence plate, boutons encre, onglets en rail, badges point + texte, en-têtes de tableau teintés
+   de la couleur du module. Les couleurs viennent uniquement des jetons de 00-tokens.css (clair et sombre).
+   =================================================================== */
+
+/* --- Couleur du module courant (comme --accent dans Webgest) : posée sur <html> d'après l'entrée de menu courante --- */
+html[data-rgx]:has(#menu-tickets.current) { --rgx-accent: #d97706; }
+html[data-rgx]:has(#menu-backup-parent.current, #menu-backup-parent:has(li.current)) { --rgx-accent: #059669; }
+html[data-rgx]:has(#menu-security.current, #menu-security:has(li.current)) { --rgx-accent: #e11d48; }
+html[data-rgx]:has(#menu-management.current, #menu-management:has(li.current)) { --rgx-accent: #7c3aed; }
+html[data-rgx]:has(#menu-configuration.current, #menu-configuration:has(li.current)) { --rgx-accent: #7c3aed; }
+html[data-rgx][data-rgx-theme="dark"]:has(#menu-tickets.current) { --rgx-accent: #fbbf24; }
+html[data-rgx][data-rgx-theme="dark"]:has(#menu-backup-parent.current, #menu-backup-parent:has(li.current)) { --rgx-accent: #34d399; }
+html[data-rgx][data-rgx-theme="dark"]:has(#menu-security.current, #menu-security:has(li.current)) { --rgx-accent: #fb7185; }
+html[data-rgx][data-rgx-theme="dark"]:has(#menu-management.current, #menu-management:has(li.current), #menu-configuration.current, #menu-configuration:has(li.current)) { --rgx-accent: #c4b5fd; }
+
+/* ===================================================================
+   Menu latéral : file-tree plat (h 36, texte encre à 70 %, survol / courant en voile, icône colorée par module)
+   =================================================================== */
+html[data-rgx] #block-menu-left { border-right: 1px solid var(--rgx-line); }
+html[data-rgx] #menu-details li.menu-lvl-0 > a,
+html[data-rgx] #menu-details li#search-menu { color: var(--rgx-side-text); }
+html[data-rgx] #menu-details li.menu-lvl-0 > a:hover,
+html[data-rgx] #menu-details li.menu-lvl-0:hover > a,
+html[data-rgx] #menu-details li#search-menu:hover {
+  background: var(--rgx-side-hover) !important;
+  color: var(--rgx-ink);
+}
+html[data-rgx] #menu-details li.menu-lvl-0.current > a,
+html[data-rgx] #menu-details li.menu-lvl-0:has(li.current) > a {
+  background: var(--rgx-side-active);
+  color: var(--rgx-ink);
+  font-weight: 600;
+}
+/* Entrée courante : l'icône prend la couleur du module (comme .sidebar-link.active dans Webgest) */
+html[data-rgx] #menu-details li#menu-tickets { --accent: #d97706; }
+html[data-rgx] #menu-details li#menu-backup-parent { --accent: #059669; }
+html[data-rgx] #menu-details li#menu-security { --accent: #e11d48; }
+html[data-rgx] #menu-details li#menu-management,
+html[data-rgx] #menu-details li#menu-configuration { --accent: #7c3aed; }
+html[data-rgx][data-rgx-theme="dark"] #menu-details li#menu-tickets { --accent: #fbbf24; }
+html[data-rgx][data-rgx-theme="dark"] #menu-details li#menu-backup-parent { --accent: #34d399; }
+html[data-rgx][data-rgx-theme="dark"] #menu-details li#menu-security { --accent: #fb7185; }
+html[data-rgx][data-rgx-theme="dark"] #menu-details li#menu-management,
+html[data-rgx][data-rgx-theme="dark"] #menu-details li#menu-configuration { --accent: #c4b5fd; }
+html[data-rgx] #menu-details li.menu-lvl-0.current svg.icon-menu,
+html[data-rgx] #menu-details li.menu-lvl-0:has(li.current) svg.icon-menu,
+html[data-rgx] #menu-details li.menu-lvl-0:hover svg.icon-menu {
+  color: var(--accent, var(--rgx-brand));
+  opacity: 1;
+}
+/* Sous-menus : même langage (voile au survol, entrée courante en gras) */
+html[data-rgx] #menu-details li.menu-lvl-1.current > a,
+html[data-rgx] #menu-details li.menu-lvl-2.current > a {
+  background: var(--rgx-side-hover);
+  color: var(--rgx-ink);
+  font-weight: 600;
+}
+html[data-rgx] #menu-details li.menu-lvl-1 > a:hover,
+html[data-rgx] #menu-details li.menu-lvl-2 > a:hover { color: var(--rgx-ink); }
+html[data-rgx] #menu-details li.submenu-title { color: var(--rgx-ink); }
+/* Volet du menu réduit : carte plate à filet fin (plus d'ombre ni de fond teinté) */
+html[data-rgx] .left-menu-shrink #menu-details ul.ul-lvl-1 {
+  background-color: var(--rgx-surface) !important;
+  border: 1px solid var(--rgx-border);
+  box-shadow: none;
+}
+html[data-rgx] .left-menu-shrink #menu-details li.submenu-title { color: var(--rgx-muted); }
+html[data-rgx] #menu-details sup { background: color-mix(in srgb, var(--rgx-brand) 12%, var(--rgx-surface)); color: var(--rgx-brand); }
+/* Bouton de réduction du menu */
+html[data-rgx] #menu-main-burger { background: transparent !important; color: var(--rgx-side-text); }
+html[data-rgx] #menu-main-burger:hover { background: var(--rgx-side-hover) !important; color: var(--rgx-ink); }
+
+/* Logo : encre sur fond clair */
+html[data-rgx] .rgx-logo,
+html[data-rgx] .rgx-logo > .rgx-logo-name,
+html[data-rgx] .rgx-logo > small { color: var(--rgx-ink); }
+html[data-rgx] .rgx-logo > small { color: var(--rgx-muted); }
+
+/* ===================================================================
+   Arborescence : même famille que le menu (fond doux, sélection en voile, pas de plein brand)
+   =================================================================== */
+html[data-rgx] #tree-block,
+html[data-rgx] #tree-search { background: var(--rgx-wash); border-color: var(--rgx-line); }
+html[data-rgx] #tree a.jstree-clicked,
+html[data-rgx] #tree a.jstree-clicked:hover {
+  background: var(--rgx-side-active) !important;
+  color: var(--rgx-ink);
+  font-weight: 600;
+}
+html[data-rgx] #tree a.jstree-hovered,
+html[data-rgx] #tree a:hover { background: var(--rgx-side-hover); }
+html[data-rgx] #tree .jstree-wholerow-hovered { background: var(--rgx-side-hover); }
+html[data-rgx] #dragbar { background: transparent; border: 0; border-right: 1px solid var(--rgx-line); }
+html[data-rgx] #dragbar:hover { background: var(--rgx-side-hover); }
+
+/* ===================================================================
+   Barre du haut : blanche, filet fin ; Brain en pastille encre ; avatar encre
+   =================================================================== */
+html[data-rgx] #header header.MuiAppBar-root { border-bottom-color: var(--rgx-line); }
+html[data-rgx] #header button.brain,
+html[data-rgx] #header button.brain * { color: var(--rgx-surface); }
+html[data-rgx] #header button.brain { background: var(--rgx-ink); border-color: transparent; box-shadow: none; }
+html[data-rgx] #header button.brain:hover { background: color-mix(in srgb, var(--rgx-ink) 85%, var(--rgx-surface)); }
+html[data-rgx] #profile-menu-toggler[data-rgx-initials]::before,
+html[data-rgx] [class*="Profile__MenuHeader-sc"][data-rgx-initials]::before {
+  background: var(--rgx-ink);
+  color: var(--rgx-surface);
+  box-shadow: none;
+}
+
+/* ===================================================================
+   Boutons : primaire = encre pleine, secondaire = blanc à filet, icône = 32 px discret
+   =================================================================== */
+html[data-rgx] .btn-primary,
+html[data-rgx] .btn-success,
+html[data-rgx] a.btn-primary,
+html[data-rgx] button.btn-primary {
+  background: var(--rgx-ink);
+  border-color: var(--rgx-ink);
+  color: var(--rgx-surface);
+  box-shadow: none;
+}
+html[data-rgx] .btn-primary:hover,
+html[data-rgx] .btn-success:hover,
+html[data-rgx] .btn-primary:focus,
+html[data-rgx] .btn-success:focus {
+  background: color-mix(in srgb, var(--rgx-ink) 85%, var(--rgx-surface));
+  border-color: transparent;
+  color: var(--rgx-surface);
+}
+html[data-rgx] .btn-primary .glyphicon-white,
+html[data-rgx] .btn-success .glyphicon-white { color: inherit; }
+html[data-rgx] .btn-default,
+html[data-rgx] .page-menu .btn-primary:not([id*="create"]) {
+  background: var(--rgx-surface);
+  border: 1px solid var(--rgx-border);
+  color: var(--rgx-ink);
+  box-shadow: none;
+}
+html[data-rgx] .btn-default:hover,
+html[data-rgx] .page-menu .btn-primary:not([id*="create"]):hover { background: var(--rgx-wash); }
+html[data-rgx] .btn:focus,
+html[data-rgx] .btn:active,
+html[data-rgx] .btn.active { box-shadow: none; outline: 0; }
+
+/* ===================================================================
+   Champs : filet fin, mise au point = bord encre (pas de halo)
+   =================================================================== */
+html[data-rgx] .form-control,
+html[data-rgx] select,
+html[data-rgx] input[type="text"],
+html[data-rgx] input[type="search"],
+html[data-rgx] input[type="password"],
+html[data-rgx] input[type="number"],
+html[data-rgx] input[type="email"],
+html[data-rgx] textarea { box-shadow: none; }
+html[data-rgx] .form-control:focus,
+html[data-rgx] select:focus,
+html[data-rgx] input:focus,
+html[data-rgx] textarea:focus,
+html[data-rgx] .MuiInputBase-root.Mui-focused,
+html[data-rgx] .MuiInputBase-root.MuiInput-root[class*="Input-sc"]:focus-within {
+  border-color: var(--rgx-ink) !important;
+  box-shadow: none !important;
+  outline: 0;
+}
+
+/* ===================================================================
+   Cartes et panneaux : aplat, filet fin, jamais d'ombre
+   =================================================================== */
+html[data-rgx] .panel,
+html[data-rgx] .well,
+html[data-rgx] .modal-content,
+html[data-rgx] .dropdown-menu,
+html[data-rgx] .popover,
+html[data-rgx] .MuiPaper-root,
+html[data-rgx] .MuiPopover-paper,
+html[data-rgx] [class*="Card__Wrapper"],
+html[data-rgx] [class*="Card__Layout"],
+html[data-rgx] [class*="Expandable__Layout"],
+html[data-rgx] [class*="Tooltip__TootlipBox"] { box-shadow: none; }
+html[data-rgx] .panel,
+html[data-rgx] .well,
+html[data-rgx] [class*="Card__Wrapper"],
+html[data-rgx] [class*="Card__Layout"],
+html[data-rgx] [class*="Expandable__Layout"] { border-color: var(--rgx-line); }
+html[data-rgx] .modal-content,
+html[data-rgx] .dropdown-menu,
+html[data-rgx] .popover,
+html[data-rgx] .MuiPopover-paper { border: 1px solid var(--rgx-border); }
+
+/* ===================================================================
+   Tableaux : plats, séparateurs fins, en-têtes teintés de la couleur du module (Webgest « table.tableau »)
+   =================================================================== */
+html[data-rgx] table.sum,
+html[data-rgx] table.ticket-table,
+html[data-rgx] table[class*="Table__Layout-sc"],
+html[data-rgx] table.table:not(.sum, .table-stat, .table-bordered, .table-condensed),
+html[data-rgx] table#services-states-all,
+html[data-rgx] table.table-stat,
+html[data-rgx] table.MuiTable-root {
+  border-color: var(--rgx-line);
+  box-shadow: none;
+}
+html[data-rgx] table[class*="Table__Layout-sc"] thead th,
+html[data-rgx] table.ticket-table > tbody > tr:first-child > th,
+html[data-rgx] table.table:not(.sum, .table-stat, .table-bordered, .table-condensed) > thead > tr > th,
+html[data-rgx] table#services-states-all > thead > tr > th,
+html[data-rgx] table.table-stat > thead > tr > th,
+html[data-rgx] table.table-stat > tbody > tr:first-child > th,
+html[data-rgx] table.MuiTable-root th {
+  background: color-mix(in srgb, var(--rgx-accent) 9%, var(--rgx-surface));
+  color: color-mix(in srgb, var(--rgx-accent) 65%, var(--rgx-ink)) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--rgx-accent) 28%, var(--rgx-surface));
+  font-size: 12px;
+  font-weight: 500 !important;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+html[data-rgx] table[class*="Table__Layout-sc"] thead th *,
+html[data-rgx] table.MuiTable-root th [class*="SortedColumn__Column"] {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: none;
+  letter-spacing: 0;
+}
+html[data-rgx] table[class*="Table__Layout-sc"] tbody td,
+html[data-rgx] table.ticket-table td,
+html[data-rgx] table.table:not(.sum, .table-stat, .table-bordered, .table-condensed) > tbody > tr > td,
+html[data-rgx] table#services-states-all > tbody > tr > td {
+  border-color: var(--rgx-line);
+}
+html[data-rgx] table[class*="Table__Layout-sc"] tbody tr:hover,
+html[data-rgx] table.ticket-table tr.ticket:hover,
+html[data-rgx] .table-hover > tbody > tr:hover { background-color: var(--rgx-wash); }
+
+/* ===================================================================
+   Onglets : rail gris clair, pastille active blanche (Webgest « .tab-bar / .tab-item »)
+   =================================================================== */
+html[data-rgx] .nav-tabs,
+html[data-rgx] .nav-pills,
+html[data-rgx] .MuiTabs-root .MuiTabs-flexContainer {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  max-width: 100%;
+  padding: 4px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--rgx-surface-2);
+}
+html[data-rgx] .nav-tabs > li,
+html[data-rgx] .nav-pills > li { float: none; margin: 0; }
+html[data-rgx] .nav-tabs > li > a,
+html[data-rgx] .nav-pills > li > a,
+html[data-rgx] .MuiTab-root {
+  min-height: 0;
+  margin: 0;
+  padding: 6px 14px;
+  border: 0 !important;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--rgx-muted);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 1;
+  white-space: nowrap;
+}
+html[data-rgx] .nav-tabs > li > a:hover,
+html[data-rgx] .nav-pills > li > a:hover,
+html[data-rgx] .MuiTab-root:hover { background: transparent; color: var(--rgx-ink); }
+html[data-rgx] .nav-tabs > li.active > a,
+html[data-rgx] .nav-tabs > li.active > a:hover,
+html[data-rgx] .nav-pills > li.active > a,
+html[data-rgx] .nav-pills > li.active > a:hover,
+html[data-rgx] .MuiTab-root.Mui-selected {
+  background: var(--rgx-surface);
+  color: var(--rgx-ink);
+  box-shadow: 0 1px 2px rgba(22, 35, 63, 0.08);
+}
+html[data-rgx][data-rgx-theme="dark"] .nav-tabs > li.active > a,
+html[data-rgx][data-rgx-theme="dark"] .nav-pills > li.active > a,
+html[data-rgx][data-rgx-theme="dark"] .MuiTab-root.Mui-selected { box-shadow: none; background: var(--rgx-border); }
+html[data-rgx] .MuiTabs-indicator { display: none; }
+html[data-rgx] .MuiTabs-root { min-height: 0; border-bottom: 0; }
+
+/* ===================================================================
+   Badges : point + texte, sans fond plein (Webgest « .badge / .dot »)
+   =================================================================== */
+html[data-rgx] .label:not(.label-block):not([class*="icon-"]):not(.label-rg-mini),
+html[data-rgx] .label-rg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent !important;
+  font-size: 12px;
+  font-weight: 500;
+}
+html[data-rgx] .label:not(.label-block):not([class*="icon-"]):not(.label-rg-mini)::before,
+html[data-rgx] .label-rg::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+/* ===================================================================
+   Avertissements (callouts) : aplat teinté, sans liseré ni ombre
+   =================================================================== */
+html[data-rgx] .alert,
+html[data-rgx] .MuiAlert-root { border: 0; border-left-width: 0; border-radius: var(--radius-md); box-shadow: none; }
+html[data-rgx] .alert-success { background: var(--rgx-ok-bg); }
+html[data-rgx] .alert-info { background: var(--rgx-info-bg); }
+html[data-rgx] .alert-warning { background: var(--rgx-warn-bg); }
+html[data-rgx] .alert-danger { background: var(--rgx-crit-bg); }
+
+/* ===================================================================
+   Titres de page : Space Grotesk, court séparateur de la couleur du module (Webgest « .titre-separateur »)
+   =================================================================== */
+html[data-rgx] .title-auth,
+html[data-rgx] .chart-plugin-title,
+html[data-rgx] .section .header .title {
+  position: relative;
+  padding-bottom: 10px;
+}
+html[data-rgx] .chart-plugin-title { border-bottom: 0; }
+html[data-rgx] .title-auth::after,
+html[data-rgx] .chart-plugin-title::after,
+html[data-rgx] .section .header .title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--rgx-accent);
+}
+html[data-rgx] .section .header { border-bottom: 0; }
+
+/* Pastilles de code (identifiants techniques) */
+html[data-rgx] code,
+html[data-rgx] kbd { background: var(--rgx-surface-2); color: var(--rgx-ink); border-radius: 4px; box-shadow: none; }
+
+/* --- Grilles React et tableaux MUI : l'identifiant #root des règles d'origine l'emporte, donc on le reprend --- */
+html[data-rgx] #root table[class*="Table__Layout-sc"] thead th,
+html[data-rgx] #root table.MuiTable-root th {
+  background: color-mix(in srgb, var(--rgx-accent) 9%, var(--rgx-surface));
+  color: color-mix(in srgb, var(--rgx-accent) 65%, var(--rgx-ink)) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--rgx-accent) 28%, var(--rgx-surface));
+  font-size: 12px;
+  font-weight: 500 !important;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+html[data-rgx] #root table:not(.table) td { border-bottom-color: var(--rgx-line); }
+html[data-rgx] #root table:not(.table) tbody tr:hover { background: var(--rgx-wash); }
+
+/* --- Boutons React « BaseButton » : primaire = encre ; pastilles de statut = point + texte --- */
+html[data-rgx] [class*="BaseButton-sc"] { box-shadow: none; }
+html[data-rgx] [class*="BaseButton-sc"].info,
+html[data-rgx] [class*="BaseButton-sc"].primary {
+  background: var(--rgx-ink);
+  color: var(--rgx-surface);
+}
+html[data-rgx] [class*="BaseButton-sc"].info:hover,
+html[data-rgx] [class*="BaseButton-sc"].primary:hover { background: color-mix(in srgb, var(--rgx-ink) 85%, var(--rgx-surface)); }
+html[data-rgx] [class*="StatusChip__Layout-sc"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+}
+html[data-rgx] [class*="StatusChip__Layout-sc"]::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* --- Tableaux hérités (liste de tickets, statistiques, listes Bootstrap) : mêmes en-têtes teintés, sous #root --- */
+html[data-rgx] #root table.ticket-table > tbody > tr:first-child > th,
+html[data-rgx] #root table.table-stat > thead > tr > th,
+html[data-rgx] #root table.table-stat > tbody > tr:first-child > th,
+html[data-rgx] #root table.table:not(.sum, .table-stat, .table-bordered, .table-condensed) > thead > tr > th,
+html[data-rgx] #root table#services-states-all > thead > tr > th {
+  background: color-mix(in srgb, var(--rgx-accent) 9%, var(--rgx-surface));
+  color: color-mix(in srgb, var(--rgx-accent) 65%, var(--rgx-ink)) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--rgx-accent) 28%, var(--rgx-surface));
+  font-size: 12px;
+  font-weight: 500 !important;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+html[data-rgx] #root table.ticket-table td,
+html[data-rgx] #root table.table-stat td { border-color: var(--rgx-line); }
+
+/* --- Nœud sélectionné de l'arborescence : voile + encre (plus de plein brand), donc pastille et icône en encre --- */
+html[data-rgx] #tree a.jstree-clicked > ins.jstree-icon::before { background: var(--rgx-ink); }
+html[data-rgx] #tree li[rel] > a.jstree-clicked > ins.jstree-icon { color: var(--rgx-ink); }
+
+/* --- Infobulles RG : encre inversée, sans ombre (le fond « menu » est désormais clair) --- */
+html[data-rgx] [class*="Tooltip__TootlipBox-sc"] {
+  background: var(--rgx-ink);
+  color: var(--rgx-surface);
+  border: 0;
+  box-shadow: none;
+}
+/* --- Tiroir Brain, cartes React : aplats --- */
+html[data-rgx] #mimibrain.mimibrain-open { box-shadow: none; }
+html[data-rgx] [class*="Card__CardLayout-sc"] { border-radius: var(--radius-lg); border-color: var(--rgx-line); box-shadow: none; }
+html[data-rgx] [class*="Card__CardLayout-sc"]:hover { border-color: var(--rgx-border); }
+
+/* --- Recherche rapide : voile sans flou, boîte à filet, sélection en voile (comme le menu) --- */
+html[data-rgx] #rgx-pal { backdrop-filter: none; background: rgb(15 23 42 / 0.32); }
+html[data-rgx] #rgx-pal .rgx-pal-box { border-radius: var(--radius-lg); box-shadow: none; border-color: var(--rgx-border); }
+html[data-rgx] #rgx-pal li { border-radius: var(--radius-md); }
+html[data-rgx] #rgx-pal li.on,
+html[data-rgx] #rgx-pal li:hover { background: var(--rgx-side-active); color: var(--rgx-ink); }
+
+/* --- Filets gris clair d'origine (#f0f4f8) : séparateurs de lignes en jeton de filet --- */
+html[data-rgx] [class*="Top5Table__Row"] { border-bottom-color: var(--rgx-line); }
+html[data-rgx] .tooltip-inner { font-family: var(--font-sans); }
+
+/* --- Page de connexion : carte plate (rayon 8, filet fin) --- */
+html[data-rgx] .form-public-page .block-form { border-radius: var(--radius-lg); border-color: var(--rgx-line); box-shadow: none; }
+html[data-rgx] .form-public-page .form-control { border-radius: var(--radius-md); }
+html[data-rgx] .form-public-page .form-group [class*="col-"] { float: none; width: 100%; padding: 0; }
+html[data-rgx] .form-public-page .form-group { margin-left: 0; margin-right: 0; }
+html[data-rgx] .form-public-page .btn-primary { border-radius: var(--radius-md); }

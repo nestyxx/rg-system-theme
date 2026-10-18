@@ -1,5 +1,19 @@
 # Journal des modifications
 
+## 3.0.0 — 2026-10-18
+
+**Refonte du style d'après Webgest** (outil interne d'Arobase, `input.css`), pour qu'RG System et Webgest se ressemblent.
+
+- **Langage « Obsidian / reading view »** : page blanche, aplats, **aucune ombre ni dégradé** (les « ombres » des fenêtres et menus sont un filet de 1 px), bordures fines, rayons de 6 et 8 px.
+- **Jetons alignés sur Webgest** : `ink #16233F`, gris `#F6F6F4 / #EDECE8 / #E1DFDA`, marque `#0B6E8F`. Le **thème sombre** reprend les jetons du thème sombre de Webgest (surface `#12161D`, gris-bleu neutres, marque `#4DB8DD`) au lieu de l'ancien marine.
+- **Menu et arborescence** en gris très clair (plus de barre marine) : entrées de 36 px, texte à 70 %, survol et entrée courante en voile, icône colorée par module (ambre Tickets, vert Backup, rose Cybersecurity, violet Configuration / Gestion).
+- **Boutons** : primaire = encre pleine (« Créer », « Ouvrir », « Convertir… »), secondaire = blanc à filet. **Champs** : la mise au point passe par le bord encre (plus de halo).
+- **Onglets en rail** gris clair avec pastille active blanche (Bootstrap et MUI). **Badges et pastilles de statut** en point + texte.
+- **Tableaux** : en-têtes teintés de la couleur du module (9 % de teinte, texte 65 %), 12 px, sans capitales ; lignes à filets fins, survol gris très clair. **Titres de page** avec le court séparateur de 40 × 2 px à la couleur du module.
+- **Avatar et bouton Brain** en encre ; infobulles en encre inversée ; palette Ctrl+K sans flou ; avertissements en aplat teinté sans liseré.
+- **Correction** : l'icône « Rechercher » du menu réduit n'était pas alignée avec les autres (centrée à 24 px au lieu de 20 px : elle portait la marge de 4 px et la largeur du rail).
+- Panneau de réglages de l'extension aligné sur les mêmes jetons ; captures du README régénérées.
+
 ## 2.1.0 — 2026-10-18
 
 - **Notifications Edge pour les tickets** (nouveau, désactivées par défaut) : création d'un ticket, relance (le compteur « Relances » augmente) et clôture (le ticket quitte la liste des tickets actifs). Elles fonctionnent depuis **n'importe quelle page de RG** tant qu'un onglet RG reste ouvert (il peut être réduit). Un clic sur la notification ouvre l'écran du ticket. Réglages dans le panneau de l'extension : interrupteur général, un choix par type d'événement, bouton « Envoyer une notification de test ».
