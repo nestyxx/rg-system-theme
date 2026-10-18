@@ -98,7 +98,7 @@ html[data-rgx] [class*="HelpPanel"] * { font-family: var(--font-sans); }
 html[data-rgx][data-rgx-theme="light"] .graph-stats tr[style*="color"] { filter: brightness(0.72); }
 
 /* --- Bouton « Style » en bas du menu de gauche (content.js) : Arobase <-> RG System revisité --- */
-html[data-rgx] #block-menu-left { grid-template-rows: 57px minmax(0, 1fr) auto; }
+html[data-rgx] #block-menu-left { grid-template-rows: auto minmax(0, 1fr) auto; }
 html[data-rgx] #rgx-style-toggle {
   display: flex;
   align-items: center;
