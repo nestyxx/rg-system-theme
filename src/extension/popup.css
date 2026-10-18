@@ -30,3 +30,8 @@ input[type="checkbox"]:checked::after { transform: translateX(16px); }
 .notice { margin: 0; padding: 16px; color: var(--muted); }
 footer { display: grid; gap: 2px; padding: 10px 16px 14px; border-top: 1px solid var(--border); color: var(--muted); font-size: 11px; }
 [hidden] { display: none !important; }
+
+/* Notifications : sous-options indentées */
+#notifyKinds { display: grid; gap: 8px; margin-top: 10px; }
+#notifyKinds[hidden] { display: none; }
+.row.sub { padding-left: 12px; font-size: 13px; }

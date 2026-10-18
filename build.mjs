@@ -54,7 +54,7 @@ const manifest = readFileSync(path.join(here, 'src', 'extension', 'manifest.temp
 JSON.parse(manifest); // échoue ici si le JSON est invalide
 writeFileSync(path.join(ext, 'manifest.json'), manifest);
 copyFileSync(path.join(here, 'src', 'extension', 'content.js'), path.join(ext, 'content.js'));
-for (const f of ['popup.html', 'popup.css', 'popup.js']) copyFileSync(path.join(here, 'src', 'extension', f), path.join(ext, f));
+for (const f of ['popup.html', 'popup.css', 'popup.js', 'background.js']) copyFileSync(path.join(here, 'src', 'extension', f), path.join(ext, f));
 for (const f of readdirSync(path.join(here, 'src', 'extension', 'icons'))) {
   mkdirSync(path.join(ext, 'icons'), { recursive: true });
   copyFileSync(path.join(here, 'src', 'extension', 'icons', f), path.join(ext, 'icons', f));

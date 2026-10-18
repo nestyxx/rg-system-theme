@@ -1,5 +1,12 @@
 # Journal des modifications
 
+## 2.1.0 — 2026-10-18
+
+- **Notifications Edge pour les tickets** (nouveau, désactivées par défaut) : création d'un ticket, relance (le compteur « Relances » augmente) et clôture (le ticket quitte la liste des tickets actifs). Elles fonctionnent depuis **n'importe quelle page de RG** tant qu'un onglet RG reste ouvert (il peut être réduit). Un clic sur la notification ouvre l'écran du ticket. Réglages dans le panneau de l'extension : interrupteur général, un choix par type d'événement, bouton « Envoyer une notification de test ».
+  - Fonctionnement : toutes les 60 s, la liste des tickets actifs du nœud racine est lue avec la requête que RG envoie lui-même (`/action/page/ticket/filter`, pagination `page` + `lastTicket` comme RG, jusqu'à 10 pages), comparée à l'état précédent mémorisé, et les différences sont envoyées au service worker qui affiche la notification. Aucun envoi à un tiers.
+  - Garde-fous : rien n'est notifié au premier relevé ni après plus de 6 h d'absence ; plus de 3 événements du même type sont regroupés ; au-delà de 200 tickets actifs, les clôtures ne sont pas déduites ; une réponse inattendue (session expirée) ne modifie pas l'état ; un seul onglet interroge RG à la fois.
+  - Nouvelle permission `notifications` et un service worker (`background.js`, sans accès réseau). README et SECURITY.md mis à jour.
+
 ## 2.0.0 — 2026-10-17
 
 Mise à jour majeure : analyse « à l'envers » du site (quelles classes d'origine sur quelles pages, lesquelles gardent leur style), adaptation à toutes les largeurs d'écran, audit des textes.

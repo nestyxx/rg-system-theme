@@ -44,6 +44,20 @@
       <input type="checkbox" id="autoReload">
     </label>
 
+    <section id="notifSec">
+      <h2>Notifications Edge</h2>
+      <label class="row switch">
+        <span><strong>Notifier les tickets</strong><small>Création, relance, clôture. Garder un onglet RG ouvert (il peut être réduit).</small></span>
+        <input type="checkbox" id="notify">
+      </label>
+      <div id="notifyKinds" hidden>
+        <label class="row switch sub"><span>Nouveau ticket</span><input type="checkbox" id="nNew"></label>
+        <label class="row switch sub"><span>Relance</span><input type="checkbox" id="nRaise"></label>
+        <label class="row switch sub"><span>Clôture</span><input type="checkbox" id="nClose"></label>
+        <button type="button" class="ghost" id="notifyTest">Envoyer une notification de test</button>
+      </div>
+    </section>
+
     <button type="button" class="ghost" id="treeReset">Largeur d'origine de l'arborescence</button>
   </main>
 

@@ -381,12 +381,125 @@
     setInterval(arPaint, 1000);
 
     // ------------------------------------------------------------------------------------------------
+    // Notifications Edge : création, relance et clôture de tickets (désactivées par défaut : rgx.notify = '1').
+    // Toutes les 60 s, on demande à RG la liste des tickets actifs du nœud racine, avec la MÊME requête que celle que RG envoie pour
+    // l'afficher (GET /action/page/ticket/filter?node=…&page=N, même origine, cookies de la session), depuis n'importe quelle page de RG.
+    // Les pages suivantes se demandent comme RG le fait (page=N&lastTicket=…), jusqu'à NT.maxPages pages.
+    // La liste est lue dans un document inerte (DOMParser : aucun script exécuté), comparée à l'état mémorisé
+    // (localStorage), puis les différences sont envoyées à background.js qui affiche la notification.
+    //   création = numéro inconnu ; relance = compteur « Relances » en hausse ; clôture = ticket absent de la liste active.
+    // Rien n'est notifié au premier relevé ni après plus de 6 h d'absence. Un seul onglet interroge RG à la fois (navigator.locks).
+    // ------------------------------------------------------------------------------------------------
+    const NT = { snap: 'rgx.ticketsSnap', last: 'rgx.ticketsLast', every: 60000, maxAge: 6 * 3600 * 1000, maxPages: 10 };
+    const ntHasBg = typeof chrome !== 'undefined' && chrome.runtime && typeof chrome.runtime.sendMessage === 'function';
+    const ntOn = () => ntHasBg && get('rgx.notify', '0') === '1';
+    const ntKind = (k) => get('rgx.notify.' + k, '1') !== '0';
+    const ntRootNode = () => { const li = document.querySelector('#tree-widget li[id], #tree li[id]'); return li && /^\d+$/.test(li.id) ? li.id : ''; };
+    const ntDate = (s) => { const m = /(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}):(\d{2})/.exec(s || ''); return m ? new Date(+m[3], +m[2] - 1, +m[1], +m[4], +m[5]).getTime() : 0; };
+    function ntParse(html) {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      if (!doc.getElementById('pagination')) return null;   // pas une page de la liste des tickets (session expirée, erreur…) : on ne touche à rien
+      const table = doc.querySelector('table.ticket-table');
+      const items = {};
+      let last = '';
+      if (table) {
+        const heads = [...table.querySelectorAll('tr:first-child > th')].map((th) => th.textContent.replace(/s+/g, ' ').trim().toLowerCase());
+        const col = (name) => heads.findIndex((h) => h.startsWith(name));
+        const ix = { num: col('numéro'), node: col('nœud'), agent: col('agent'), date: col('date'), title: col('titre'), raise: col('relance') };
+        table.querySelectorAll('tr.ticket[data-ticket]').forEach((tr) => {
+          const td = tr.children, txt = (i) => (i >= 0 && td[i] ? td[i].textContent.replace(/s+/g, ' ').trim() : '');
+          const nodeA = ix.node >= 0 && td[ix.node] ? td[ix.node].querySelector('a[href^="#/node/"]') : null;
+          const crit = /criticality-color-critical/.test(tr.innerHTML) ? 3 : /criticality-color-medium/.test(tr.innerHTML) ? 2 : 1;
+          last = tr.getAttribute('data-ticket');
+          items[last] = { n: txt(ix.num), t: txt(ix.title), nd: txt(ix.node), h: nodeA ? nodeA.getAttribute('href') : '', a: txt(ix.agent), c: crit, r: parseInt(txt(ix.raise), 10) || 0, d: ntDate(txt(ix.date)) };
+        });
+      }
+      const next = doc.querySelector('#pagination a[data-pagination="next"]');   // dans RG, « li.active » = bouton désactivé
+      const more = !!next && !next.parentElement.classList.contains('active') && !next.parentElement.classList.contains('disabled') && !!last;
+      return { items, last, more };
+    }
+    async function ntFetchAll(node) {
+      const items = {};
+      let last = '';
+      for (let page = 1; page <= NT.maxPages; page++) {
+        const url = '/action/page/ticket/filter?node=' + node + '&criticality=all&state=active&eventTypes=all&agentTypes=all&page=' + page + (last ? '&lastTicket=' + encodeURIComponent(last) : '') + '&_=' + Date.now();
+        const r = await fetch(url, { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+        if (!r.ok) return null;
+        const p = ntParse(await r.text());
+        if (!p) return null;
+        Object.assign(items, p.items);
+        last = p.last;
+        if (!p.more) return { items, truncated: false };
+      }
+      return { items, truncated: true };   // plus de NT.maxPages pages : la liste est incomplète, on ne conclut pas à des clôtures
+    }
+    const ntLabel = (it) => (it.nd && it.a ? it.nd + ' · ' + it.a : it.nd || it.a);
+    const ntLink = (it, fallback) => { const m = /^#\/node\/([A-Za-z0-9-]+)/.exec(it.h || ''); return m ? '#/node/' + m[1] + '/page/ticket' : fallback; };
+    const CRIT = { 3: 'critique', 2: 'moyenne', 1: 'faible' };
+    function ntDiff(prev, cur, truncated) {
+      const out = { created: [], raised: [], closed: [] };
+      const newest = Math.max(0, ...Object.values(prev).map((x) => x.d));
+      for (const [id, it] of Object.entries(cur)) {
+        const old = prev[id];
+        if (!old) { if (!truncated || it.d >= newest) out.created.push(it); }   // liste tronquée : un ticket plus ancien qui « entre » dans la page n'est pas un nouveau ticket
+        else if (it.r > old.r) out.raised.push(it);
+      }
+      if (!truncated) for (const [id, it] of Object.entries(prev)) if (!cur[id]) out.closed.push(it);
+      return out;
+    }
+    function ntMessages(diff, rootHash) {
+      const msgs = [];
+      const group = (list, kind, one, many) => {
+        if (!list.length || !ntKind(kind)) return;
+        if (list.length > 3) {
+          msgs.push({ title: list.length + ' ' + many, message: list.slice(0, 3).map((i) => i.t || i.n).join(' · ') + ' …', hash: rootHash });
+          return;
+        }
+        for (const it of list) msgs.push({ title: one + ' — ' + (ntLabel(it) || it.n), message: (it.t || it.n) + (kind === 'new' ? ' · criticité ' + CRIT[it.c] : kind === 'raise' ? ' · relance n° ' + it.r : '') , hash: ntLink(it, rootHash) });
+      };
+      group(diff.created, 'new', 'Nouveau ticket', 'nouveaux tickets');
+      group(diff.raised, 'raise', 'Relance', 'tickets relancés');
+      group(diff.closed, 'close', 'Ticket clôturé', 'tickets clôturés');
+      return msgs;
+    }
+    function ntSend(msgs) {
+      if (!msgs.length || !ntHasBg) return;
+      try { const p = chrome.runtime.sendMessage({ type: 'rgx-notify', items: msgs }); if (p && p.catch) p.catch(() => {}); } catch (e) { /* extension rechargée : on ignore */ }
+    }
+    async function ntRun() {
+      const node = ntRootNode();
+      if (!node || Date.now() - parseInt(get(NT.last, '0'), 10) < NT.every - 2000) return;
+      set(NT.last, String(Date.now()));
+      let cur;
+      try { cur = await ntFetchAll(node); } catch (e) { return; }
+      if (!cur) return;
+      let prev = null;
+      try { prev = JSON.parse(get(NT.snap, 'null')); } catch (e) { prev = null; }
+      set(NT.snap, JSON.stringify({ t: Date.now(), node, items: cur.items }));
+      if (!prev || prev.node !== node || Date.now() - prev.t > NT.maxAge) return;   // premier relevé (ou trop ancien) : état de départ, aucune notification
+      ntSend(ntMessages(ntDiff(prev.items, cur.items, cur.truncated), '#/node/' + node + '/page/ticket'));
+    }
+    function ntTick() {
+      if (!ntOn()) return;
+      if (navigator.locks && navigator.locks.request) navigator.locks.request('rgx-ticket-watch', { ifAvailable: true }, (lock) => (lock ? ntRun() : null));
+      else ntRun();
+    }
+    setInterval(ntTick, 15000);
+    setTimeout(ntTick, 8000);
+    if (ntHasBg && chrome.runtime.onMessage) {
+      chrome.runtime.onMessage.addListener((m) => {   // clic sur une notification : on ouvre l'écran du ticket
+        if (m && m.type === 'rgx-open' && /^#\/node\/[A-Za-z0-9-]+\/page\/[a-z]+(\/[a-z]+)*$/.test(m.hash || '')) location.hash = m.hash;
+      });
+    }
+
+    // ------------------------------------------------------------------------------------------------
     // Réglages en direct depuis le panneau de l'extension (événement DOM « rgx-set » émis par popup.js).
     // ------------------------------------------------------------------------------------------------
     document.addEventListener('rgx-set', (e) => {
       const { key, value } = (e && e.detail) || {};
       if (key === K.theme) { mode = value; apply(); }
       else if (key === K.density) { density = value; apply(); }
+      else if (key === 'rgx.notifyTest') ntSend([{ title: 'Notification de test', message: 'Les notifications de tickets fonctionnent : vous serez prévenu des créations, relances et clôtures.', hash: ntRootNode() ? '#/node/' + ntRootNode() + '/page/ticket' : '' }]);
       else if (key === 'rgx.treeWidth' && !value) { applyTreeWidth(0); window.dispatchEvent(new Event('resize')); }
       // rgx.autoReload est relu à chaque passage de la minuterie (arEnabled)
     });

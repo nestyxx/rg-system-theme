@@ -18,6 +18,7 @@
 - **Des gains d'usage**, tous côté navigateur :
   - arborescence **redimensionnable librement** (la largeur minimale d'origine est supprimée) ;
   - **actualisation automatique des tickets** qui fonctionne vraiment, sans recharger la plateforme ;
+  - **notifications Edge** à la création, la relance et la clôture d'un ticket, depuis n'importe quelle page de RG (option, un onglet RG doit rester ouvert) ;
   - **recherche rapide `Ctrl+K`** (nœuds de l'arborescence et pages du menu) ;
   - **texte complet au survol** des libellés tronqués, infobulles sur les actions en simple icône ;
   - panneau de réglages dans l'icône de l'extension : thème, densité, actualisation, largeur de l'arbre ;
@@ -61,9 +62,10 @@ Les réglages sont mémorisés dans le `localStorage` du site (`rgx.*`). Interru
 ## Vie privée et sécurité
 
 - L'extension ne s'exécute **que** sur `https://dashboard.rg-supervision.com/*`.
-- **Aucune donnée n'est lue pour être envoyée ailleurs, aucun appel réseau n'est ajouté**, aucune télémétrie. Polices, icônes et CSS sont embarqués : pas de CDN.
+- **Aucune donnée n'est envoyée ailleurs**, aucune télémétrie. Polices, icônes et CSS sont embarqués : pas de CDN.
+- **Un seul appel réseau ajouté, et seulement si vous activez les notifications de tickets** (désactivées par défaut) : la même requête que celle que RG envoie pour afficher la page des tickets (`GET /action/page/ticket?node=…`, même site, session en cours), toutes les 60 s. La réponse est lue sur place, comparée à la précédente, et seuls des textes de notification en sortent, vers Edge. Rien n'est transmis à un tiers.
 - Elle ne modifie ni les URL, ni les requêtes, ni les données : uniquement du CSS et un peu de JavaScript d'affichage.
-- Permissions : accès au domaine ci-dessus, plus `scripting` / `activeTab` pour le panneau de réglages.
+- Permissions : accès au domaine ci-dessus, `scripting` / `activeTab` pour le panneau de réglages, `notifications` pour les notifications de tickets.
 - Détail et procédure de signalement : [SECURITY.md](SECURITY.md).
 
 ## Limites connues

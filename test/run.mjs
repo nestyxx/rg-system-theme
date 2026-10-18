@@ -26,7 +26,7 @@ try {
 }
 
 // 1b. Syntaxe des scripts de l'extension
-for (const f of ['content.js', 'popup.js']) {
+for (const f of ['content.js', 'popup.js', 'background.js']) {
   try { execFileSync(process.execPath, ['--check', path.join(root, 'src', 'extension', f)], { stdio: 'pipe' }); ok('syntaxe ' + f); } catch (e) { ko('syntaxe ' + f + ' : ' + String(e.stderr).slice(0, 200)); }
 }
 
@@ -42,6 +42,7 @@ const refs = [
   ...Object.values(manifest.icons || {}),
   ...Object.values((manifest.action || {}).default_icon || {}),
   (manifest.action || {}).default_popup,
+  (manifest.background || {}).service_worker,
   ...(manifest.content_scripts || []).flatMap((c) => [...(c.css || []), ...(c.js || [])]),
 ].filter(Boolean);
 for (const f of new Set(refs)) check(existsSync(path.join(ext, f)), `fichier présent : ${f}`);
