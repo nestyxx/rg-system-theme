@@ -154,3 +154,15 @@ html[data-rgx] #rgx-notify-ask button:hover { background: var(--rgx-wash); }
 html[data-rgx] #rgx-notify-ask button[data-a="yes"] { border-color: var(--rgx-btn, var(--rgx-brand)); background: var(--rgx-btn, var(--rgx-brand)); color: var(--rgx-btn-ink, var(--rgx-brand-ink)); }
 html[data-rgx] #rgx-notify-ask button[data-a="yes"]:hover { background: var(--rgx-btn-hover, var(--rgx-brand-hover)); }
 html[data-rgx] #rgx-notify-ask button[data-a="never"] { border-color: transparent; background: transparent; color: var(--rgx-muted); }
+
+/* --- Arborescence : nœud sélectionné ET survolé (« a.jstree-clicked.jstree-hovered ») : RG lui ajoutait un filet de 1 px qui décalait
+   le texte de quelques pixels. Plus aucun filet ni remplissage différent, quel que soit l'état. --- */
+html[data-rgx] #tree li > a.jstree-clicked.jstree-hovered,
+html[data-rgx] #tree li > a.jstree-hovered.jstree-clicked:hover,
+html[data-rgx] #tree li > a.jstree-clicked:hover {
+  border: 0 !important;
+  padding: 0 8px 0 2px !important;
+}
+
+/* Page de connexion : min-height 100vh + marges intérieures provoquaient un défilement de 48 px */
+html[data-rgx] .form-public-page { box-sizing: border-box; }

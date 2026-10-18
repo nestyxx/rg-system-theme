@@ -1,5 +1,11 @@
 # Journal des modifications
 
+## 3.3.0 — 2026-10-18
+
+- **Arborescence — ligne suivante surlignée** : en style Arobase, la copie de l'arborescence que jsTree garde pour les barres pleine largeur (`.jstree-wholerow`) devenait visible avec le voile de sélection, et sa sélection est décalée d'une ligne quand des nœuds s'ouvrent. Elle reste maintenant toujours transparente.
+- **Arborescence — texte décalé au survol de l'élément sélectionné** : RG ajoutait un filet de 1 px (`a.jstree-clicked.jstree-hovered`) qui poussait le texte de quelques pixels. Corrigé dans les deux styles (texte à la même position au repos et au survol, mesuré).
+- **Page de connexion, comme Webgest** (style Arobase) : le visuel de RG est affiché en fond, flouté sous un voile sombre, avec une carte translucide et un bouton « œil » pour voir l'image nette (mémorisé). Le style « RG System revisité » garde la carte centrée sans image. Corrigé aussi un défilement parasite de 48 px sur cette page.
+
 ## 3.2.0 — 2026-10-18
 
 - **Invitation à activer les notifications de tickets** : une carte en bas à droite de RG, affichée quelques secondes après le chargement de la session (jamais sur la page de connexion) tant que les notifications sont désactivées. « Activer » les active et envoie tout de suite une notification de test ; « Plus tard » redemande dans 7 jours ; « Ne plus demander » arrête. Sans elle, personne ne pensait à ouvrir le panneau de l'extension. Le choix est mémorisé (`rgx.notifyAsk`).
