@@ -1,5 +1,9 @@
 # Journal des modifications
 
+## 3.4.3 — 2026-10-18
+
+- **Étiquettes d'état neutres** (« Mis à jour », « Pas installé », « Désactivé »…) : la règle des étiquettes sans variante leur laissait un fond et un anneau intérieur qui se voyaient comme un filet sous le texte, et leur hauteur de ligne (12 px pour un texte de 12 px, avec rognage) coupait jambages et accents. Point gris + texte, sans filet, hauteur de ligne de 16 px.
+
 ## 3.4.2 — 2026-10-18
 
 - **Fiche agent : le premier bloc** (date d'installation, type d'agent, version, IP, proxy) était une pile de lignes grises sans cadre, alors que « Informations » juste dessous est une carte. Il devient une carte identique (bord, rayon, fond) avec les mêmes lignes zébrées discrètes.

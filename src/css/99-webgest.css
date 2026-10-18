@@ -532,3 +532,13 @@ html[data-rgx] #block-menu-left::after {
   z-index: 6;
   pointer-events: none;
 }
+
+/* Étiquettes d'état neutres (« Mis à jour », « Pas installé », « Désactivé ») : la règle des étiquettes sans variante leur donnait un fond
+   et un anneau intérieur (box-shadow) qui, sans remplissage, se voyaient comme un filet sous le texte. Point gris + texte, comme les autres. */
+html[data-rgx] .label-rg:not(.label-success):not(.label-important):not(.label-danger):not(.label-warning):not(.label-info):not(.label-primary):not(.label-unknown) {
+  background: transparent !important;
+  box-shadow: none;
+}
+/* Hauteur de ligne de 12 px pour un texte de 12 px avec « overflow: hidden » (ellipsis-content) : jambages et accents rognés. */
+html[data-rgx] .label:not(.label-block):not([class*="icon-"]):not(.label-rg-mini),
+html[data-rgx] .label-rg { line-height: 16px; }
