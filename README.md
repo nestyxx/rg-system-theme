@@ -1,5 +1,7 @@
 # RG System – thème Arobase
 
+<p align="center"><img src="docs/img/social-preview.png" alt="Un thème clair et sombre pour RG System Suite : extension Edge / Chrome, 100 % côté navigateur, open source (MIT)" width="100%"></p>
+
 > Un habillage moderne, clair et sombre, pour **RG System Suite** : une extension Edge / Chrome qui ne touche
 > qu'à l'affichage. Même plateforme, mêmes données, même comportement : une interface cohérente, lisible et agréable.
 
