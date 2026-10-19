@@ -17,7 +17,7 @@ html[data-rgx] #menu-details li.current {
    espace intérieur de 10 px), comme dans la maquette. La marge est portée par le <li> : elle ne dépend pas des classes
    utilitaires de RG. Menu réduit (.left-menu-shrink) : dimensions d'origine. --- */
 html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-0 {
-  width: 180px;
+  width: calc(var(--rgx-menu-w, 200px) - 20px);
   margin-left: 10px;
 }
 html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-0 > a {
@@ -445,7 +445,7 @@ html[data-rgx] .left-menu-shrink #menu-details .name-menu {
 }
 /* Volet qui s'ouvre à côté de l'icône : carte du thème, titre de la section en tête */
 html[data-rgx] .left-menu-shrink #menu-details ul.ul-lvl-1 {
-  margin: -40px 0 0 44px;
+  margin: -40px 0 0 calc(var(--rgx-rail-w, 40px) + 4px);
   padding: 6px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
@@ -717,10 +717,10 @@ html[data-rgx][data-rgx-tree] #tree-block:not(.shrunk-tree) {
   width: var(--rgx-tree-w) !important;
 }
 html[data-rgx][data-rgx-tree] #block-dashboard:not(.left-menu-shrink) #dragbar:not(.shrunk-tree) {
-  left: calc(200px + var(--rgx-tree-w) - 10px) !important;
+  left: calc(var(--rgx-menu-w, 200px) + var(--rgx-tree-w) - 10px) !important;
 }
 html[data-rgx][data-rgx-tree] .left-menu-shrink #dragbar:not(.shrunk-tree) {
-  left: calc(40px + var(--rgx-tree-w) - 10px) !important;
+  left: calc(var(--rgx-rail-w, 40px) + var(--rgx-tree-w) - 10px) !important;
 }
 html[data-rgx] #tree-search-label {
   overflow: hidden;

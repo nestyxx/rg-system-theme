@@ -1,5 +1,10 @@
 # Journal des modifications
 
+## 3.5.0 — 2026-10-19
+
+- **Menu plus aéré, comme celui de Webgest** (style Arobase) : menu étendu à **220 px** (200 d'origine) et rail de **60 px** (40 d'origine) avec des pastilles de 40 x 38 px et 3 px d'écart ; entrées étendues de 38 px. Le bouton « Style » du bas et le volet qui s'ouvre à côté d'une icône suivent. Le style « RG System revisité » garde les dimensions d'origine.
+  - Technique : les largeurs de RG sont codées en dur à plusieurs endroits (menu, rail, logo, volet, poignée de l'arborescence, rail de l'arborescence en superposition) ; elles passent par les jetons `--rgx-menu-w` et `--rgx-rail-w` (200 / 40 px en repli dans les modules partagés). La barre de défilement du rail (écran bas) est masquée : elle prenait 10 px des 60 et créait un défilement horizontal.
+
 ## 3.4.3 — 2026-10-18
 
 - **Étiquettes d'état neutres** (« Mis à jour », « Pas installé », « Désactivé »…) : la règle des étiquettes sans variante leur laissait un fond et un anneau intérieur qui se voyaient comme un filet sous le texte, et leur hauteur de ligne (12 px pour un texte de 12 px, avec rognage) coupait jambages et accents. Point gris + texte, sans filet, hauteur de ligne de 16 px.

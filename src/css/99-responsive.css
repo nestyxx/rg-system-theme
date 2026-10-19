@@ -10,20 +10,20 @@ html[data-rgx] #rgx-m-burger { display: none; }
 
 @media (max-width: 999px) {
   /* La colonne de l'arborescence n'existe plus : elle passe au-dessus du contenu */
-  html[data-rgx] #block-dashboard { grid-template-columns: 200px 0 minmax(0, 1fr) !important; }
-  html[data-rgx] #block-dashboard.left-menu-shrink { grid-template-columns: 40px 0 minmax(0, 1fr) !important; }
+  html[data-rgx] #block-dashboard { grid-template-columns: var(--rgx-menu-w, 200px) 0 minmax(0, 1fr) !important; }
+  html[data-rgx] #block-dashboard.left-menu-shrink { grid-template-columns: var(--rgx-rail-w, 40px) 0 minmax(0, 1fr) !important; }
   html[data-rgx] #dragbar { display: none !important; }
   html[data-rgx] #tree-block {
     position: fixed !important;
     top: 56px;
     bottom: 0;
-    left: 200px;
+    left: var(--rgx-menu-w, 200px);
     width: min(340px, 86vw) !important;
     z-index: 1100;
     transition: transform 0.2s ease;
     box-shadow: var(--rgx-shadow-pop);
   }
-  html[data-rgx] #block-dashboard.left-menu-shrink #tree-block { left: 40px; }
+  html[data-rgx] #block-dashboard.left-menu-shrink #tree-block { left: var(--rgx-rail-w, 40px); }
   html[data-rgx] #tree-block.shrunk-tree { transform: translateX(-110%); visibility: hidden; box-shadow: none; }
   /* Voile derrière l'arborescence ouverte (un clic dessus la referme : content.js) */
   html[data-rgx] #block-dashboard:has(#tree-block:not(.shrunk-tree))::after {

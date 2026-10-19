@@ -542,3 +542,42 @@ html[data-rgx] .label-rg:not(.label-success):not(.label-important):not(.label-da
 /* Hauteur de ligne de 12 px pour un texte de 12 px avec « overflow: hidden » (ellipsis-content) : jambages et accents rognés. */
 html[data-rgx] .label:not(.label-block):not([class*="icon-"]):not(.label-rg-mini),
 html[data-rgx] .label-rg { line-height: 16px; }
+
+/* ===================================================================
+   Menu aéré, comme celui de Webgest : 220 px étendu (200 d'origine), rail de 60 px (40 d'origine) avec des pastilles de 40 px.
+   Les largeurs d'origine de RG sont codées en dur à plusieurs endroits ; les jetons --rgx-menu-w / --rgx-rail-w les remplacent
+   (les autres modules les lisent avec 200 / 40 px en repli : le style « RG System revisité » garde les dimensions d'origine).
+   =================================================================== */
+html[data-rgx] {
+  --rgx-menu-w: 220px;
+  --rgx-rail-w: 60px;
+}
+@media (min-width: 768px) {
+  html[data-rgx] #block-menu-left,
+  html[data-rgx] #menu-details .menu-lvl-0,
+  html[data-rgx] #menu-details .ul-lvl-0,
+  html[data-rgx] #head-menu .background-color-logo-menu { width: var(--rgx-menu-w); }
+  html[data-rgx] .left-menu-shrink #block-menu-left,
+  html[data-rgx] .left-menu-shrink #block-menu,
+  html[data-rgx] .left-menu-shrink #brand-logo-menu,
+  html[data-rgx] .left-menu-shrink #head-menu .background-color-logo-menu,
+  html[data-rgx] .left-menu-shrink .left-menu,
+  html[data-rgx] .left-menu-shrink #menu-details .menu-lvl-0,
+  html[data-rgx] .left-menu-shrink #menu-details .ul-lvl-0 { width: var(--rgx-rail-w); }
+}
+/* Rail : pastilles de 40 x 38 px centrées, un peu d'air entre elles */
+html[data-rgx] .left-menu-shrink #menu-details li.menu-lvl-0 { height: 44px; }
+html[data-rgx] .left-menu-shrink #menu-details li.menu-lvl-0 > a,
+html[data-rgx] .left-menu-shrink #menu-details li#search-menu {
+  height: 38px;
+  margin: 3px 10px !important;
+}
+html[data-rgx] .left-menu-shrink #menu-details li#search-menu {
+  width: calc(100% - 20px);
+  line-height: 38px;
+}
+html[data-rgx] .left-menu-shrink #rgx-style-toggle { margin: 0 14px 12px; }
+/* Menu étendu : entrées de 38 px, 2 px d'écart */
+html[data-rgx] #block-dashboard:not(.left-menu-shrink) #menu-details li.menu-lvl-0 > a { min-height: 38px; margin: 2px 0 !important; }
+/* Rail : la barre de défilement (écran bas) prenait 10 px des 60 et créait un défilement horizontal ; elle est masquée (molette et tactile restent actifs) */
+html[data-rgx] .left-menu-shrink #menu-details { overflow-x: hidden; scrollbar-width: none; }
